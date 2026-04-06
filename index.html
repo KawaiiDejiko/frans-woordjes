@@ -755,7 +755,7 @@
           </div>
         </div>
 
-        <!-- Categories -->
+         <!-- Categories -->
         <div class="setup-section">
           <div class="section-title">CategorieÃ«n</div>
           <div class="categories-grid" id="categoriesGrid"></div>
@@ -966,7 +966,7 @@
       {"fr":"le libre-arbitre","nl":"de vrije wil","cat":"Algemeen"},
       {"fr":"une licence","nl":"een diploma / licentie","cat":"Algemeen"},
       {"fr":"licite","nl":"geoorloofd","cat":"Algemeen"},
-      {"fr":"le liÃ³vre","nl":"de haas","cat":"Algemeen"},
+      {"fr":"le liÃvre","nl":"de haas","cat":"Algemeen"},
       {"fr":"le lieu","nl":"de plaats","cat":"Algemeen"},
       {"fr":"la ligue","nl":"de liga","cat":"Algemeen"},
       {"fr":"la limite","nl":"de grens / limiet","cat":"Algemeen"},
@@ -1231,7 +1231,7 @@
       },
       settings: {
         klas: null,
-        categorieÃ«n: new Set(CATEGORIES),
+        categories: new Set(CATEGORIES),
         richting: null,
         aantalWoorden: 20,
       },
@@ -1272,7 +1272,7 @@
     }
 
     function getFilteredWords() {
-      return WORDS.filter(w => state.settings.categorieÃ«n.has(w.cat));
+      return WORDS.filter(w => state.settings.categories.has(w.cat));
     }
 
     function updateWordCount() {
@@ -1318,9 +1318,9 @@
       chip.addEventListener('click', () => {
         chip.classList.toggle('selected');
         if (chip.classList.contains('selected')) {
-          state.settings.categorieÃ«n.add(cat);
+          state.settings.categories.add(cat);
         } else {
-          state.settings.categorieÃ«n.delete(cat);
+          state.settings.categories.delete(cat);
         }
         updateWordCount();
       });
@@ -1328,13 +1328,13 @@
     });
 
     document.getElementById('selectAllBtn').addEventListener('click', () => {
-      CATEGORIES.forEach(cat => state.settings.categorieÃ«n.add(cat));
+      CATEGORIES.forEach(cat => state.settings.categories.add(cat));
       document.querySelectorAll('.category-chip').forEach(c => c.classList.add('selected'));
       updateWordCount();
     });
 
     document.getElementById('deselectAllBtn').addEventListener('click', () => {
-      state.settings.categorieÃ«n.clear();
+      state.settings.categories.clear();
       document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
       updateWordCount();
     });
