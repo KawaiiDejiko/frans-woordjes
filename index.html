@@ -1,1 +1,757 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Frans Examenidioom â Sint Catamaria</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --card: #16213e;
+      --accent: #e94560;
+      --accent2: #0f3460;
+      --text: #eaeaea;
+      --muted: #888;
+      --success: #4caf50;
+      --error: #e94560;
+      --border: #2a2a4a;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 480px;
+      animation: fadeIn 0.3s ease;
+    }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
+    /* CARD */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .logo-flag { font-size: 2.5rem; }
+    .logo h1 { font-size: 1.3rem; font-weight: 700; margin-top: 0.5rem; }
+    .logo p { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+
+    /* FORM ELEMENTS */
+    label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    input[type="email"], input[type="text"] {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: var(--text);
+      font-family: var(--font);
+      transition: border-color 0.2s;
+    }
+    input:focus { outline: none; border-color: var(--accent); }
+    .field { margin-bottom: 1.2rem; }
+
+    /* BUTTONS */
+    .btn {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      font-family: var(--font);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover:not(:disabled) { opacity: 0.9; }
+    .btn-secondary { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); }
+    .btn-secondary:hover:not(:disabled) { border-color: var(--accent); }
+
+    .error-msg { color: var(--error); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .error-msg.show { display: block; }
+
+    /* LEVEL GRID */
+    .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+    .level-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .level-card:hover { border-color: var(--accent); background: var(--accent2); }
+    .level-card .niveau { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .level-card .klas { font-size: 1.4rem; font-weight: 800; margin: 0.2rem 0; }
+    .level-card .count { font-size: 0.8rem; color: var(--muted); }
+
+    /* EXERCISE */
+    .progress-bar {
+      background: var(--surface);
+      border-radius: 99px;
+      height: 6px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: var(--accent);
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+    .question-meta { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.82rem; color: var(--muted); }
+    .french-word {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 1.5rem 0;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .french-context { text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: -1rem; margin-bottom: 1.5rem; font-style: italic; }
+    .options { display: flex; flex-direction: column; gap: 0.6rem; }
+    .option {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .option:hover:not(.locked) { border-color: var(--accent); }
+    .option.correct { border-color: var(--success); background: rgba(76,175,80,0.15); }
+    .option.wrong { border-color: var(--error); background: rgba(233,69,96,0.1); }
+    .option.locked { cursor: not-allowed; }
+    .feedback {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.correct { background: rgba(76,175,80,0.15); color: #81c784; }
+    .feedback.wrong { background: rgba(233,69,96,0.1); color: #ef9a9a; }
+
+    /* Fill-in exercise */
+    .fill-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-align: center;
+      font-family: var(--font);
+      margin: 1rem 0;
+    }
+    .fill-input:focus { outline: none; border-color: var(--accent); }
+    .fill-input.correct { border-color: var(--success); }
+    .fill-input.wrong { border-color: var(--error); }
+
+    /* RESULTS */
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 6px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .score-circle .score-num { font-size: 2rem; font-weight: 800; }
+    .score-circle .score-label { font-size: 0.7rem; color: var(--muted); }
+    .result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0; }
+    .stat { background: var(--surface); border-radius: 10px; padding: 1rem; text-align: center; }
+    .stat .num { font-size: 1.5rem; font-weight: 700; }
+    .stat .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .result-title { text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .result-sub { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+    .saving-msg { text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
+
+    /* MODE BUTTONS */
+    .mode-btns { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .mode-btn {
+      flex: 1;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font);
+    }
+    .mode-btn.active { border-color: var(--accent); background: rgba(233,69,96,0.15); color: var(--accent); }
+
+    /* Header nav */
+    .top-bar { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 0.75rem; }
+    .back-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; padding: 0.2rem; }
+    .top-bar h2 { font-size: 1rem; font-weight: 700; }
+    .top-bar .level-badge { margin-left: auto; background: var(--accent2); border-radius: 6px; padding: 0.25rem 0.6rem; font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- ==================== SCREEN: LOGIN ==================== -->
+<div class="screen active" id="screen-login">
+  <div class="card">
+    <div class="logo">
+      <div class="logo-flag">ð«ð·</div>
+      <h1>Frans Examenidioom</h1>
+      <p>Sint Catamaria College</p>
+    </div>
+    <div class="field">
+      <label>Schoole-mailadres</label>
+      <input type="email" id="email-input" placeholder="leerling@sancatamaria.nl" autocomplete="email">
+      <div class="error-msg" id="email-error">Gebruik je schoolmailadres (@sancatamaria.nl)</div>
+    </div>
+    <div class="field">
+      <label>Naam</label>
+      <input type="text" id="name-input" placeholder="Je naam">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Inloggen â</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN: LEVEL ==================== -->
+<div class="screen" id="screen-level">
+  <div class="card">
+    <div class="logo">
+      <div class="logo-flag">ð«ð·</div>
+      <h1>Kies je niveau</h1>
+      <p id="welkom-naam"></p>
+    </div>
+    <div class="level-grid">
+      <div class="level-card" onclick="chooseLevel('HAVO','3')">
+        <div class="niveau">HAVO</div>
+        <div class="klas">3</div>
+        <div class="count" id="count-h3">laden...</div>
+      </div>
+      <div class="level-card" onclick="chooseLevel('HAVO','4')">
+        <div class="niveau">HAVO</div>
+        <div class="klas">4</div>
+        <div class="count" id="count-h4">laden...</div>
+      </div>
+      <div class="level-card" onclick="chooseLevel('VWO','3')">
+        <div class="niveau">VWO</div>
+        <div clas="klas">3</div>
+        <div class="count" id="count-v3">laden...</div>
+      </div>
+      <div class="level-card" onclick="chooseLevel('VWO','4')">
+        <div class="niveau">VWO</div>
+        <div clas="klas">4</div>
+        <div class="count" id="count-v4">laden...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCREEN: EXERCISE ==================== -->
+<div class="screen" id="screen-exercise">
+  <div class="card">
+    <div class="top-bar">
+      <button class="back-btn" onclick="goToLevel()">â</button>
+      <h2>Oefenen</h2>
+      <div class="level-badge" id="ex-level-badge"></div>
+    </div>
+
+    <div class="mode-btns">
+      <button class="mode-btn active" id="mode-mc" onclick="setMode('mc')">Meerkeuze</button>
+      <button class="mode-btn" id="mode-fill" onclick="setMode('fill')">Invullen</button>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="question-meta">
+      <span id="q-counter">Vraag 1 / 10</span>
+      <span id="q-score">â 0 &nbsp; â 0</span>
+    </div>
+
+    <!-- Multiple choice -->
+    <div id="mc-block">
+      <div class="french-word" id="mc-word"></div>
+      <div class="french-context" id="mc-context"></div>
+      <div class="options" id="mc-options"></div>
+    </div>
+
+    <!-- Fill in -->
+    <div id="fill-block" style="display:none">
+      <div style="text-align:center; color:var(--muted); font-size:0.85rem; margin-bottom:0.5rem;">Wat betekent dit in het Nederlands?</div>
+      <div class="french-word" id="fill-word"></div>
+      <div class="french-context" id="fill-context"></div>
+      <input class="fill-input" id="fill-input" type="text" placeholder="Jouw antwoord..." onkeydown="if(event.key==='Enter')checkFill()">
+      <button class="btn btn-primary" id="fill-btn" onclick="checkFill()">Controleren</button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button class="btn btn-secondary" id="next-btn" onclick="nextQuestion()" style="margin-top:1rem; display:none">Volgende â</button>
+  </div>
+</div>
+
+<!-- ==================== SCREEN: RESULTS ==================== -->
+<div class="screen" id="screen-results">
+  <div class="card">
+    <div class="top-bar">
+      <button class="back-btn" onclick="goToLevel()">â</button>
+      <h2>Resultaat</h2>
+      <div class="level-badge" id="res-level-badge"></div>
+    </div>
+    <div class="score-circle">
+      <div class="score-num" id="res-score">â</div>
+      <div class="score-label">SCORE</div>
+    </div>
+    <div class="result-title" id="res-title"></div>
+    <div class="result-sub" id="res-sub"></div>
+    <div class="result-stats">
+      <div class="stat"><div class="num" id="res-correct">0</div><div class="lbl">Goed</div></div>
+      <div class="stat"><div class="num" id="res-wrong">0</div><div class="lbl">Fout</div></div>
+      <div class="stat"><div class="num" id="res-total">0</div><div class="lbl">Vragen</div></div>
+      <div class="stat"><div class="num" id="res-pct">0%</div><div class="lbl">Percentage</div></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="chooseLevel(currentNiveau, currentKlas)">Opnieuw</button>
+      <button class="btn btn-primary" onclick="goToLevel()">Ander niveau</button>
+    </div>
+    <div class="saving-msg" id="saving-msg"></div>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// CONFIGURATIE â pas hier aan
+// =====================================================
+const CONFIG = {
+  schoolDomain: 'sancatamaria.nl',
+  supabaseUrl: 'https://txremxejuasyraidahzd.supabase.co',
+  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4cmVteGVqdWFzeXJhaWRhaHpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0NDMyNzIsImV4cCI6MjA5MTAxOTI3Mn0.kHhf-1MQkn9thBqSbjqYsHNOX7UoTih3qSAQg8S1oEw',
+  supabaseTable: 'resultaten',
+  vragenPerRonde: 10,
+};
+
+// =====================================================
+// STANDAARD WOORDENLIJSTEN (als Supabase niet is ingesteld)
+// =====================================================
+const DEFAULT_WORDS = {
+  'HAVO-3': [
+    { fr: 'selon moi', nl: 'volgens mij', context: 'mening geven' },
+    { fr: 'je pense que', nl: 'ik denk dat', context: 'mening geven' },
+    { fr: 'Ã  mon avis', nl: 'naar mijn mening', context: 'mening geven' },
+    { fr: 'd\"abord', nl: 'eerst / ten eerste', context: 'structuur' },
+    { fr: 'ensuite', nl: 'vervolgens / daarna', context: 'structuur' },
+    { fr: 'enfin', nl: 'ten slotte / uiteindelijk', context: 'structuur' },
+    { fr: 'parce que', nl: 'omdat', context: 'redeneren' },
+    { fr: 'donc', nl: 'dus / dus', context: 'conclusie' },
+    { fr: 'mais', nl: 'maar', context: 'tegenstelling' },
+    { fr: 'cependant', nl: 'echter / toch', context: 'tegenstelling' },
+    { fr: 'aussi', nl: 'ook / tevens', context: 'toevoeging' },
+    { fr: 'de plus', nl: 'bovendien', context: 'toevoeging' },
+    { fr: 'par exemple', nl: 'bijvoorbeeld', context: 'voorbeeld geven' },
+    { fr: 'c\'est-Ã -dire', nl: 'dat wil zeggen', context: 'verduidelijking' },
+    { fr: 'en gÃ©nÃ©ral', nl: 'in het algemeen', context: 'generalisatie' },
+  ],
+  'HAVO-4': [
+    { fr: 'd\'une part... d\'autre part', nl: 'enerzijds... anderzijds', context: 'tweedeling' },
+    { fr: 'il faut', nl: 'men moet / het is nodig', context: 'noodzaak' },
+    { fr: 'il est important de', nl: 'het is belangrijk om', context: 'nadruk' },
+    { fr: 'en revanche', nl: 'daarentegen', context: 'tegenstelling' },
+    { fr: 'pourtant', nl: 'toch / desondanks', context: 'tegenstelling' },
+    { fr: 'nÃ©anmoins', nl: 'niettemin', context: 'tegenstelling' },
+    { fr: 'en effet', nl: 'inderdaad / want', context: 'bevestiging' },
+    { fr: 'grÃ¢ce Ã ', nl: 'dankzij', context: 'oorzaak-gevolg' },
+    { fr: 'Ã  cause de', nl: 'vanwege / door (negatief)', context: 'oorzaak' },
+    { fr: 'ainsi', nl: 'zo / aldus', context: 'conclusie' },
+    { fr: 'en conclusion', nl: 'ter conclusie / concluderend', context: 'conclusie' },
+    { fr: 'en rÃ©sumÃ©', nl: 'samengevat', context: 'conclusie' },
+    { fr: 'autrement dit', nl: 'met andere woorden', context: 'herformulering' },
+    { fr: 'quant Ã ', nl: 'wat betreft', context: 'onderwerp aanduiden' },
+    { fr: 'malgrÃ©', nl: 'ondanks', context: 'tegenstelling' },
+    { fr: 'bien que', nl: 'hoewel', context: 'tegenstelling (subjonctif)' },
+  ],
+  'VWO-3': [
+    { fr: 'selon moi', nl: 'volgens mij', context: 'mening geven' },
+    { fr: 'Ã  mon avis', nl: 'naar mijn mening', context: 'mening geven' },
+    { fr: 'il me semble que', nl: 'het lijkt mij dat', context: 'mening nuanceren' },
+    { fr: 'd\'abord', nl: 'eerst / ten eerste', context: 'structuur' },
+    { fr: 'en outre', nl: 'bovendien / verder', context: 'toevoeging' },
+    { fr: 'cependant', nl: 'echter', context: 'tegenstelling' },
+    { fr: 'nÃ©anmoins', nl: 'niettemin', context: 'tegenstelling' },
+    { fr: 'en revanche', nl: 'daarentegen', context: 'tegenstelling' },
+    { fr: 'grÃ¢ce Ã ', nl: 'dankzij', context: 'positieve oorzaak' },
+    { fr: 'Ã  cause de', nl: 'vanwege (negatief)', context: 'negatieve oorzaak' },
+    { fr: 'par consÃ©quent', nl: 'bijgevolg / als gevolg', context: 'gevolg' },
+    { fr: 'en effet', nl: 'inderdaad / immers', context: 'bevestiging/verklaring' },
+    { fr: 'c\'est pourquoi', nl: 'dat is waarom / daarom', context: 'redenering' },
+    { fr: 'bien que', nl: 'hoewel', context: 'concessie' },
+    { fr: 'quoique', nl: 'hoewel / ofschoon', context: 'concessie' },
+    { fr: 'afin de', nl: 'om te / teneinde', context: 'doel' },
+  ],
+  'VWO-4': [
+    { fr: 'd\'une part... d\'autre part', nl: 'enerzijds... anderzijds', context: 'tweedeling' },
+    { fr: 'il convient de', nl: 'het is gepast om / men dient', context: 'formeel advies' },
+    { fr: 'force est de constater que', nl: 'men moet vaststellen dat', context: 'formele constatering' },
+    { fr: 'il va de soi que', nl: 'het spreekt vanzelf dat', context: 'vanzelfsprekendheid' },
+    { fr: 'en dÃ©pit de', nl: 'ondanks', context: 'tegenstelling' },
+    { fr: 'Ã  l\'instar de', nl: 'naar het voorbeeld van / net als', context: 'vergelijking' },
+    { fr: 'qui plus est', nl: 'sterker nog / bovendien', context: 'nadruk' },
+    { fr: 'sans doute', nl: 'ongetwijfeld / zonder twijfel', context: 'zekerheid' },
+    { fr: 'il s\'agit de', nl: 'het gaat om / het betreft', context: 'onderwerp benoemen' },
+    { fr: 'Ã  cet Ã©gard', nl: 'in dit opzicht / in dat verband', context: 'verwijzing' },
+    { fr: 'dans la mesure oÃ¹', nl: 'voor zover / in de mate dat', context: 'voorwaarde' },
+    { fr: 'au fur et Ã  mesure', nl: 'geleidelijk / naarmate', context: 'progressie' },
+    { fr: 'en l\'occurrence', nl: 'in dit geval / namelijk', context: 'precisering' },
+    { fr: 'vis-Ã -vis de', nl: 'ten opzichte van', context: 'relatie aanduiden' },
+    { fr: 'nonobstant', nl: 'desondanks / ondanks', context: 'formeel / tegenstelling' },
+    { fr: 'Ã  titre d\'exemple', nl: 'als voorbeeld / bij wijze van voorbeeld', context: 'voorbeeld geven' },
+    { fr: 'compte tenu de', nl: 'gelet op / rekening houdend met', context: 'redenering' },
+    { fr: 'en guise de conclusion', nl: 'ter afsluiting / als conclusie', context: 'conclusie formeel' },
+  ]
+};
+
+// =====================================================
+// STATE
+// =====================================================
+let currentUser = { email: '', name: '' };
+let currentNiveau = '';
+let currentKlas = '';
+let currentWords = [];
+let currentQ = 0;
+let correct = 0;
+let wrong = 0;
+let exerciseMode = 'mc'; // 'mc' or 'fill'
+let answered = false;
+let startTime = null;
+
+// =====================================================
+// LOGIN
+// =====================================================
+function doLogin() {
+  const email = document.getElementById('email-input').value.trim().toLowerCase();
+  const name = document.getElementById('name-input').value.trim();
+  const errEl = document.getElementById('email-error');
+
+  if (!email.endsWith('@' + CONFIG.schoolDomain)) {
+    errEl.classList.add('show');
+    return;
+  }
+  errEl.classList.remove('show');
+
+  currentUser = { email, name: name || email.split('@')[0] };
+  document.getElementById('welkom-naam').textContent = 'Welkom, ' + currentUser.name + '!';
+  updateCounts();
+  showScreen('screen-level');
+}
+
+// =====================================================
+// LEVEL COUNTS
+// =====================================================
+function updateCounts() {
+  const levels = [['h3','HAVO-3'],['h4','HAVO-4'],['v3','VWO-3'],['v4','VWO-4']];
+  levels.forEach(([id, key]) => {
+    document.getElementById('count-' + id).textContent = (DEFAULT_WORDS[key]?.length || 0) + ' woorden';
+  });
+}
+
+// =====================================================
+// LEVEL CHOOSE
+// =====================================================
+function chooseLevel(niveau, klas) {
+  currentNiveau = niveau;
+  currentKlas = klas;
+  const key = niveau + '-' + klas;
+  const words = DEFAULT_WORDS[key] || [];
+  currentWords = shuffle([...words]).slice(0, CONFIG.vragenPerRonde);
+  currentQ = 0;
+  correct = 0;
+  wrong = 0;
+  answered = false;
+  startTime = Date.now();
+
+  document.getElementById('ex-level-badge').textContent = niveau + ' ' + klas;
+  document.getElementById('res-level-badge').textContent = niveau + ' ' + klas;
+
+  showScreen('screen-exercise');
+  renderQuestion();
+}
+
+// =====================================================
+// MODE SWITCH
+// =====================================================
+function setMode(mode) {
+  exerciseMode = mode;
+  document.getElementById('mode-mc').classList.toggle('active', mode === 'mc');
+  document.getElementById('mode-fill').classList.toggle('active', mode === 'fill');
+  document.getElementById('mc-block').style.display = mode === 'mc' ? 'block' : 'none';
+  document.getElementById('fill-block').style.display = mode === 'fill' ? 'block' : 'none';
+  // Reset current question rendering
+  renderQuestion();
+}
+
+// =====================================================
+// RENDER QUESTION
+// =====================================================
+function renderQuestion() {
+  if (currentQ >= currentWords.length) {
+    showResults();
+    return;
+  }
+
+  answered = false;
+  const word = currentWords[currentQ];
+  const total = currentWords.length;
+
+  document.getElementById('q-counter').textContent = `Vraag ${currentQ + 1} / ${total}`;
+  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
+  document.getElementById('progress-fill').style.width = ((currentQ / total) * 100) + '%';
+
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback';
+  document.getElementById('next-btn').style.display = 'none';
+
+  if (exerciseMode === 'mc') {
+    renderMC(word);
+  } else {
+    renderFill(word);
+  }
+}
+
+function renderMC(word) {
+  document.getElementById('mc-word').textContent = word.fr;
+  document.getElementById('mc-context').textContent = word.context ? '(' + word.context + ')' : '';
+
+  // Get 3 wrong answers
+  const others = currentWords.filter((_, i) => i !== currentQ);
+  const distractors = shuffle(others).slice(0, 3).map(w => w.nl);
+  const options = shuffle([word.nl, ...distractors]);
+
+  const container = document.getElementById('mc-options');
+  container.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'option';
+    btn.textContent = opt;
+    btn.onclick = () => checkMC(btn, opt, word.nl, options);
+    container.appendChild(btn);
+  });
+}
+
+function checkMC(el, chosen, correct_ans, allOptions) {
+  if (answered) return;
+  answered = true;
+  const allBtns = document.querySelectorAll('.option');
+  allBtns.forEach(b => b.classList.add('locked'));
+
+  if (chosen === correct_ans) {
+    el.classList.add('correct');
+    correct++;
+    showFeedback(true, null);
+  } else {
+    el.classList.add('wrong');
+    wrong++;
+    allBtns.forEach(b => { if (b.textContent === correct_ans) b.classList.add('correct'); });
+    showFeedback(false, correct_ans);
+  }
+  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function renderFill(word) {
+  document.getElementById('fill-word').textContent = word.fr;
+  document.getElementById('fill-context').textContent = word.context ? '(' + word.context + ')' : '';
+  const inp = document.getElementById('fill-input');
+  inp.value = '';
+  inp.className = 'fill-input';
+  inp.disabled = false;
+  inp.focus();
+  document.getElementById('fill-btn').style.display = 'block';
+}
+
+function checkFill() {
+  if (answered) return;
+  const word = currentWords[currentQ];
+  const inp = document.getElementById('fill-input');
+  const given = inp.value.trim().toLowerCase();
+  const expected = word.nl.toLowerCase();
+
+  // Accept partial match or close enough
+  const isCorrect = expected.split('/').some(part => {
+    const p = part.trim();
+    return given === p || given.length > 2 && (p.includes(given) || given.includes(p));
+  });
+
+  answered = true;
+  inp.disabled = true;
+  document.getElementById('fill-btn').style.display = 'none';
+
+  if (isCorrect) {
+    inp.classList.add('correct');
+    correct++;
+    showFeedback(true, null);
+  } else {
+    inp.classList.add('wrong');
+    wrong++;
+    showFeedback(false, word.nl);
+  }
+  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
+  document.getElementById('next-btn').style.display = 'block';
+}
+
+function showFeedback(isCorrect, correctAnswer) {
+  const el = document.getElementById('feedback');
+  if (isCorrect) {
+    el.textContent = 'â Goed! ð';
+    el.className = 'feedback correct show';
+  } else {
+    el.textContent = `â Fout. Het goede antwoord: "${correctAnswer}"`;
+    el.className = 'feedback wrong show';
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  renderQuestion();
+}
+
+// =====================================================
+// RESULTS
+// =====================================================
+function showResults() {
+  const total = currentWords.length;
+  const pct = Math.round((correct / total) * 100);
+  const elapsed = Math.round((Date.now() - startTime) / 1000);
+
+  document.getElementById('res-score').textContent = correct + '/' + total;
+  document.getElementById('res-correct').textContent = correct;
+  document.getElementById('res-wrong').textContent = wrong;
+  document.getElementById('res-total').textContent = total;
+  document.getElementById('res-pct').textContent = pct + '%';
+
+  let title, sub;
+  if (pct >= 90) { title = 'Uitstekend! ð'; sub = 'Je kent het idioom heel goed.'; }
+  else if (pct >= 70) { title = 'Goed gedaan! ð'; sub = 'Je bent goed op weg.'; }
+  else if (pct >= 50) { title = 'Redelijk ð'; sub = 'Nog wat oefenen en je bent er.'; }
+  else { title = 'Blijven oefenen ðª'; sub = 'Probeer het nog een keer.'; }
+
+  document.getElementById('res-title').textContent = title;
+  document.getElementById('res-sub').textContent = sub;
+  document.getElementById('progress-fill').style.width = '100%';
+
+  showScreen('screen-results');
+  saveToSupabase(correct, total, pct, elapsed);
+}
+
+// =====================================================
+// SUPABASE
+// =====================================================
+async function saveToSupabase(correctNum, totalNum, pct, elapsed) {
+  const msg = document.getElementById('saving-msg');
+
+  // Skip if not configured
+  if (CONFIG.supabaseUrl.startsWith('JOUW') || CONFIG.supabaseKey.startsWith('JOUW')) {
+    msg.textContent = '(Supabase nog niet gekoppeld â resultaat niet opgeslagen)';
+    return;
+  }
+
+  msg.textContent = 'Resultaat opslaan...';
+
+  const record = {
+    email: currentUser.email,
+    naam: currentUser.name,
+    niveau: currentNiveau,
+    klas: currentKlas,
+    score: correctNum,
+    totaal: totalNum,
+    percentage: pct,
+    modus: exerciseMode === 'mc' ? 'Meerkeuze' : 'Invullen',
+    tijdsduur_s: elapsed,
+    datum: new Date().toISOString(),
+  };
+
+  try {
+    const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
+      method: 'POST',
+      headers: {
+        'apikey': CONFIG.supabaseKey,
+        'Authorization': 'Bearer ' + CONFIG.supabaseKey,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(record)
+    });
+    if (res.ok) {
+      msg.textContent = 'â Resultaat opgeslagen.';
+    } else {
+      const err = await res.json();
+      msg.textContent = 'Fout bij opslaan: ' + (err.message || res.status);
+    }
+  } catch (e) {
+    msg.textContent = 'Kon niet opslaan: ' + e.message;
+  }
+}
+
+// =====================================================
+// NAVIGATION
+// =====================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToLevel() {
+  showScreen('screen-level');
+}
+
+// =====================================================
+// UTILS
+// =====================================================
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Handle enter key on login
+document.getElementById('email-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
+</body>
+</html>
