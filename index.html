@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Parbleu!">
-  <title>Parbleu! â Frans Woordjes</title>
+  <title>Parbleu! – Frans Woordjes</title>
   <style>
     * {
       margin: 0;
@@ -732,7 +732,7 @@
           <label for="naam">Je naam</label>
           <input type="text" id="naam" placeholder="Je voornaam" required>
         </div>
-        <button type="submit" class="btn-primary" style="width: 100%;">Inloggen â</button>
+        <button type="submit" class="btn-primary" style="width: 100%;">Inloggen →</button>
       </form>
     </div>
 
@@ -755,9 +755,9 @@
           </div>
         </div>
 
-         <!-- Categories -->
+        <!-- Categories -->
         <div class="setup-section">
-          <div class="section-title">CategorieÃ«n</div>
+          <div class="section-title">Categorieën</div>
           <div class="categories-grid" id="categoriesGrid"></div>
           <div class="toggle-categories">
             <span class="toggle-link" id="selectAllBtn">Alles selecteren</span>
@@ -770,9 +770,9 @@
         <div class="setup-section">
           <div class="section-title">Richting</div>
           <div class="richting-buttons">
-            <button type="button" class="richting-btn" data-richting="fr_nl">ð«ð· â ð³ð±<br>Frans â Nederlands</button>
-            <button type="button" class="richting-btn" data-richting="nl_fr">ð³ð± â ð«ð·<br>Nederlands â Frans</button>
-            <button type="button" class="richting-btn" data-richting="mix">ð<br>Mix</button>
+            <button type="button" class="richting-btn" data-richting="fr_nl">🇫🇷 → 🇳🇱<br>Frans → Nederlands</button>
+            <button type="button" class="richting-btn" data-richting="nl_fr">🇳🇱 → 🇫🇷<br>Nederlands → Frans</button>
+            <button type="button" class="richting-btn" data-richting="mix">🔀<br>Mix</button>
           </div>
         </div>
 
@@ -791,8 +791,8 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-          <button type="button" class="btn-primary" id="quizBtn">âï¸ Quiz starten</button>
-          <button type="button" class="btn-secondary" id="flashcardsBtn">ð Flashcards</button>
+          <button type="button" class="btn-primary" id="quizBtn">✏️ Quiz starten</button>
+          <button type="button" class="btn-secondary" id="flashcardsBtn">🃏 Flashcards</button>
         </div>
       </div>
     </div>
@@ -806,7 +806,7 @@
 
       <div class="quiz-container">
         <div class="quiz-content">
-          <div class="quiz-label" id="quizLabel">Frans â Nederlands</div>
+          <div class="quiz-label" id="quizLabel">Frans → Nederlands</div>
           <div class="quiz-word" id="quizWord">Bonjour</div>
           <div class="quiz-input-group">
             <input type="text" class="quiz-input" id="quizInput" placeholder="Je antwoord...">
@@ -821,9 +821,9 @@
     <!-- Flashcard Screen -->
     <div class="screen flashcard-screen">
       <div class="flashcard-controls">
-        <button type="button" class="flashcard-btn" id="prevBtn">â</button>
+        <button type="button" class="flashcard-btn" id="prevBtn">←</button>
         <div class="flashcard-counter" id="flashcardCounter">1 van 20</div>
-        <button type="button" class="flashcard-btn" id="nextBtn">â</button>
+        <button type="button" class="flashcard-btn" id="nextBtn">→</button>
       </div>
 
       <div class="flashcard-container">
@@ -835,8 +835,8 @@
         </div>
 
         <div class="flashcard-actions">
-          <button type="button" class="btn-shuffle" id="shuffleBtn">ð Schudden</button>
-          <button type="button" class="btn-back" id="backBtn">â© Terug naar instellingen</button>
+          <button type="button" class="btn-shuffle" id="shuffleBtn">🔀 Schudden</button>
+          <button type="button" class="btn-back" id="backBtn">↩ Terug naar instellingen</button>
         </div>
       </div>
     </div>
@@ -853,7 +853,7 @@
         <div class="results-detail" id="resultsList"></div>
 
         <div class="results-buttons">
-          <button type="button" class="btn-primary" id="saveBtn">ð¾ Opslaan & opnieuw</button>
+          <button type="button" class="btn-primary" id="saveBtn">💾 Opslaan & opnieuw</button>
           <button type="button" class="btn-secondary" id="retryBtn">Nog een keer</button>
         </div>
       </div>
@@ -877,7 +877,7 @@
 
     const WORDS = [
       {"fr":"accueillir","nl":"ontvangen","cat":"Algemeen"},
-      {"fr":"l'Ã¢ge","nl":"de leeftijd","cat":"Algemeen"},
+      {"fr":"l'âge","nl":"de leeftijd","cat":"Algemeen"},
       {"fr":"ancien","nl":"oud","cat":"Algemeen"},
       {"fr":"appliquer","nl":"in de praktijk brengen","cat":"Algemeen"},
       {"fr":"assez","nl":"nogal","cat":"Algemeen"},
@@ -891,35 +891,35 @@
       {"fr":"changer","nl":"veranderen","cat":"Algemeen"},
       {"fr":"le changement","nl":"de verandering","cat":"Algemeen"},
       {"fr":"connu","nl":"bekend","cat":"Algemeen"},
-      {"fr":"connaÃ®tre","nl":"kennen","cat":"Algemeen"},
+      {"fr":"connaître","nl":"kennen","cat":"Algemeen"},
       {"fr":"le pays","nl":"het land","cat":"Algemeen"},
       {"fr":"dernier","nl":"laatste","cat":"Algemeen"},
       {"fr":"le destin","nl":"het lot","cat":"Algemeen"},
       {"fr":"devenu","nl":"geworden","cat":"Algemeen"},
       {"fr":"devenir","nl":"worden","cat":"Algemeen"},
-      {"fr":"la diffÃ©rence","nl":"het verschil","cat":"Algemeen"},
-      {"fr":"empÃªcher","nl":"verhinderen","cat":"Algemeen"},
+      {"fr":"la différence","nl":"het verschil","cat":"Algemeen"},
+      {"fr":"empêcher","nl":"verhinderen","cat":"Algemeen"},
       {"fr":"encore","nl":"nog","cat":"Algemeen"},
       {"fr":"ensemble","nl":"geheel / samen","cat":"Algemeen"},
-      {"fr":"l'Ã©poque","nl":"het tijdperk","cat":"Algemeen"},
+      {"fr":"l'époque","nl":"het tijdperk","cat":"Algemeen"},
       {"fr":"l'esprit","nl":"de geest","cat":"Algemeen"},
-      {"fr":"Ã©tonner","nl":"verbazen","cat":"Algemeen"},
-      {"fr":"Ã©tonnant","nl":"verbazingwekkend","cat":"Algemeen"},
-      {"fr":"Ã©tonnÃ©","nl":"verbaasd","cat":"Algemeen"},
-      {"fr":"Ã©viter","nl":"vermijden","cat":"Algemeen"},
+      {"fr":"w�tonner","nl":"verbazen","cat":"Algemeen"},
+      {"fr":"étonnant","nl":"verbazingwekkend","cat":"Algemeen"},
+      {"fr":"étonné","nl":"verbaasd","cat":"Algemeen"},
+      {"fr":"w�viter","nl":"vermijden","cat":"Algemeen"},
       {"fr":"exigeant","nl":"veeleisend","cat":"Algemeen"},
       {"fr":"l'exigence","nl":"de eis","cat":"Algemeen"},
       {"fr":"facilement","nl":"gemakkelijk","cat":"Algemeen"},
       {"fr":"il faut","nl":"men moet","cat":"Algemeen"},
       {"fr":"la faute","nl":"de fout","cat":"Algemeen"},
       {"fr":"la foi","nl":"het geloof","cat":"Algemeen"},
-      {"fr":"grÃ¢ce Ã ","nl":"dankzij","cat":"Algemeen"},
+      {"fr":"grâce à","nl":"dankzij","cat":"Algemeen"},
       {"fr":"le hasard","nl":"het toeval","cat":"Algemeen"},
-      {"fr":"l'idÃ©e","nl":"het idee","cat":"Algemeen"},
+      {"fr":"l'idée","nl":"het idee","cat":"Algemeen"},
       {"fr":"il s'agit de","nl":"het gaat om","cat":"Algemeen"},
       {"fr":"incroyable","nl":"ongelooflijk","cat":"Algemeen"},
-      {"fr":"l'intÃ©rÃªt","nl":"de belangstelling","cat":"Algemeen"},
-      {"fr":"intÃ©ressant","nl":"interessant","cat":"Algemeen"},
+      {"fr":"l'intérêt","nl":"de belangstelling","cat":"Algemeen"},
+      {"fr":"intéressant","nl":"interessant","cat":"Algemeen"},
       {"fr":"jamais","nl":"nooit","cat":"Algemeen"},
       {"fr":"jeune","nl":"jong","cat":"Algemeen"},
       {"fr":"joyeux","nl":"blij","cat":"Algemeen"},
@@ -929,7 +929,7 @@
       {"fr":"justement","nl":"juist / precies","cat":"Algemeen"},
       {"fr":"justifier","nl":"rechtvaardigen","cat":"Algemeen"},
       {"fr":"le kilo","nl":"de kilo","cat":"Algemeen"},
-      {"fr":"le kilomÃ¨tre","nl":"de kilometer","cat":"Algemeen"},
+      {"fr":"le kilomètre","nl":"de kilometer","cat":"Algemeen"},
       {"fr":"laid","nl":"lelijk","cat":"Algemeen"},
       {"fr":"la laideur","nl":"de lelheid","cat":"Algemeen"},
       {"fr":"se laisser","nl":"zich laten","cat":"Algemeen"},
@@ -938,35 +938,35 @@
       {"fr":"la largeur","nl":"de breedte","cat":"Algemeen"},
       {"fr":"las","nl":"moe / vermoeid","cat":"Algemeen"},
       {"fr":"la lassitude","nl":"de vermoeidheid","cat":"Algemeen"},
-      {"fr":"lÃ©ger","nl":"licht","cat":"Algemeen"},
-      {"fr":"lÃ©gÃ¨rement","nl":"licht / zachtjes","cat":"Algemeen"},
-      {"fr":"le lÃ©ger","nl":"licht","cat":"Algemeen"},
-      {"fr":"la lÃ©gitimitÃ©","nl":"de rechtmatigheid","cat":"Algemeen"},
-      {"fr":"lÃ©gitime","nl":"rechtmatig","cat":"Algemeen"},
+      {"fr":"léger","nl":"licht","cat":"Algemeen"},
+      {"fr":"légèrement","nl":"licht / zachtjes","cat":"Algemeen"},
+      {"fr":"le léger","nl":"licht","cat":"Algemeen"},
+      {"fr":"la légitimité","nl":"de rechtmatigheid","cat":"Algemeen"},
+      {"fr":"légitime","nl":"rechtmatig","cat":"Algemeen"},
       {"fr":"le lendemain","nl":"de volgende dag","cat":"Algemeen"},
       {"fr":"lent","nl":"langzaam","cat":"Algemeen"},
       {"fr":"lentement","nl":"langzaam","cat":"Algemeen"},
       {"fr":"la lenteur","nl":"de traagheid","cat":"Algemeen"},
-      {"fr":"le lÃ©opard","nl":"de luipaard","cat":"Algemeen"},
+      {"fr":"le léopard","nl":"de luipaard","cat":"Algemeen"},
       {"fr":"lequel","nl":"welke","cat":"Algemeen"},
       {"fr":"le lever","nl":"het opstaan","cat":"Algemeen"},
       {"fr":"lever","nl":"opheffing / heffen","cat":"Algemeen"},
       {"fr":"le levain","nl":"de gist","cat":"Algemeen"},
       {"fr":"le levant","nl":"het oosten","cat":"Algemeen"},
-      {"fr":"le levÃ©e","nl":"het heffen","cat":"Algemeen"},
+      {"fr":"le levée","nl":"het heffen","cat":"Algemeen"},
       {"fr":"le lexique","nl":"de woordenschat","cat":"Algemeen"},
       {"fr":"la liaison","nl":"de verbinding","cat":"Algemeen"},
       {"fr":"la liasse","nl":"de bundel","cat":"Algemeen"},
       {"fr":"libeller","nl":"opstellen / formuleren","cat":"Algemeen"},
-      {"fr":"la libÃ©ration","nl":"de bevrijding","cat":"Algemeen"},
-      {"fr":"libÃ©rer","nl":"bevrijden","cat":"Algemeen"},
-      {"fr":"libertÃ©","nl":"vrijheid","cat":"Algemeen"},
+      {"fr":"la libération","nl":"de bevrijding","cat":"Algemeen"},
+      {"fr":"libérer","nl":"bevrijden","cat":"Algemeen"},
+      {"fr":"liberté","nl":"vrijheid","cat":"Algemeen"},
       {"fr":"libre","nl":"vrij","cat":"Algemeen"},
       {"fr":"la librairie","nl":"de boekhandel","cat":"Algemeen"},
       {"fr":"le libre-arbitre","nl":"de vrije wil","cat":"Algemeen"},
       {"fr":"une licence","nl":"een diploma / licentie","cat":"Algemeen"},
       {"fr":"licite","nl":"geoorloofd","cat":"Algemeen"},
-      {"fr":"le liÃvre","nl":"de haas","cat":"Algemeen"},
+      {"fr":"le lièvre","nl":"de haas","cat":"Algemeen"},
       {"fr":"le lieu","nl":"de plaats","cat":"Algemeen"},
       {"fr":"la ligue","nl":"de liga","cat":"Algemeen"},
       {"fr":"la limite","nl":"de grens / limiet","cat":"Algemeen"},
@@ -984,36 +984,36 @@
       {"fr":"l'affaire","nl":"de zaak","cat":"Economie"},
       {"fr":"l'argent","nl":"het geld","cat":"Economie"},
       {"fr":"la banque alimentaire","nl":"de voedselbank","cat":"Economie"},
-      {"fr":"le bÃ©nÃ©fice","nl":"de winst","cat":"Economie"},
+      {"fr":"le bénéfice","nl":"de winst","cat":"Economie"},
       {"fr":"le chiffre d'affaires","nl":"de omzet","cat":"Economie"},
-      {"fr":"le chÃ´mage","nl":"de werkloosheid","cat":"Economie"},
+      {"fr":"le chômage","nl":"de werkloosheid","cat":"Economie"},
       {"fr":"le commerce","nl":"de handel","cat":"Economie"},
       {"fr":"consommer","nl":"gebruiken / verbruiken","cat":"Economie"},
       {"fr":"la consommation","nl":"het verbruik","cat":"Economie"},
       {"fr":"la dette","nl":"de schuld","cat":"Economie"},
-      {"fr":"Ã©conomiser","nl":"(be)sparen","cat":"Economie"},
+      {"fr":"économiser","nl":"(be)sparen","cat":"Economie"},
       {"fr":"embaucher","nl":"in dienst nemen","cat":"Economie"},
-      {"fr":"l'employÃ©","nl":"de werknemer","cat":"Economie"},
+      {"fr":"l'employé","nl":"de werknemer","cat":"Economie"},
       {"fr":"l'employeur","nl":"de werkgever","cat":"Economie"},
       {"fr":"l'emploi","nl":"de baan","cat":"Economie"},
       {"fr":"l'entreprise","nl":"het bedrijf","cat":"Economie"},
       {"fr":"exporter","nl":"uitvoeren","cat":"Economie"},
-      {"fr":"les impÃ´ts","nl":"de belastingen","cat":"Economie"},
+      {"fr":"les impôts","nl":"de belastingen","cat":"Economie"},
       {"fr":"importer","nl":"invoeren","cat":"Economie"},
       {"fr":"le licenciement","nl":"het ontslag","cat":"Economie"},
-      {"fr":"le marchÃ©","nl":"de markt","cat":"Economie"},
-      {"fr":"le mÃ©tier","nl":"het beroep","cat":"Economie"},
+      {"fr":"le marché","nl":"de markt","cat":"Economie"},
+      {"fr":"le métier","nl":"het beroep","cat":"Economie"},
       {"fr":"le patron","nl":"de baas","cat":"Economie"},
       {"fr":"le pouvoir d'achat","nl":"de koopkracht","cat":"Economie"},
       {"fr":"le produit","nl":"het product","cat":"Economie"},
       {"fr":"le revenu","nl":"het inkomen","cat":"Economie"},
       {"fr":"le salaire","nl":"het loon / salaris","cat":"Economie"},
       {"fr":"le syndicat","nl":"de vakbond","cat":"Economie"},
-      {"fr":"l'impÃ´t","nl":"de belasting","cat":"Economie"},
+      {"fr":"l'impôt","nl":"de belasting","cat":"Economie"},
       {"fr":"la crise","nl":"de crisis","cat":"Economie"},
       {"fr":"l'inflation","nl":"de inflatie","cat":"Economie"},
-      {"fr":"le crÃ©dit","nl":"het krediet","cat":"Economie"},
-      {"fr":"dÃ©penser","nl":"uitgeven","cat":"Economie"},
+      {"fr":"le crédit","nl":"het krediet","cat":"Economie"},
+      {"fr":"tépenser","nl":"uitgeven","cat":"Economie"},
       {"fr":"le prix","nl":"de prijs","cat":"Economie"},
       {"fr":"le professionnel","nl":"de professional","cat":"Economie"},
       {"fr":"le travail","nl":"het werk","cat":"Economie"},
@@ -1023,42 +1023,42 @@
 
       {"fr":"la campagne","nl":"het platteland","cat":"Maatschappij"},
       {"fr":"le citoyen","nl":"de burger","cat":"Maatschappij"},
-      {"fr":"la communautÃ©","nl":"de gemeenschap","cat":"Maatschappij"},
+      {"fr":"la communauté","nl":"de gemeenschap","cat":"Maatschappij"},
       {"fr":"la culture","nl":"de cultuur","cat":"Maatschappij"},
       {"fr":"le droit","nl":"het recht","cat":"Maatschappij"},
-      {"fr":"l'Ã©galitÃ©","nl":"de gelijkheid","cat":"Maatschappij"},
+      {"fr":"l'égalité","nl":"de gelijkheid","cat":"Maatschappij"},
       {"fr":"l'environnement","nl":"het milieu / de omgeving","cat":"Maatschappij"},
       {"fr":"la famille","nl":"het gezin / de familie","cat":"Maatschappij"},
-      {"fr":"la frontiÃ¨re","nl":"de grens","cat":"Maatschappij"},
+      {"fr":"la frontière","nl":"de grens","cat":"Maatschappij"},
       {"fr":"le gouvernement","nl":"de regering","cat":"Maatschappij"},
       {"fr":"habiter","nl":"wonen","cat":"Maatschappij"},
       {"fr":"l'habitant","nl":"de inwoner","cat":"Maatschappij"},
       {"fr":"immigrer","nl":"immigreren","cat":"Maatschappij"},
-      {"fr":"l'immigrÃ©","nl":"de immigrant","cat":"Maatschappij"},
+      {"fr":"l'immigré","nl":"de immigrant","cat":"Maatschappij"},
       {"fr":"l'immigration","nl":"de immigratie","cat":"Maatschappij"},
-      {"fr":"la libertÃ©","nl":"de vrijheid","cat":"Maatschappij"},
+      {"fr":"la liberté","nl":"de vrijheid","cat":"Maatschappij"},
       {"fr":"la loi","nl":"de wet","cat":"Maatschappij"},
       {"fr":"le monde","nl":"de wereld","cat":"Maatschappij"},
       {"fr":"le pays d'origine","nl":"land van herkomst","cat":"Maatschappij"},
       {"fr":"le pays d'accueil","nl":"land van ontvangst","cat":"Maatschappij"},
-      {"fr":"les pays en voie de dÃ©veloppement","nl":"de ontwikkelingslanden","cat":"Maatschappij"},
+      {"fr":"les pays en voie de développement","nl":"de ontwikkelingslanden","cat":"Maatschappij"},
       {"fr":"le quartier","nl":"de wijk","cat":"Maatschappij"},
-      {"fr":"les rÃ©fugiÃ©s","nl":"de vluchtelingen","cat":"Maatschappij"},
+      {"fr":"les réfugiés","nl":"de vluchtelingen","cat":"Maatschappij"},
       {"fr":"rencontrer","nl":"ontmoeten","cat":"Maatschappij"},
       {"fr":"SDF (Sans Domicile Fixe)","nl":"daklozen","cat":"Maatschappij"},
-      {"fr":"la sociÃ©tÃ©","nl":"de samenleving","cat":"Maatschappij"},
-      {"fr":"la pauvretÃ©","nl":"de armoede","cat":"Maatschappij"},
+      {"fr":"la société","nl":"de samenleving","cat":"Maatschappij"},
+      {"fr":"la pauvreté","nl":"de armoede","cat":"Maatschappij"},
       {"fr":"la richesse","nl":"de rijkdom","cat":"Maatschappij"},
       {"fr":"le racisme","nl":"het racisme","cat":"Maatschappij"},
-      {"fr":"la tolÃ©rance","nl":"de tolerantie","cat":"Maatschappij"},
-      {"fr":"l'intÃ©gration","nl":"de integratie","cat":"Maatschappij"},
-      {"fr":"le prÃ©jugÃ©","nl":"het vooroordeel","cat":"Maatschappij"},
+      {"fr":"la tolérance","nl":"de tolerantie","cat":"Maatschappij"},
+      {"fr":"l'intégration","nl":"de integratie","cat":"Maatschappij"},
+      {"fr":"le préjugé","nl":"het vooroordeel","cat":"Maatschappij"},
       {"fr":"la discrimination","nl":"de discriminatie","cat":"Maatschappij"},
 
-      {"fr":"aÃ®nÃ©","nl":"oudere","cat":"Onderwijs"},
+      {"fr":"aîné","nl":"oudere","cat":"Onderwijs"},
       {"fr":"alimentaire","nl":"voedings-","cat":"Onderwijs"},
-      {"fr":"le bac(calaurÃ©at)","nl":"het eindexamen","cat":"Onderwijs"},
-      {"fr":"le collÃ¨ge","nl":"de onderbouw","cat":"Onderwijs"},
+      {"fr":"le bac(calauréat)","nl":"het eindexamen","cat":"Onderwijs"},
+      {"fr":"le collège","nl":"de onderbouw","cat":"Onderwijs"},
       {"fr":"comprendre","nl":"begrijpen","cat":"Onderwijs"},
       {"fr":"les cours","nl":"de lessen","cat":"Onderwijs"},
       {"fr":"la formation","nl":"de opleiding","cat":"Onderwijs"},
@@ -1067,55 +1067,55 @@
       {"fr":"les jeunes","nl":"jongeren","cat":"Onderwijs"},
       {"fr":"jouer","nl":"spelen","cat":"Onderwijs"},
       {"fr":"le jeu","nl":"het spel","cat":"Onderwijs"},
-      {"fr":"le lycÃ©e","nl":"bovenbouw havo/vwo","cat":"Onderwijs"},
-      {"fr":"une matiÃ¨re","nl":"een schoolvak","cat":"Onderwijs"},
+      {"fr":"le lycée","nl":"bovenbouw havo/vwo","cat":"Onderwijs"},
+      {"fr":"une matière","nl":"een schoolvak","cat":"Onderwijs"},
       {"fr":"les notes","nl":"de (rapport)cijfers","cat":"Onderwijs"},
       {"fr":"passer son bac","nl":"zijn eindexamen doen","cat":"Onderwijs"},
       {"fr":"proposer","nl":"voorstellen","cat":"Onderwijs"},
       {"fr":"le proviseur","nl":"de rector / directeur","cat":"Onderwijs"},
-      {"fr":"la rÃ©crÃ©(ation)","nl":"de pauze","cat":"Onderwijs"},
+      {"fr":"la récré(ation)","nl":"de pauze","cat":"Onderwijs"},
       {"fr":"redoubler","nl":"zitten blijven","cat":"Onderwijs"},
       {"fr":"apprendre","nl":"leren","cat":"Onderwijs"},
       {"fr":"enseigner","nl":"onderwijzen","cat":"Onderwijs"},
       {"fr":"le professeur","nl":"de leraar","cat":"Onderwijs"},
       {"fr":"la classe","nl":"de klas","cat":"Onderwijs"},
-      {"fr":"l'Ã©cole","nl":"de school","cat":"Onderwijs"},
-      {"fr":"Ã©tudier","nl":"studeren","cat":"Onderwijs"},
+      {"fr":"l'école","nl":"de school","cat":"Onderwijs"},
+      {"fr":"w�tudier","nl":"studeren","cat":"Onderwijs"},
       {"fr":"l'examen","nl":"het examen","cat":"Onderwijs"},
-      {"fr":"l'Ã©lÃ¨ve","nl":"de leerling","cat":"Onderwijs"},
+      {"fr":"l'élève","nl":"de leerling","cat":"Onderwijs"},
       {"fr":"le niveau","nl":"het niveau","cat":"Onderwijs"},
-      {"fr":"le succÃ¨s","nl":"het succes","cat":"Onderwijs"},
-      {"fr":"l'Ã©chec","nl":"de mislukking","cat":"Onderwijs"},
-      {"fr":"rÃ©ussir","nl":"slagen","cat":"Onderwijs"},
+      {"fr":"le succès","nl":"het succes","cat":"Onderwijs"},
+      {"fr":"l'échec","nl":"de mislukking","cat":"Onderwijs"},
+      {"fr":"téussir","nl":"slagen","cat":"Onderwijs"},
 
       {"fr":"le spectacle","nl":"de show / voorstelling","cat":"Kunst & Cultuur"},
       {"fr":"le tableau","nl":"het schilderij","cat":"Kunst & Cultuur"},
-      {"fr":"le thÃ©Ã¢tre","nl":"het theater","cat":"Kunst & Cultuur"},
+      {"fr":"le théâtre","nl":"het theater","cat":"Kunst & Cultuur"},
       {"fr":"l'art","nl":"de kunst","cat":"Kunst & Cultuur"},
       {"fr":"la chanson","nl":"het lied","cat":"Kunst & Cultuur"},
       {"fr":"le chanteur","nl":"de zanger","cat":"Kunst & Cultuur"},
-      {"fr":"le cinÃ©ma","nl":"de bioscoop / film","cat":"Kunst & Cultuur"},
-      {"fr":"crÃ©er","nl":"scheppen / maken","cat":"Kunst & Cultuur"},
+      {"fr":"le cinéma","nl":"de bioscoop / film","cat":"Kunst & Cultuur"},
+      {"fr":"térer","nl":"scheppen / maken","cat":"Kunst & Cultuur"},
       {"fr":"dessiner","nl":"tekenen","cat":"Kunst & Cultuur"},
-      {"fr":"un Ã©crivain","nl":"een schrijver","cat":"Kunst & Cultuur"},
+      {"fr":"un écrivain","nl":"een schrijver","cat":"Kunst & Cultuur"},
       {"fr":"exposer","nl":"tentoonstellen","cat":"Kunst & Cultuur"},
       {"fr":"une exposition","nl":"een tentoonstelling","cat":"Kunst & Cultuur"},
 
       {"fr":"le candidat","nl":"de kandidaat","cat":"Politiek"},
       {"fr":"le citoyen","nl":"de staatsburger","cat":"Politiek"},
-      {"fr":"le dÃ©bat","nl":"het debat","cat":"Politiek"},
-      {"fr":"la dÃ©mocratie","nl":"de democratie","cat":"Politiek"},
-      {"fr":"les Ã©lections","nl":"de verkiezingen","cat":"Politiek"},
+      {"fr":"le débat","nl":"het debat","cat":"Politiek"},
+      {"fr":"la démocratie","nl":"de democratie","cat":"Politiek"},
+      {"fr":"les élections","nl":"de verkiezingen","cat":"Politiek"},
       {"fr":"le parlement","nl":"het parlement","cat":"Politiek"},
       {"fr":"le parti","nl":"de partij","cat":"Politiek"},
       {"fr":"la politique","nl":"de politiek","cat":"Politiek"},
-      {"fr":"le prÃ©sident","nl":"de president","cat":"Politiek"},
+      {"fr":"le président","nl":"de president","cat":"Politiek"},
       {"fr":"voter","nl":"stemmen","cat":"Politiek"},
       {"fr":"la voix","nl":"de stem","cat":"Politiek"},
 
       {"fr":"l'alcool","nl":"de alcohol","cat":"Gezondheid"},
       {"fr":"l'alimentation","nl":"de voeding","cat":"Gezondheid"},
-      {"fr":"avoir mal Ã ","nl":"pijn hebben aan","cat":"Gezondheid"},
+      {"fr":"avoir mal à","nl":"pijn hebben aan","cat":"Gezondheid"},
       {"fr":"le corps","nl":"het lichaam","cat":"Gezondheid"},
       {"fr":"la douleur","nl":"de pijn","cat":"Gezondheid"},
       {"fr":"se droguer","nl":"drugs gebruiken","cat":"Gezondheid"},
@@ -1124,51 +1124,51 @@
       {"fr":"grossir","nl":"dikker worden","cat":"Gezondheid"},
       {"fr":"mince","nl":"slank","cat":"Gezondheid"},
       {"fr":"se nourrir","nl":"zich voeden","cat":"Gezondheid"},
-      {"fr":"la santÃ©","nl":"de gezondheid","cat":"Gezondheid"},
+      {"fr":"la santé","nl":"de gezondheid","cat":"Gezondheid"},
       {"fr":"le sport","nl":"de sport","cat":"Gezondheid"},
 
       {"fr":"le championnat","nl":"het kampioenschap","cat":"Sport"},
       {"fr":"concourir","nl":"meedingen / deelnemen","cat":"Sport"},
       {"fr":"disputer un match","nl":"een wedstrijd spelen","cat":"Sport"},
-      {"fr":"l'entraÃ®nement","nl":"de training","cat":"Sport"},
-      {"fr":"l'Ã©quipe","nl":"het team","cat":"Sport"},
+      {"fr":"l'entraînement","nl":"de training","cat":"Sport"},
+      {"fr":"l'équipe","nl":"het team","cat":"Sport"},
       {"fr":"gagner","nl":"winnen","cat":"Sport"},
       {"fr":"perdre","nl":"verliezen","cat":"Sport"},
       {"fr":"le record","nl":"het record","cat":"Sport"},
-      {"fr":"le rÃ©sultat","nl":"de uitslag","cat":"Sport"},
+      {"fr":"le résultat","nl":"de uitslag","cat":"Sport"},
       {"fr":"le stade","nl":"het stadion","cat":"Sport"},
       {"fr":"remporter une victoire","nl":"een overwinning behalen","cat":"Sport"},
 
       {"fr":"le bruit","nl":"het lawaai","cat":"Milieu"},
-      {"fr":"le dÃ©sastre","nl":"de ramp","cat":"Milieu"},
+      {"fr":"le désastre","nl":"de ramp","cat":"Milieu"},
       {"fr":"l'effet de serre","nl":"broeikaseffect","cat":"Milieu"},
-      {"fr":"l'Ã©mission CO2","nl":"CO2-uitstoot","cat":"Milieu"},
+      {"fr":"l'émission CO2","nl":"CO2-uitstoot","cat":"Milieu"},
       {"fr":"un incendie","nl":"een brand","cat":"Milieu"},
       {"fr":"l'inondation","nl":"de overstroming","cat":"Milieu"},
-      {"fr":"la matiÃ¨re premiÃ¨re","nl":"de grondstof","cat":"Milieu"},
-      {"fr":"les ordures / les dÃ©chets","nl":"het afval","cat":"Milieu"},
+      {"fr":"la matière première","nl":"de grondstof","cat":"Milieu"},
+      {"fr":"les ordures / les déchets","nl":"het afval","cat":"Milieu"},
       {"fr":"le paysan / l'agriculteur","nl":"de boer","cat":"Milieu"},
-      {"fr":"le rÃ©chauffement de la terre","nl":"de opwarming van de aarde","cat":"Milieu"},
-      {"fr":"la sÃ©cheresse","nl":"de droogte","cat":"Milieu"},
+      {"fr":"le réchauffement de la terre","nl":"de opwarming van de aarde","cat":"Milieu"},
+      {"fr":"la sécheresse","nl":"de droogte","cat":"Milieu"},
       {"fr":"le tremblement de terre","nl":"de aardbeving","cat":"Milieu"},
-      {"fr":"trier les dÃ©chets","nl":"afval scheiden","cat":"Milieu"},
+      {"fr":"trier les déchets","nl":"afval scheiden","cat":"Milieu"},
 
       {"fr":"un mensuel","nl":"een maandblad","cat":"Media"},
       {"fr":"un quotidien","nl":"een dagblad","cat":"Media"},
       {"fr":"un hebdomadaire","nl":"een weekblad","cat":"Media"},
-      {"fr":"numÃ©rique","nl":"digitaal","cat":"Media"},
+      {"fr":"numérique","nl":"digitaal","cat":"Media"},
       {"fr":"un ordinateur (portable)","nl":"een computer (laptop)","cat":"Media"},
-      {"fr":"la publicitÃ©","nl":"de reclame","cat":"Media"},
+      {"fr":"la publicité","nl":"de reclame","cat":"Media"},
       {"fr":"la souris","nl":"de muis","cat":"Media"},
       {"fr":"une tablette","nl":"een tablet / iPad","cat":"Media"},
-      {"fr":"tÃ©lÃ©charger","nl":"downloaden","cat":"Media"},
+      {"fr":"télécharger","nl":"downloaden","cat":"Media"},
       {"fr":"un texto","nl":"een sms","cat":"Media"},
       {"fr":"internet","nl":"internet","cat":"Media"},
-      {"fr":"la tÃ©lÃ©vision","nl":"de televisie","cat":"Media"},
+      {"fr":"la télévision","nl":"de televisie","cat":"Media"},
       {"fr":"la radio","nl":"de radio","cat":"Media"},
       {"fr":"le journal","nl":"de krant","cat":"Media"},
-      {"fr":"la vidÃ©o","nl":"de video","cat":"Media"},
-      {"fr":"le rÃ©seau social","nl":"het sociale netwerk","cat":"Media"},
+      {"fr":"la vidéo","nl":"de video","cat":"Media"},
+      {"fr":"le réseau social","nl":"het sociale netwerk","cat":"Media"},
 
       {"fr":"le car scolaire","nl":"de schoolbus","cat":"Transport"},
       {"fr":"les chemins de fer","nl":"de spoorwegen","cat":"Transport"},
@@ -1176,39 +1176,39 @@
       {"fr":"descendre","nl":"uitstappen","cat":"Transport"},
       {"fr":"monter","nl":"instappen","cat":"Transport"},
       {"fr":"le permis de conduire","nl":"het rijbewijs","cat":"Transport"},
-      {"fr":"le rÃ©seau","nl":"het netwerk","cat":"Transport"},
+      {"fr":"le réseau","nl":"het netwerk","cat":"Transport"},
       {"fr":"la station","nl":"het station / halte","cat":"Transport"},
       {"fr":"le trajet","nl":"de reis / het traject","cat":"Transport"},
 
       {"fr":"toujours","nl":"altijd / nog steeds","cat":"Signaalwoorden"},
-      {"fr":"il y a + tijdsaanduiding","nl":"â¦ geleden","cat":"Signaalwoorden"},
-      {"fr":"Ã  l'avenir","nl":"in de toekomst","cat":"Signaalwoorden"},
-      {"fr":"tout Ã  coup","nl":"plotseling / ineens","cat":"Signaalwoorden"},
+      {"fr":"il y a + tijdsaanduiding","nl":"… geleden","cat":"Signaalwoorden"},
+      {"fr":"à l'avenir","nl":"in de toekomst","cat":"Signaalwoorden"},
+      {"fr":"tout à coup","nl":"plotseling / ineens","cat":"Signaalwoorden"},
       {"fr":"tout de suite","nl":"meteen","cat":"Signaalwoorden"},
       {"fr":"alors que / tandis que","nl":"terwijl","cat":"Signaalwoorden"},
       {"fr":"au contraire","nl":"daarentegen","cat":"Signaalwoorden"},
       {"fr":"bien que","nl":"hoewel","cat":"Signaalwoorden"},
       {"fr":"cependant","nl":"desalniettemin / echter","cat":"Signaalwoorden"},
       {"fr":"certes","nl":"zeker","cat":"Signaalwoorden"},
-      {"fr":"contrairement Ã ","nl":"in tegenstelling tot","cat":"Signaalwoorden"},
+      {"fr":"contrairement à","nl":"in tegenstelling tot","cat":"Signaalwoorden"},
       {"fr":"en fait","nl":"eigenlijk / in feite","cat":"Signaalwoorden"},
       {"fr":"en revanche","nl":"daarentegen","cat":"Signaalwoorden"},
       {"fr":"mais","nl":"maar","cat":"Signaalwoorden"},
-      {"fr":"nÃ©anmoins","nl":"toch / desondanks","cat":"Signaalwoorden"},
+      {"fr":"néanmoins","nl":"toch / desondanks","cat":"Signaalwoorden"},
       {"fr":"par contre","nl":"daarentegen","cat":"Signaalwoorden"},
       {"fr":"pourtant","nl":"toch / maar","cat":"Signaalwoorden"},
       {"fr":"par exemple","nl":"bijvoorbeeld","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ pas","nl":"niet","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ plus","nl":"niet meer","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ pas encore","nl":"nog niet","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ jamais","nl":"nooit","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ guÃ¨re","nl":"bijna niet","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ rien","nl":"niets","cat":"Signaalwoorden"},
-      {"fr":"ne â¦ personne","nl":"niemand","cat":"Signaalwoorden"},
-      {"fr":"moins â¦ que","nl":"minder â¦ dan","cat":"Signaalwoorden"},
-      {"fr":"aussi â¦ que","nl":"net zo â¦ als","cat":"Signaalwoorden"},
-      {"fr":"plus â¦ que","nl":"meer â¦ dan","cat":"Signaalwoorden"},
-      {"fr":"Ã  tout prix","nl":"tot elke prijs","cat":"Signaalwoorden"},
+      {"fr":"ne … pas","nl":"niet","cat":"Signaalwoorden"},
+      {"fr":"ne … plus","nl":"niet meer","cat":"Signaalwoorden"},
+      {"fr":"ne … pas encore","nl":"nog niet","cat":"Signaalwoorden"},
+      {"fr":"ne … jamais","nl":"nooit","cat":"Signaalwoorden"},
+      {"fr":"ne … guère","nl":"bijna niet","cat":"Signaalwoorden"},
+      {"fr":"ne … rien","nl":"niets","cat":"Signaalwoorden"},
+      {"fr":"ne … personne","nl":"niemand","cat":"Signaalwoorden"},
+      {"fr":"moins … que","nl":"minder … dan","cat":"Signaalwoorden"},
+      {"fr":"aussi … que","nl":"net zo … als","cat":"Signaalwoorden"},
+      {"fr":"plus … que","nl":"meer … dan","cat":"Signaalwoorden"},
+      {"fr":"à tout prix","nl":"tot elke prijs","cat":"Signaalwoorden"},
       {"fr":"de moins en moins","nl":"minder en minder","cat":"Signaalwoorden"},
       {"fr":"de plus en plus","nl":"meer en meer","cat":"Signaalwoorden"},
 
@@ -1218,7 +1218,7 @@
       {"fr":"fier","nl":"trots","cat":"Pos. & Neg."},
       {"fr":"meilleur","nl":"beter","cat":"Pos. & Neg."},
       {"fr":"mieux","nl":"best","cat":"Pos. & Neg."},
-      {"fr":"rÃ©ussir","nl":"slagen","cat":"Pos. & Neg."},
+      {"fr":"réussir","nl":"slagen","cat":"Pos. & Neg."},
       {"fr":"riche","nl":"rijk","cat":"Pos. & Neg."}
     ];
 
@@ -1448,7 +1448,7 @@
       const questionWord = isReverse ? word.nl : word.fr;
       const correctAnswer = isReverse ? word.fr : word.nl;
 
-      document.getElementById('quizLabel').textContent = `${fromLang} â ${toLang}`;
+      document.getElementById('quizLabel').textContent = `${fromLang} → ${toLang}`;
       document.getElementById('quizWord').textContent = questionWord;
       document.getElementById('quizCounter').textContent = `Vraag ${state.quiz.currentIndex + 1} van ${state.quiz.words.length}`;
       document.getElementById('progressFill').style.width = `${(state.quiz.currentIndex / state.quiz.words.length) * 100}%`;
@@ -1496,16 +1496,16 @@
 
       if (correct) {
         feedback.className = 'feedback show correct';
-        feedback.textContent = `â Correct! Het antwoord is: ${correctAnswer}`;
+        feedback.textContent = `✓ Correct! Het antwoord is: ${correctAnswer}`;
         inputEl.className = 'quiz-input correct';
       } else {
         feedback.className = 'feedback show wrong';
-        feedback.textContent = `â Fout. Het juiste antwoord is: ${correctAnswer}`;
+        feedback.textContent = `✗ Fout. Het juiste antwoord is: ${correctAnswer}`;
         inputEl.className = 'quiz-input wrong';
       }
 
       checkBtn.disabled = true;
-      checkBtn.textContent = state.quiz.currentIndex < state.quiz.words.length - 1 ? 'Volgende â' : 'Resultaten â';
+      checkBtn.textContent = state.quiz.currentIndex < state.quiz.words.length - 1 ? 'Volgende →' : 'Resultaten →';
       inputEl.disabled = true;
 
       updateScoreDisplay();
