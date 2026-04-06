@@ -3,755 +3,1693 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1a1a2e">
+  <meta name="theme-color" content="#e07070">
+  <meta name="description" content="Parbleu! Frans woordjes leren voor Sint Catamaria">
+  <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Frans Examenidioom â Sint Catamaria</title>
-  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-title" content="Parbleu!">
+  <title>Parbleu! â Frans Woordjes</title>
   <style>
-    :root {
-      --bg: #0f0f1a;
-      --surface: #1a1a2e;
-      --card: #16213e;
-      --accent: #e94560;
-      --accent2: #0f3460;
-      --text: #eaeaea;
-      --muted: #888;
-      --success: #4caf50;
-      --error: #e94560;
-      --border: #2a2a4a;
-      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #fafaf8;
+      color: #1e1e1e;
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-top: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #e07070;
+      margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .screen {
+      display: none;
+      flex: 1;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Login Screen */
+    .login-form {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1e1e1e;
+    }
+
+    input[type="email"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e8e0d8;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #e07070;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      font-size: 0.85rem;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* Setup Screen */
+    .setup-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      flex: 1;
+    }
+
+    .setup-section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #1e1e1e;
+    }
+
+    .greeting {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e1e1e;
+      margin-bottom: 8px;
+    }
+
+    .klas-buttons,
+    .richting-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .pill-btn,
+    .richting-btn {
+      padding: 12px 16px;
+      border: 2px solid #e8e0d8;
+      background: white;
+      border-radius: 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #1e1e1e;
+      font-family: inherit;
+      min-height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-    }
-    .screen {
-      display: none;
-      width: 100%;
-      max-width: 480px;
-      animation: fadeIn 0.3s ease;
-    }
-    .screen.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-    /* CARD */
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 2rem;
-      border: 1px solid var(--border);
-    }
-    .logo {
       text-align: center;
-      margin-bottom: 1.5rem;
     }
-    .logo-flag { font-size: 2.5rem; }
-    .logo h1 { font-size: 1.3rem; font-weight: 700; margin-top: 0.5rem; }
-    .logo p { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
 
-    /* FORM ELEMENTS */
-    label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    input[type="email"], input[type="text"] {
-      width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      color: var(--text);
-      font-family: var(--font);
-      transition: border-color 0.2s;
+    .pill-btn:active,
+    .richting-btn:active {
+      transform: scale(0.98);
     }
-    input:focus { outline: none; border-color: var(--accent); }
-    .field { margin-bottom: 1.2rem; }
 
-    /* BUTTONS */
-    .btn {
+    .pill-btn.selected,
+    .richting-btn.selected {
+      background: #e07070;
+      color: white;
+      border-color: #e07070;
+    }
+
+    .categories-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .category-chip {
+      padding: 8px 14px;
+      background: white;
+      border: 2px solid #e8e0d8;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #1e1e1e;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .category-chip:active {
+      transform: scale(0.96);
+    }
+
+    .category-chip.selected {
+      background: #e07070;
+      color: white;
+      border-color: #e07070;
+    }
+
+    .toggle-categories {
+      display: flex;
+      gap: 12px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    .toggle-link {
+      color: #e07070;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .toggle-link:active {
+      opacity: 0.8;
+    }
+
+    .word-count {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="range"] {
       width: 100%;
-      padding: 0.85rem;
+      height: 6px;
+      border-radius: 3px;
+      background: #e8e0d8;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e07070;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e07070;
+      cursor: pointer;
       border: none;
-      border-radius: 10px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .slider-value {
+      font-weight: 700;
+      color: #e07070;
+      font-size: 1.2rem;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 16px 20px;
+      border: none;
+      border-radius: 8px;
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-      font-family: var(--font);
-    }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover:not(:disabled) { opacity: 0.9; }
-    .btn-secondary { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); }
-    .btn-secondary:hover:not(:disabled) { border-color: var(--accent); }
-
-    .error-msg { color: var(--error); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
-    .error-msg.show { display: block; }
-
-    /* LEVEL GRID */
-    .level-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
-    .level-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 1.2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .level-card:hover { border-color: var(--accent); background: var(--accent2); }
-    .level-card .niveau { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .level-card .klas { font-size: 1.4rem; font-weight: 800; margin: 0.2rem 0; }
-    .level-card .count { font-size: 0.8rem; color: var(--muted); }
-
-    /* EXERCISE */
-    .progress-bar {
-      background: var(--surface);
-      border-radius: 99px;
-      height: 6px;
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-    }
-    .progress-fill {
-      background: var(--accent);
-      height: 100%;
-      border-radius: 99px;
-      transition: width 0.4s ease;
-    }
-    .question-meta { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.82rem; color: var(--muted); }
-    .french-word {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 800;
-      margin: 1.5rem 0;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .french-context { text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: -1rem; margin-bottom: 1.5rem; font-style: italic; }
-    .options { display: flex; flex-direction: column; gap: 0.6rem; }
-    .option {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-    .option:hover:not(.locked) { border-color: var(--accent); }
-    .option.correct { border-color: var(--success); background: rgba(76,175,80,0.15); }
-    .option.wrong { border-color: var(--error); background: rgba(233,69,96,0.1); }
-    .option.locked { cursor: not-allowed; }
-    .feedback {
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      display: none;
-    }
-    .feedback.show { display: block; }
-    .feedback.correct { background: rgba(76,175,80,0.15); color: #81c784; }
-    .feedback.wrong { background: rgba(233,69,96,0.1); color: #ef9a9a; }
-
-    /* Fill-in exercise */
-    .fill-input {
-      width: 100%;
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
-      font-size: 1.1rem;
-      color: var(--text);
-      text-align: center;
-      font-family: var(--font);
-      margin: 1rem 0;
-    }
-    .fill-input:focus { outline: none; border-color: var(--accent); }
-    .fill-input.correct { border-color: var(--success); }
-    .fill-input.wrong { border-color: var(--error); }
-
-    /* RESULTS */
-    .score-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 6px solid var(--accent);
+      transition: all 0.2s;
+      font-family: inherit;
+      min-height: 48px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.5rem;
+      gap: 8px;
     }
-    .score-circle .score-num { font-size: 2rem; font-weight: 800; }
-    .score-circle .score-label { font-size: 0.7rem; color: var(--muted); }
-    .result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1.5rem 0; }
-    .stat { background: var(--surface); border-radius: 10px; padding: 1rem; text-align: center; }
-    .stat .num { font-size: 1.5rem; font-weight: 700; }
-    .stat .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
-    .result-title { text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .result-sub { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
-    .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
-    .saving-msg { text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: 0.75rem; }
 
-    /* MODE BUTTONS */
-    .mode-btns { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; }
-    .mode-btn {
+    .btn-primary {
+      background: #e07070;
+      color: white;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #e07070;
+      border: 2px solid #e07070;
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    /* Quiz Screen */
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
       flex: 1;
-      padding: 0.6rem;
-      border-radius: 8px;
-      border: 1.5px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-      font-family: var(--font);
     }
-    .mode-btn.active { border-color: var(--accent); background: rgba(233,69,96,0.15); color: var(--accent); }
 
-    /* Header nav */
-    .top-bar { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 0.75rem; }
-    .back-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; padding: 0.2rem; }
-    .top-bar h2 { font-size: 1rem; font-weight: 700; }
-    .top-bar .level-badge { margin-left: auto; background: var(--accent2); border-radius: 6px; padding: 0.25rem 0.6rem; font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #e8e0d8;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #e07070;
+      transition: width 0.3s ease;
+    }
+
+    .quiz-counter {
+      font-size: 0.9rem;
+      color: #888;
+      text-align: center;
+    }
+
+    .quiz-content {
+      background: white;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quiz-label {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .quiz-word {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #e07070;
+      margin-bottom: 24px;
+      word-wrap: break-word;
+    }
+
+    .quiz-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .quiz-input {
+      flex: 1;
+      padding: 12px 14px;
+      border: 2px solid #e8e0d8;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    .quiz-input:focus {
+      outline: none;
+      border-color: #e07070;
+    }
+
+    .quiz-input.correct {
+      border-color: #4caf50;
+      background: #f1f8f4;
+    }
+
+    .quiz-input.wrong {
+      border-color: #d32f2f;
+      background: #fef1f0;
+    }
+
+    .btn-check {
+      padding: 12px 20px;
+      background: #e07070;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      min-width: 100px;
+      font-size: 1rem;
+    }
+
+    .btn-check:active {
+      transform: scale(0.98);
+    }
+
+    .btn-check:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .feedback {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: #f1f8f4;
+      color: #2e7d32;
+      border-left: 4px solid #4caf50;
+    }
+
+    .feedback.wrong {
+      background: #fef1f0;
+      color: #c62828;
+      border-left: 4px solid #d32f2f;
+    }
+
+    .score-display {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 12px;
+    }
+
+    /* Flashcard Screen */
+    .flashcard-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .flashcard-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .flashcard-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px 12px;
+      color: #e07070;
+      transition: opacity 0.2s;
+    }
+
+    .flashcard-btn:active {
+      opacity: 0.7;
+    }
+
+    .flashcard-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .flashcard-counter {
+      font-size: 0.9rem;
+      color: #888;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+    }
+
+    .card:active {
+      transform: scale(0.98);
+    }
+
+    .card-front {
+      text-align: center;
+    }
+
+    .card-front-lang {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-word {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #e07070;
+    }
+
+    .card-back {
+      text-align: center;
+    }
+
+    .card-back-lang {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card-translation {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #1e1e1e;
+    }
+
+    .flashcard-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn-shuffle {
+      padding: 12px 16px;
+      background: white;
+      border: 2px solid #e07070;
+      border-radius: 8px;
+      color: #e07070;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-back {
+      padding: 12px 16px;
+      background: #e07070;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-shuffle:active,
+    .btn-back:active {
+      transform: scale(0.98);
+    }
+
+    /* Results Screen */
+    .results-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .results-score {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .big-score {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #e07070;
+      margin-bottom: 12px;
+    }
+
+    .percentage {
+      font-size: 1.2rem;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .time-elapsed {
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .results-detail {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .result-item {
+      padding: 12px;
+      border-bottom: 1px solid #e8e0d8;
+      font-size: 0.9rem;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-question {
+      font-weight: 600;
+      color: #1e1e1e;
+      margin-bottom: 6px;
+    }
+
+    .result-user-answer {
+      color: #d32f2f;
+    }
+
+    .result-correct-answer {
+      color: #2e7d32;
+    }
+
+    .results-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      .setup-section {
+        padding: 16px;
+      }
+
+      .quiz-content {
+        padding: 20px;
+      }
+
+      .card {
+        padding: 24px;
+        min-height: 250px;
+      }
+
+      .quiz-word {
+        font-size: 1.8rem;
+      }
+
+      .card-word {
+        font-size: 2rem;
+      }
+
+      .big-score {
+        font-size: 2.8rem;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Parbleu!</h1>
+      <p class="subtitle">Sint Catamaria College</p>
+    </header>
 
-<!-- ==================== SCREEN: LOGIN ==================== -->
-<div class="screen active" id="screen-login">
-  <div class="card">
-    <div class="logo">
-      <div class="logo-flag">ð«ð·</div>
-      <h1>Frans Examenidioom</h1>
-      <p>Sint Catamaria College</p>
+    <!-- Login Screen -->
+    <div class="screen login-screen active">
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="email">School E-mailadres</label>
+          <input type="email" id="email" placeholder="leerling@sanctamaria.nl" required>
+          <div class="error-message" id="emailError"></div>
+        </div>
+        <div class="form-group">
+          <label for="naam">Je naam</label>
+          <input type="text" id="naam" placeholder="Je voornaam" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">Inloggen â</button>
+      </form>
     </div>
-    <div class="field">
-      <label>Schoole-mailadres</label>
-      <input type="email" id="email-input" placeholder="leerling@sancatamaria.nl" autocomplete="email">
-      <div class="error-msg" id="email-error">Gebruik je schoolmailadres (@sancatamaria.nl)</div>
-    </div>
-    <div class="field">
-      <label>Naam</label>
-      <input type="text" id="name-input" placeholder="Je naam">
-    </div>
-    <button class="btn btn-primary" onclick="doLogin()">Inloggen â</button>
-  </div>
-</div>
 
-<!-- ==================== SCREEN: LEVEL ==================== -->
-<div class="screen" id="screen-level">
-  <div class="card">
-    <div class="logo">
-      <div class="logo-flag">ð«ð·</div>
-      <h1>Kies je niveau</h1>
-      <p id="welkom-naam"></p>
-    </div>
-    <div class="level-grid">
-      <div class="level-card" onclick="chooseLevel('HAVO','3')">
-        <div class="niveau">HAVO</div>
-        <div class="klas">3</div>
-        <div class="count" id="count-h3">laden...</div>
+    <!-- Setup Screen -->
+    <div class="screen setup-screen">
+      <div class="setup-container">
+        <div>
+          <p class="greeting">Hoi <span id="greetingName"></span>!</p>
+          <p style="color: #888; font-size: 0.95rem;">Kies je oefening</p>
+        </div>
+
+        <!-- Klas Selector -->
+        <div class="setup-section">
+          <div class="section-title">Klas</div>
+          <div class="klas-buttons">
+            <button type="button" class="pill-btn" data-klas="HAVO 3">HAVO 3</button>
+            <button type="button" class="pill-btn" data-klas="HAVO 4">HAVO 4</button>
+            <button type="button" class="pill-btn" data-klas="VWO 3">VWO 3</button>
+            <button type="button" class="pill-btn" data-klas="VWO 4">VWO 4</button>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="setup-section">
+          <div class="section-title">CategorieÃ«n</div>
+          <div class="categories-grid" id="categoriesGrid"></div>
+          <div class="toggle-categories">
+            <span class="toggle-link" id="selectAllBtn">Alles selecteren</span>
+            <span class="toggle-link" id="deselectAllBtn">Alles deselecteren</span>
+          </div>
+          <div class="word-count" id="wordCount">X woorden geselecteerd</div>
+        </div>
+
+        <!-- Richting -->
+        <div class="setup-section">
+          <div class="section-title">Richting</div>
+          <div class="richting-buttons">
+            <button type="button" class="richting-btn" data-richting="fr_nl">ð«ð· â ð³ð±<br>Frans â Nederlands</button>
+            <button type="button" class="richting-btn" data-richting="nl_fr">ð³ð± â ð«ð·<br>Nederlands â Frans</button>
+            <button type="button" class="richting-btn" data-richting="mix">ð<br>Mix</button>
+          </div>
+        </div>
+
+        <!-- Aantal Woorden -->
+        <div class="setup-section">
+          <div class="section-title">Aantal woorden</div>
+          <div class="slider-container">
+            <input type="range" id="wordSlider" min="5" max="100" value="20" step="1">
+            <div class="slider-label">
+              <span>5</span>
+              <span class="slider-value" id="sliderValue">20</span>
+              <span id="maxWords">100</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button type="button" class="btn-primary" id="quizBtn">âï¸ Quiz starten</button>
+          <button type="button" class="btn-secondary" id="flashcardsBtn">ð Flashcards</button>
+        </div>
       </div>
-      <div class="level-card" onclick="chooseLevel('HAVO','4')">
-        <div class="niveau">HAVO</div>
-        <div class="klas">4</div>
-        <div class="count" id="count-h4">laden...</div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div class="screen quiz-screen">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
       </div>
-      <div class="level-card" onclick="chooseLevel('VWO','3')">
-        <div class="niveau">VWO</div>
-        <div clas="klas">3</div>
-        <div class="count" id="count-v3">laden...</div>
+      <div class="quiz-counter" id="quizCounter">Vraag 1 van 20</div>
+
+      <div class="quiz-container">
+        <div class="quiz-content">
+          <div class="quiz-label" id="quizLabel">Frans â Nederlands</div>
+          <div class="quiz-word" id="quizWord">Bonjour</div>
+          <div class="quiz-input-group">
+            <input type="text" class="quiz-input" id="quizInput" placeholder="Je antwoord...">
+            <button type="button" class="btn-check" id="checkBtn">Controleer</button>
+          </div>
+          <div class="feedback" id="feedback"></div>
+          <div class="score-display" id="scoreDisplay">Score: 0/20</div>
+        </div>
       </div>
-      <div class="level-card" onclick="chooseLevel('VWO','4')">
-        <div class="niveau">VWO</div>
-        <div clas="klas">4</div>
-        <div class="count" id="count-v4">laden...</div>
+    </div>
+
+    <!-- Flashcard Screen -->
+    <div class="screen flashcard-screen">
+      <div class="flashcard-controls">
+        <button type="button" class="flashcard-btn" id="prevBtn">â</button>
+        <div class="flashcard-counter" id="flashcardCounter">1 van 20</div>
+        <button type="button" class="flashcard-btn" id="nextBtn">â</button>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="card" id="card">
+          <div class="card-front">
+            <div class="card-front-lang" id="cardFrontLang">Frans</div>
+            <div class="card-word" id="cardWord">Bonjour</div>
+          </div>
+        </div>
+
+        <div class="flashcard-actions">
+          <button type="button" class="btn-shuffle" id="shuffleBtn">ð Schudden</button>
+          <button type="button" class="btn-back" id="backBtn">â© Terug naar instellingen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div class="screen results-screen">
+      <div class="results-container">
+        <div class="results-score">
+          <div class="big-score" id="finalScore">18/20</div>
+          <div class="percentage" id="finalPercentage">90%</div>
+          <div class="time-elapsed" id="timeElapsed">Tijd: 5m 30s</div>
+        </div>
+
+        <div class="results-detail" id="resultsList"></div>
+
+        <div class="results-buttons">
+          <button type="button" class="btn-primary" id="saveBtn">ð¾ Opslaan & opnieuw</button>
+          <button type="button" class="btn-secondary" id="retryBtn">Nog een keer</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ==================== SCREEN: EXERCISE ==================== -->
-<div class="screen" id="screen-exercise">
-  <div class="card">
-    <div class="top-bar">
-      <button class="back-btn" onclick="goToLevel()">â</button>
-      <h2>Oefenen</h2>
-      <div class="level-badge" id="ex-level-badge"></div>
-    </div>
+  <script>
+    // ============= CONFIG & DATA =============
+    const CONFIG = {
+      schoolDomain: 'sanctamaria.nl',
+      supabaseUrl: 'https://txremxejuasyraidahzd.supabase.co',
+      supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4cmVteGVqdWFzeXJhaWRhaHpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0NDMyNzIsImV4cCI6MjA5MTAxOTI3Mn0.kHhf-1MQkn9thBqSbjqYsHNOX7UoTih3qSAQg8S1oEw',
+      supabaseTable: 'resultaten',
+    };
 
-    <div class="mode-btns">
-      <button class="mode-btn active" id="mode-mc" onclick="setMode('mc')">Meerkeuze</button>
-      <button class="mode-btn" id="mode-fill" onclick="setMode('fill')">Invullen</button>
-    </div>
+    const CATEGORIES = [
+      'Algemeen', 'Economie', 'Maatschappij', 'Onderwijs', 'Kunst & Cultuur',
+      'Politiek', 'Gezondheid', 'Sport', 'Milieu', 'Media', 'Transport',
+      'Signaalwoorden', 'Pos. & Neg.'
+    ];
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-    </div>
-    <div class="question-meta">
-      <span id="q-counter">Vraag 1 / 10</span>
-      <span id="q-score">â 0 &nbsp; â 0</span>
-    </div>
+    const WORDS = [
+      {"fr":"accueillir","nl":"ontvangen","cat":"Algemeen"},
+      {"fr":"l'Ã¢ge","nl":"de leeftijd","cat":"Algemeen"},
+      {"fr":"ancien","nl":"oud","cat":"Algemeen"},
+      {"fr":"appliquer","nl":"in de praktijk brengen","cat":"Algemeen"},
+      {"fr":"assez","nl":"nogal","cat":"Algemeen"},
+      {"fr":"assurer","nl":"verzekeren","cat":"Algemeen"},
+      {"fr":"au courant","nl":"op de hoogte","cat":"Algemeen"},
+      {"fr":"l'avenir","nl":"de toekomst","cat":"Algemeen"},
+      {"fr":"avoir besoin de","nl":"nodig hebben","cat":"Algemeen"},
+      {"fr":"le besoin","nl":"de noodzaak / de behoefte","cat":"Algemeen"},
+      {"fr":"chacun(e)","nl":"ieder(e)","cat":"Algemeen"},
+      {"fr":"chaque","nl":"elk(e)","cat":"Algemeen"},
+      {"fr":"changer","nl":"veranderen","cat":"Algemeen"},
+      {"fr":"le changement","nl":"de verandering","cat":"Algemeen"},
+      {"fr":"connu","nl":"bekend","cat":"Algemeen"},
+      {"fr":"connaÃ®tre","nl":"kennen","cat":"Algemeen"},
+      {"fr":"le pays","nl":"het land","cat":"Algemeen"},
+      {"fr":"dernier","nl":"laatste","cat":"Algemeen"},
+      {"fr":"le destin","nl":"het lot","cat":"Algemeen"},
+      {"fr":"devenu","nl":"geworden","cat":"Algemeen"},
+      {"fr":"devenir","nl":"worden","cat":"Algemeen"},
+      {"fr":"la diffÃ©rence","nl":"het verschil","cat":"Algemeen"},
+      {"fr":"empÃªcher","nl":"verhinderen","cat":"Algemeen"},
+      {"fr":"encore","nl":"nog","cat":"Algemeen"},
+      {"fr":"ensemble","nl":"geheel / samen","cat":"Algemeen"},
+      {"fr":"l'Ã©poque","nl":"het tijdperk","cat":"Algemeen"},
+      {"fr":"l'esprit","nl":"de geest","cat":"Algemeen"},
+      {"fr":"Ã©tonner","nl":"verbazen","cat":"Algemeen"},
+      {"fr":"Ã©tonnant","nl":"verbazingwekkend","cat":"Algemeen"},
+      {"fr":"Ã©tonnÃ©","nl":"verbaasd","cat":"Algemeen"},
+      {"fr":"Ã©viter","nl":"vermijden","cat":"Algemeen"},
+      {"fr":"exigeant","nl":"veeleisend","cat":"Algemeen"},
+      {"fr":"l'exigence","nl":"de eis","cat":"Algemeen"},
+      {"fr":"facilement","nl":"gemakkelijk","cat":"Algemeen"},
+      {"fr":"il faut","nl":"men moet","cat":"Algemeen"},
+      {"fr":"la faute","nl":"de fout","cat":"Algemeen"},
+      {"fr":"la foi","nl":"het geloof","cat":"Algemeen"},
+      {"fr":"grÃ¢ce Ã ","nl":"dankzij","cat":"Algemeen"},
+      {"fr":"le hasard","nl":"het toeval","cat":"Algemeen"},
+      {"fr":"l'idÃ©e","nl":"het idee","cat":"Algemeen"},
+      {"fr":"il s'agit de","nl":"het gaat om","cat":"Algemeen"},
+      {"fr":"incroyable","nl":"ongelooflijk","cat":"Algemeen"},
+      {"fr":"l'intÃ©rÃªt","nl":"de belangstelling","cat":"Algemeen"},
+      {"fr":"intÃ©ressant","nl":"interessant","cat":"Algemeen"},
+      {"fr":"jamais","nl":"nooit","cat":"Algemeen"},
+      {"fr":"jeune","nl":"jong","cat":"Algemeen"},
+      {"fr":"joyeux","nl":"blij","cat":"Algemeen"},
+      {"fr":"juste","nl":"juist / eerlijk","cat":"Algemeen"},
+      {"fr":"la justice","nl":"de rechtvaardigheid","cat":"Algemeen"},
+      {"fr":"le jugement","nl":"het oordeel","cat":"Algemeen"},
+      {"fr":"justement","nl":"juist / precies","cat":"Algemeen"},
+      {"fr":"justifier","nl":"rechtvaardigen","cat":"Algemeen"},
+      {"fr":"le kilo","nl":"de kilo","cat":"Algemeen"},
+      {"fr":"le kilomÃ¨tre","nl":"de kilometer","cat":"Algemeen"},
+      {"fr":"laid","nl":"lelijk","cat":"Algemeen"},
+      {"fr":"la laideur","nl":"de lelheid","cat":"Algemeen"},
+      {"fr":"se laisser","nl":"zich laten","cat":"Algemeen"},
+      {"fr":"la langue","nl":"de taal","cat":"Algemeen"},
+      {"fr":"large","nl":"breed / wijd","cat":"Algemeen"},
+      {"fr":"la largeur","nl":"de breedte","cat":"Algemeen"},
+      {"fr":"las","nl":"moe / vermoeid","cat":"Algemeen"},
+      {"fr":"la lassitude","nl":"de vermoeidheid","cat":"Algemeen"},
+      {"fr":"lÃ©ger","nl":"licht","cat":"Algemeen"},
+      {"fr":"lÃ©gÃ¨rement","nl":"licht / zachtjes","cat":"Algemeen"},
+      {"fr":"le lÃ©ger","nl":"licht","cat":"Algemeen"},
+      {"fr":"la lÃ©gitimitÃ©","nl":"de rechtmatigheid","cat":"Algemeen"},
+      {"fr":"lÃ©gitime","nl":"rechtmatig","cat":"Algemeen"},
+      {"fr":"le lendemain","nl":"de volgende dag","cat":"Algemeen"},
+      {"fr":"lent","nl":"langzaam","cat":"Algemeen"},
+      {"fr":"lentement","nl":"langzaam","cat":"Algemeen"},
+      {"fr":"la lenteur","nl":"de traagheid","cat":"Algemeen"},
+      {"fr":"le lÃ©opard","nl":"de luipaard","cat":"Algemeen"},
+      {"fr":"lequel","nl":"welke","cat":"Algemeen"},
+      {"fr":"le lever","nl":"het opstaan","cat":"Algemeen"},
+      {"fr":"lever","nl":"opheffing / heffen","cat":"Algemeen"},
+      {"fr":"le levain","nl":"de gist","cat":"Algemeen"},
+      {"fr":"le levant","nl":"het oosten","cat":"Algemeen"},
+      {"fr":"le levÃ©e","nl":"het heffen","cat":"Algemeen"},
+      {"fr":"le lexique","nl":"de woordenschat","cat":"Algemeen"},
+      {"fr":"la liaison","nl":"de verbinding","cat":"Algemeen"},
+      {"fr":"la liasse","nl":"de bundel","cat":"Algemeen"},
+      {"fr":"libeller","nl":"opstellen / formuleren","cat":"Algemeen"},
+      {"fr":"la libÃ©ration","nl":"de bevrijding","cat":"Algemeen"},
+      {"fr":"libÃ©rer","nl":"bevrijden","cat":"Algemeen"},
+      {"fr":"libertÃ©","nl":"vrijheid","cat":"Algemeen"},
+      {"fr":"libre","nl":"vrij","cat":"Algemeen"},
+      {"fr":"la librairie","nl":"de boekhandel","cat":"Algemeen"},
+      {"fr":"le libre-arbitre","nl":"de vrije wil","cat":"Algemeen"},
+      {"fr":"une licence","nl":"een diploma / licentie","cat":"Algemeen"},
+      {"fr":"licite","nl":"geoorloofd","cat":"Algemeen"},
+      {"fr":"le liÃ³vre","nl":"de haas","cat":"Algemeen"},
+      {"fr":"le lieu","nl":"de plaats","cat":"Algemeen"},
+      {"fr":"la ligue","nl":"de liga","cat":"Algemeen"},
+      {"fr":"la limite","nl":"de grens / limiet","cat":"Algemeen"},
+      {"fr":"limiter","nl":"beperken","cat":"Algemeen"},
+      {"fr":"limoger","nl":"ontslaan","cat":"Algemeen"},
+      {"fr":"limpide","nl":"helder","cat":"Algemeen"},
+      {"fr":"le lin","nl":"het linnen","cat":"Algemeen"},
+      {"fr":"le linceul","nl":"het doodkist / linnen","cat":"Algemeen"},
+      {"fr":"le linge","nl":"de wasgoed","cat":"Algemeen"},
+      {"fr":"le lingot","nl":"de staaf","cat":"Algemeen"},
+      {"fr":"le lino","nl":"de linoleum","cat":"Algemeen"},
+      {"fr":"le lionceau","nl":"de jonge leeuw","cat":"Algemeen"},
+      {"fr":"le lionne","nl":"de leeuw (vrouw)","cat":"Algemeen"},
 
-    <!-- Multiple choice -->
-    <div id="mc-block">
-      <div class="french-word" id="mc-word"></div>
-      <div class="french-context" id="mc-context"></div>
-      <div class="options" id="mc-options"></div>
-    </div>
+      {"fr":"l'affaire","nl":"de zaak","cat":"Economie"},
+      {"fr":"l'argent","nl":"het geld","cat":"Economie"},
+      {"fr":"la banque alimentaire","nl":"de voedselbank","cat":"Economie"},
+      {"fr":"le bÃ©nÃ©fice","nl":"de winst","cat":"Economie"},
+      {"fr":"le chiffre d'affaires","nl":"de omzet","cat":"Economie"},
+      {"fr":"le chÃ´mage","nl":"de werkloosheid","cat":"Economie"},
+      {"fr":"le commerce","nl":"de handel","cat":"Economie"},
+      {"fr":"consommer","nl":"gebruiken / verbruiken","cat":"Economie"},
+      {"fr":"la consommation","nl":"het verbruik","cat":"Economie"},
+      {"fr":"la dette","nl":"de schuld","cat":"Economie"},
+      {"fr":"Ã©conomiser","nl":"(be)sparen","cat":"Economie"},
+      {"fr":"embaucher","nl":"in dienst nemen","cat":"Economie"},
+      {"fr":"l'employÃ©","nl":"de werknemer","cat":"Economie"},
+      {"fr":"l'employeur","nl":"de werkgever","cat":"Economie"},
+      {"fr":"l'emploi","nl":"de baan","cat":"Economie"},
+      {"fr":"l'entreprise","nl":"het bedrijf","cat":"Economie"},
+      {"fr":"exporter","nl":"uitvoeren","cat":"Economie"},
+      {"fr":"les impÃ´ts","nl":"de belastingen","cat":"Economie"},
+      {"fr":"importer","nl":"invoeren","cat":"Economie"},
+      {"fr":"le licenciement","nl":"het ontslag","cat":"Economie"},
+      {"fr":"le marchÃ©","nl":"de markt","cat":"Economie"},
+      {"fr":"le mÃ©tier","nl":"het beroep","cat":"Economie"},
+      {"fr":"le patron","nl":"de baas","cat":"Economie"},
+      {"fr":"le pouvoir d'achat","nl":"de koopkracht","cat":"Economie"},
+      {"fr":"le produit","nl":"het product","cat":"Economie"},
+      {"fr":"le revenu","nl":"het inkomen","cat":"Economie"},
+      {"fr":"le salaire","nl":"het loon / salaris","cat":"Economie"},
+      {"fr":"le syndicat","nl":"de vakbond","cat":"Economie"},
+      {"fr":"l'impÃ´t","nl":"de belasting","cat":"Economie"},
+      {"fr":"la crise","nl":"de crisis","cat":"Economie"},
+      {"fr":"l'inflation","nl":"de inflatie","cat":"Economie"},
+      {"fr":"le crÃ©dit","nl":"het krediet","cat":"Economie"},
+      {"fr":"dÃ©penser","nl":"uitgeven","cat":"Economie"},
+      {"fr":"le prix","nl":"de prijs","cat":"Economie"},
+      {"fr":"le professionnel","nl":"de professional","cat":"Economie"},
+      {"fr":"le travail","nl":"het werk","cat":"Economie"},
+      {"fr":"la vente","nl":"de verkoop","cat":"Economie"},
+      {"fr":"le client","nl":"de klant","cat":"Economie"},
+      {"fr":"l'achat","nl":"de aankoop","cat":"Economie"},
 
-    <!-- Fill in -->
-    <div id="fill-block" style="display:none">
-      <div style="text-align:center; color:var(--muted); font-size:0.85rem; margin-bottom:0.5rem;">Wat betekent dit in het Nederlands?</div>
-      <div class="french-word" id="fill-word"></div>
-      <div class="french-context" id="fill-context"></div>
-      <input class="fill-input" id="fill-input" type="text" placeholder="Jouw antwoord..." onkeydown="if(event.key==='Enter')checkFill()">
-      <button class="btn btn-primary" id="fill-btn" onclick="checkFill()">Controleren</button>
-    </div>
+      {"fr":"la campagne","nl":"het platteland","cat":"Maatschappij"},
+      {"fr":"le citoyen","nl":"de burger","cat":"Maatschappij"},
+      {"fr":"la communautÃ©","nl":"de gemeenschap","cat":"Maatschappij"},
+      {"fr":"la culture","nl":"de cultuur","cat":"Maatschappij"},
+      {"fr":"le droit","nl":"het recht","cat":"Maatschappij"},
+      {"fr":"l'Ã©galitÃ©","nl":"de gelijkheid","cat":"Maatschappij"},
+      {"fr":"l'environnement","nl":"het milieu / de omgeving","cat":"Maatschappij"},
+      {"fr":"la famille","nl":"het gezin / de familie","cat":"Maatschappij"},
+      {"fr":"la frontiÃ¨re","nl":"de grens","cat":"Maatschappij"},
+      {"fr":"le gouvernement","nl":"de regering","cat":"Maatschappij"},
+      {"fr":"habiter","nl":"wonen","cat":"Maatschappij"},
+      {"fr":"l'habitant","nl":"de inwoner","cat":"Maatschappij"},
+      {"fr":"immigrer","nl":"immigreren","cat":"Maatschappij"},
+      {"fr":"l'immigrÃ©","nl":"de immigrant","cat":"Maatschappij"},
+      {"fr":"l'immigration","nl":"de immigratie","cat":"Maatschappij"},
+      {"fr":"la libertÃ©","nl":"de vrijheid","cat":"Maatschappij"},
+      {"fr":"la loi","nl":"de wet","cat":"Maatschappij"},
+      {"fr":"le monde","nl":"de wereld","cat":"Maatschappij"},
+      {"fr":"le pays d'origine","nl":"land van herkomst","cat":"Maatschappij"},
+      {"fr":"le pays d'accueil","nl":"land van ontvangst","cat":"Maatschappij"},
+      {"fr":"les pays en voie de dÃ©veloppement","nl":"de ontwikkelingslanden","cat":"Maatschappij"},
+      {"fr":"le quartier","nl":"de wijk","cat":"Maatschappij"},
+      {"fr":"les rÃ©fugiÃ©s","nl":"de vluchtelingen","cat":"Maatschappij"},
+      {"fr":"rencontrer","nl":"ontmoeten","cat":"Maatschappij"},
+      {"fr":"SDF (Sans Domicile Fixe)","nl":"daklozen","cat":"Maatschappij"},
+      {"fr":"la sociÃ©tÃ©","nl":"de samenleving","cat":"Maatschappij"},
+      {"fr":"la pauvretÃ©","nl":"de armoede","cat":"Maatschappij"},
+      {"fr":"la richesse","nl":"de rijkdom","cat":"Maatschappij"},
+      {"fr":"le racisme","nl":"het racisme","cat":"Maatschappij"},
+      {"fr":"la tolÃ©rance","nl":"de tolerantie","cat":"Maatschappij"},
+      {"fr":"l'intÃ©gration","nl":"de integratie","cat":"Maatschappij"},
+      {"fr":"le prÃ©jugÃ©","nl":"het vooroordeel","cat":"Maatschappij"},
+      {"fr":"la discrimination","nl":"de discriminatie","cat":"Maatschappij"},
 
-    <div class="feedback" id="feedback"></div>
+      {"fr":"aÃ®nÃ©","nl":"oudere","cat":"Onderwijs"},
+      {"fr":"alimentaire","nl":"voedings-","cat":"Onderwijs"},
+      {"fr":"le bac(calaurÃ©at)","nl":"het eindexamen","cat":"Onderwijs"},
+      {"fr":"le collÃ¨ge","nl":"de onderbouw","cat":"Onderwijs"},
+      {"fr":"comprendre","nl":"begrijpen","cat":"Onderwijs"},
+      {"fr":"les cours","nl":"de lessen","cat":"Onderwijs"},
+      {"fr":"la formation","nl":"de opleiding","cat":"Onderwijs"},
+      {"fr":"l'histoire","nl":"de geschiedenis / verhaal","cat":"Onderwijs"},
+      {"fr":"l'internaute","nl":"de internetgebruiker","cat":"Onderwijs"},
+      {"fr":"les jeunes","nl":"jongeren","cat":"Onderwijs"},
+      {"fr":"jouer","nl":"spelen","cat":"Onderwijs"},
+      {"fr":"le jeu","nl":"het spel","cat":"Onderwijs"},
+      {"fr":"le lycÃ©e","nl":"bovenbouw havo/vwo","cat":"Onderwijs"},
+      {"fr":"une matiÃ¨re","nl":"een schoolvak","cat":"Onderwijs"},
+      {"fr":"les notes","nl":"de (rapport)cijfers","cat":"Onderwijs"},
+      {"fr":"passer son bac","nl":"zijn eindexamen doen","cat":"Onderwijs"},
+      {"fr":"proposer","nl":"voorstellen","cat":"Onderwijs"},
+      {"fr":"le proviseur","nl":"de rector / directeur","cat":"Onderwijs"},
+      {"fr":"la rÃ©crÃ©(ation)","nl":"de pauze","cat":"Onderwijs"},
+      {"fr":"redoubler","nl":"zitten blijven","cat":"Onderwijs"},
+      {"fr":"apprendre","nl":"leren","cat":"Onderwijs"},
+      {"fr":"enseigner","nl":"onderwijzen","cat":"Onderwijs"},
+      {"fr":"le professeur","nl":"de leraar","cat":"Onderwijs"},
+      {"fr":"la classe","nl":"de klas","cat":"Onderwijs"},
+      {"fr":"l'Ã©cole","nl":"de school","cat":"Onderwijs"},
+      {"fr":"Ã©tudier","nl":"studeren","cat":"Onderwijs"},
+      {"fr":"l'examen","nl":"het examen","cat":"Onderwijs"},
+      {"fr":"l'Ã©lÃ¨ve","nl":"de leerling","cat":"Onderwijs"},
+      {"fr":"le niveau","nl":"het niveau","cat":"Onderwijs"},
+      {"fr":"le succÃ¨s","nl":"het succes","cat":"Onderwijs"},
+      {"fr":"l'Ã©chec","nl":"de mislukking","cat":"Onderwijs"},
+      {"fr":"rÃ©ussir","nl":"slagen","cat":"Onderwijs"},
 
-    <button class="btn btn-secondary" id="next-btn" onclick="nextQuestion()" style="margin-top:1rem; display:none">Volgende â</button>
-  </div>
-</div>
+      {"fr":"le spectacle","nl":"de show / voorstelling","cat":"Kunst & Cultuur"},
+      {"fr":"le tableau","nl":"het schilderij","cat":"Kunst & Cultuur"},
+      {"fr":"le thÃ©Ã¢tre","nl":"het theater","cat":"Kunst & Cultuur"},
+      {"fr":"l'art","nl":"de kunst","cat":"Kunst & Cultuur"},
+      {"fr":"la chanson","nl":"het lied","cat":"Kunst & Cultuur"},
+      {"fr":"le chanteur","nl":"de zanger","cat":"Kunst & Cultuur"},
+      {"fr":"le cinÃ©ma","nl":"de bioscoop / film","cat":"Kunst & Cultuur"},
+      {"fr":"crÃ©er","nl":"scheppen / maken","cat":"Kunst & Cultuur"},
+      {"fr":"dessiner","nl":"tekenen","cat":"Kunst & Cultuur"},
+      {"fr":"un Ã©crivain","nl":"een schrijver","cat":"Kunst & Cultuur"},
+      {"fr":"exposer","nl":"tentoonstellen","cat":"Kunst & Cultuur"},
+      {"fr":"une exposition","nl":"een tentoonstelling","cat":"Kunst & Cultuur"},
 
-<!-- ==================== SCREEN: RESULTS ==================== -->
-<div class="screen" id="screen-results">
-  <div class="card">
-    <div class="top-bar">
-      <button class="back-btn" onclick="goToLevel()">â</button>
-      <h2>Resultaat</h2>
-      <div class="level-badge" id="res-level-badge"></div>
-    </div>
-    <div class="score-circle">
-      <div class="score-num" id="res-score">â</div>
-      <div class="score-label">SCORE</div>
-    </div>
-    <div class="result-title" id="res-title"></div>
-    <div class="result-sub" id="res-sub"></div>
-    <div class="result-stats">
-      <div class="stat"><div class="num" id="res-correct">0</div><div class="lbl">Goed</div></div>
-      <div class="stat"><div class="num" id="res-wrong">0</div><div class="lbl">Fout</div></div>
-      <div class="stat"><div class="num" id="res-total">0</div><div class="lbl">Vragen</div></div>
-      <div class="stat"><div class="num" id="res-pct">0%</div><div class="lbl">Percentage</div></div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="chooseLevel(currentNiveau, currentKlas)">Opnieuw</button>
-      <button class="btn btn-primary" onclick="goToLevel()">Ander niveau</button>
-    </div>
-    <div class="saving-msg" id="saving-msg"></div>
-  </div>
-</div>
+      {"fr":"le candidat","nl":"de kandidaat","cat":"Politiek"},
+      {"fr":"le citoyen","nl":"de staatsburger","cat":"Politiek"},
+      {"fr":"le dÃ©bat","nl":"het debat","cat":"Politiek"},
+      {"fr":"la dÃ©mocratie","nl":"de democratie","cat":"Politiek"},
+      {"fr":"les Ã©lections","nl":"de verkiezingen","cat":"Politiek"},
+      {"fr":"le parlement","nl":"het parlement","cat":"Politiek"},
+      {"fr":"le parti","nl":"de partij","cat":"Politiek"},
+      {"fr":"la politique","nl":"de politiek","cat":"Politiek"},
+      {"fr":"le prÃ©sident","nl":"de president","cat":"Politiek"},
+      {"fr":"voter","nl":"stemmen","cat":"Politiek"},
+      {"fr":"la voix","nl":"de stem","cat":"Politiek"},
 
-<script>
-// =====================================================
-// CONFIGURATIE â pas hier aan
-// =====================================================
-const CONFIG = {
-  schoolDomain: 'sancatamaria.nl',
-  supabaseUrl: 'https://txremxejuasyraidahzd.supabase.co',
-  supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4cmVteGVqdWFzeXJhaWRhaHpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0NDMyNzIsImV4cCI6MjA5MTAxOTI3Mn0.kHhf-1MQkn9thBqSbjqYsHNOX7UoTih3qSAQg8S1oEw',
-  supabaseTable: 'resultaten',
-  vragenPerRonde: 10,
-};
+      {"fr":"l'alcool","nl":"de alcohol","cat":"Gezondheid"},
+      {"fr":"l'alimentation","nl":"de voeding","cat":"Gezondheid"},
+      {"fr":"avoir mal Ã ","nl":"pijn hebben aan","cat":"Gezondheid"},
+      {"fr":"le corps","nl":"het lichaam","cat":"Gezondheid"},
+      {"fr":"la douleur","nl":"de pijn","cat":"Gezondheid"},
+      {"fr":"se droguer","nl":"drugs gebruiken","cat":"Gezondheid"},
+      {"fr":"fumer","nl":"roken","cat":"Gezondheid"},
+      {"fr":"la grippe","nl":"de griep","cat":"Gezondheid"},
+      {"fr":"grossir","nl":"dikker worden","cat":"Gezondheid"},
+      {"fr":"mince","nl":"slank","cat":"Gezondheid"},
+      {"fr":"se nourrir","nl":"zich voeden","cat":"Gezondheid"},
+      {"fr":"la santÃ©","nl":"de gezondheid","cat":"Gezondheid"},
+      {"fr":"le sport","nl":"de sport","cat":"Gezondheid"},
 
-// =====================================================
-// STANDAARD WOORDENLIJSTEN (als Supabase niet is ingesteld)
-// =====================================================
-const DEFAULT_WORDS = {
-  'HAVO-3': [
-    { fr: 'selon moi', nl: 'volgens mij', context: 'mening geven' },
-    { fr: 'je pense que', nl: 'ik denk dat', context: 'mening geven' },
-    { fr: 'Ã  mon avis', nl: 'naar mijn mening', context: 'mening geven' },
-    { fr: 'd\"abord', nl: 'eerst / ten eerste', context: 'structuur' },
-    { fr: 'ensuite', nl: 'vervolgens / daarna', context: 'structuur' },
-    { fr: 'enfin', nl: 'ten slotte / uiteindelijk', context: 'structuur' },
-    { fr: 'parce que', nl: 'omdat', context: 'redeneren' },
-    { fr: 'donc', nl: 'dus / dus', context: 'conclusie' },
-    { fr: 'mais', nl: 'maar', context: 'tegenstelling' },
-    { fr: 'cependant', nl: 'echter / toch', context: 'tegenstelling' },
-    { fr: 'aussi', nl: 'ook / tevens', context: 'toevoeging' },
-    { fr: 'de plus', nl: 'bovendien', context: 'toevoeging' },
-    { fr: 'par exemple', nl: 'bijvoorbeeld', context: 'voorbeeld geven' },
-    { fr: 'c\'est-Ã -dire', nl: 'dat wil zeggen', context: 'verduidelijking' },
-    { fr: 'en gÃ©nÃ©ral', nl: 'in het algemeen', context: 'generalisatie' },
-  ],
-  'HAVO-4': [
-    { fr: 'd\'une part... d\'autre part', nl: 'enerzijds... anderzijds', context: 'tweedeling' },
-    { fr: 'il faut', nl: 'men moet / het is nodig', context: 'noodzaak' },
-    { fr: 'il est important de', nl: 'het is belangrijk om', context: 'nadruk' },
-    { fr: 'en revanche', nl: 'daarentegen', context: 'tegenstelling' },
-    { fr: 'pourtant', nl: 'toch / desondanks', context: 'tegenstelling' },
-    { fr: 'nÃ©anmoins', nl: 'niettemin', context: 'tegenstelling' },
-    { fr: 'en effet', nl: 'inderdaad / want', context: 'bevestiging' },
-    { fr: 'grÃ¢ce Ã ', nl: 'dankzij', context: 'oorzaak-gevolg' },
-    { fr: 'Ã  cause de', nl: 'vanwege / door (negatief)', context: 'oorzaak' },
-    { fr: 'ainsi', nl: 'zo / aldus', context: 'conclusie' },
-    { fr: 'en conclusion', nl: 'ter conclusie / concluderend', context: 'conclusie' },
-    { fr: 'en rÃ©sumÃ©', nl: 'samengevat', context: 'conclusie' },
-    { fr: 'autrement dit', nl: 'met andere woorden', context: 'herformulering' },
-    { fr: 'quant Ã ', nl: 'wat betreft', context: 'onderwerp aanduiden' },
-    { fr: 'malgrÃ©', nl: 'ondanks', context: 'tegenstelling' },
-    { fr: 'bien que', nl: 'hoewel', context: 'tegenstelling (subjonctif)' },
-  ],
-  'VWO-3': [
-    { fr: 'selon moi', nl: 'volgens mij', context: 'mening geven' },
-    { fr: 'Ã  mon avis', nl: 'naar mijn mening', context: 'mening geven' },
-    { fr: 'il me semble que', nl: 'het lijkt mij dat', context: 'mening nuanceren' },
-    { fr: 'd\'abord', nl: 'eerst / ten eerste', context: 'structuur' },
-    { fr: 'en outre', nl: 'bovendien / verder', context: 'toevoeging' },
-    { fr: 'cependant', nl: 'echter', context: 'tegenstelling' },
-    { fr: 'nÃ©anmoins', nl: 'niettemin', context: 'tegenstelling' },
-    { fr: 'en revanche', nl: 'daarentegen', context: 'tegenstelling' },
-    { fr: 'grÃ¢ce Ã ', nl: 'dankzij', context: 'positieve oorzaak' },
-    { fr: 'Ã  cause de', nl: 'vanwege (negatief)', context: 'negatieve oorzaak' },
-    { fr: 'par consÃ©quent', nl: 'bijgevolg / als gevolg', context: 'gevolg' },
-    { fr: 'en effet', nl: 'inderdaad / immers', context: 'bevestiging/verklaring' },
-    { fr: 'c\'est pourquoi', nl: 'dat is waarom / daarom', context: 'redenering' },
-    { fr: 'bien que', nl: 'hoewel', context: 'concessie' },
-    { fr: 'quoique', nl: 'hoewel / ofschoon', context: 'concessie' },
-    { fr: 'afin de', nl: 'om te / teneinde', context: 'doel' },
-  ],
-  'VWO-4': [
-    { fr: 'd\'une part... d\'autre part', nl: 'enerzijds... anderzijds', context: 'tweedeling' },
-    { fr: 'il convient de', nl: 'het is gepast om / men dient', context: 'formeel advies' },
-    { fr: 'force est de constater que', nl: 'men moet vaststellen dat', context: 'formele constatering' },
-    { fr: 'il va de soi que', nl: 'het spreekt vanzelf dat', context: 'vanzelfsprekendheid' },
-    { fr: 'en dÃ©pit de', nl: 'ondanks', context: 'tegenstelling' },
-    { fr: 'Ã  l\'instar de', nl: 'naar het voorbeeld van / net als', context: 'vergelijking' },
-    { fr: 'qui plus est', nl: 'sterker nog / bovendien', context: 'nadruk' },
-    { fr: 'sans doute', nl: 'ongetwijfeld / zonder twijfel', context: 'zekerheid' },
-    { fr: 'il s\'agit de', nl: 'het gaat om / het betreft', context: 'onderwerp benoemen' },
-    { fr: 'Ã  cet Ã©gard', nl: 'in dit opzicht / in dat verband', context: 'verwijzing' },
-    { fr: 'dans la mesure oÃ¹', nl: 'voor zover / in de mate dat', context: 'voorwaarde' },
-    { fr: 'au fur et Ã  mesure', nl: 'geleidelijk / naarmate', context: 'progressie' },
-    { fr: 'en l\'occurrence', nl: 'in dit geval / namelijk', context: 'precisering' },
-    { fr: 'vis-Ã -vis de', nl: 'ten opzichte van', context: 'relatie aanduiden' },
-    { fr: 'nonobstant', nl: 'desondanks / ondanks', context: 'formeel / tegenstelling' },
-    { fr: 'Ã  titre d\'exemple', nl: 'als voorbeeld / bij wijze van voorbeeld', context: 'voorbeeld geven' },
-    { fr: 'compte tenu de', nl: 'gelet op / rekening houdend met', context: 'redenering' },
-    { fr: 'en guise de conclusion', nl: 'ter afsluiting / als conclusie', context: 'conclusie formeel' },
-  ]
-};
+      {"fr":"le championnat","nl":"het kampioenschap","cat":"Sport"},
+      {"fr":"concourir","nl":"meedingen / deelnemen","cat":"Sport"},
+      {"fr":"disputer un match","nl":"een wedstrijd spelen","cat":"Sport"},
+      {"fr":"l'entraÃ®nement","nl":"de training","cat":"Sport"},
+      {"fr":"l'Ã©quipe","nl":"het team","cat":"Sport"},
+      {"fr":"gagner","nl":"winnen","cat":"Sport"},
+      {"fr":"perdre","nl":"verliezen","cat":"Sport"},
+      {"fr":"le record","nl":"het record","cat":"Sport"},
+      {"fr":"le rÃ©sultat","nl":"de uitslag","cat":"Sport"},
+      {"fr":"le stade","nl":"het stadion","cat":"Sport"},
+      {"fr":"remporter une victoire","nl":"een overwinning behalen","cat":"Sport"},
 
-// =====================================================
-// STATE
-// =====================================================
-let currentUser = { email: '', name: '' };
-let currentNiveau = '';
-let currentKlas = '';
-let currentWords = [];
-let currentQ = 0;
-let correct = 0;
-let wrong = 0;
-let exerciseMode = 'mc'; // 'mc' or 'fill'
-let answered = false;
-let startTime = null;
+      {"fr":"le bruit","nl":"het lawaai","cat":"Milieu"},
+      {"fr":"le dÃ©sastre","nl":"de ramp","cat":"Milieu"},
+      {"fr":"l'effet de serre","nl":"broeikaseffect","cat":"Milieu"},
+      {"fr":"l'Ã©mission CO2","nl":"CO2-uitstoot","cat":"Milieu"},
+      {"fr":"un incendie","nl":"een brand","cat":"Milieu"},
+      {"fr":"l'inondation","nl":"de overstroming","cat":"Milieu"},
+      {"fr":"la matiÃ¨re premiÃ¨re","nl":"de grondstof","cat":"Milieu"},
+      {"fr":"les ordures / les dÃ©chets","nl":"het afval","cat":"Milieu"},
+      {"fr":"le paysan / l'agriculteur","nl":"de boer","cat":"Milieu"},
+      {"fr":"le rÃ©chauffement de la terre","nl":"de opwarming van de aarde","cat":"Milieu"},
+      {"fr":"la sÃ©cheresse","nl":"de droogte","cat":"Milieu"},
+      {"fr":"le tremblement de terre","nl":"de aardbeving","cat":"Milieu"},
+      {"fr":"trier les dÃ©chets","nl":"afval scheiden","cat":"Milieu"},
 
-// =====================================================
-// LOGIN
-// =====================================================
-function doLogin() {
-  const email = document.getElementById('email-input').value.trim().toLowerCase();
-  const name = document.getElementById('name-input').value.trim();
-  const errEl = document.getElementById('email-error');
+      {"fr":"un mensuel","nl":"een maandblad","cat":"Media"},
+      {"fr":"un quotidien","nl":"een dagblad","cat":"Media"},
+      {"fr":"un hebdomadaire","nl":"een weekblad","cat":"Media"},
+      {"fr":"numÃ©rique","nl":"digitaal","cat":"Media"},
+      {"fr":"un ordinateur (portable)","nl":"een computer (laptop)","cat":"Media"},
+      {"fr":"la publicitÃ©","nl":"de reclame","cat":"Media"},
+      {"fr":"la souris","nl":"de muis","cat":"Media"},
+      {"fr":"une tablette","nl":"een tablet / iPad","cat":"Media"},
+      {"fr":"tÃ©lÃ©charger","nl":"downloaden","cat":"Media"},
+      {"fr":"un texto","nl":"een sms","cat":"Media"},
+      {"fr":"internet","nl":"internet","cat":"Media"},
+      {"fr":"la tÃ©lÃ©vision","nl":"de televisie","cat":"Media"},
+      {"fr":"la radio","nl":"de radio","cat":"Media"},
+      {"fr":"le journal","nl":"de krant","cat":"Media"},
+      {"fr":"la vidÃ©o","nl":"de video","cat":"Media"},
+      {"fr":"le rÃ©seau social","nl":"het sociale netwerk","cat":"Media"},
 
-  if (!email.endsWith('@' + CONFIG.schoolDomain)) {
-    errEl.classList.add('show');
-    return;
-  }
-  errEl.classList.remove('show');
+      {"fr":"le car scolaire","nl":"de schoolbus","cat":"Transport"},
+      {"fr":"les chemins de fer","nl":"de spoorwegen","cat":"Transport"},
+      {"fr":"changer de train","nl":"overstappen","cat":"Transport"},
+      {"fr":"descendre","nl":"uitstappen","cat":"Transport"},
+      {"fr":"monter","nl":"instappen","cat":"Transport"},
+      {"fr":"le permis de conduire","nl":"het rijbewijs","cat":"Transport"},
+      {"fr":"le rÃ©seau","nl":"het netwerk","cat":"Transport"},
+      {"fr":"la station","nl":"het station / halte","cat":"Transport"},
+      {"fr":"le trajet","nl":"de reis / het traject","cat":"Transport"},
 
-  currentUser = { email, name: name || email.split('@')[0] };
-  document.getElementById('welkom-naam').textContent = 'Welkom, ' + currentUser.name + '!';
-  updateCounts();
-  showScreen('screen-level');
-}
+      {"fr":"toujours","nl":"altijd / nog steeds","cat":"Signaalwoorden"},
+      {"fr":"il y a + tijdsaanduiding","nl":"â¦ geleden","cat":"Signaalwoorden"},
+      {"fr":"Ã  l'avenir","nl":"in de toekomst","cat":"Signaalwoorden"},
+      {"fr":"tout Ã  coup","nl":"plotseling / ineens","cat":"Signaalwoorden"},
+      {"fr":"tout de suite","nl":"meteen","cat":"Signaalwoorden"},
+      {"fr":"alors que / tandis que","nl":"terwijl","cat":"Signaalwoorden"},
+      {"fr":"au contraire","nl":"daarentegen","cat":"Signaalwoorden"},
+      {"fr":"bien que","nl":"hoewel","cat":"Signaalwoorden"},
+      {"fr":"cependant","nl":"desalniettemin / echter","cat":"Signaalwoorden"},
+      {"fr":"certes","nl":"zeker","cat":"Signaalwoorden"},
+      {"fr":"contrairement Ã ","nl":"in tegenstelling tot","cat":"Signaalwoorden"},
+      {"fr":"en fait","nl":"eigenlijk / in feite","cat":"Signaalwoorden"},
+      {"fr":"en revanche","nl":"daarentegen","cat":"Signaalwoorden"},
+      {"fr":"mais","nl":"maar","cat":"Signaalwoorden"},
+      {"fr":"nÃ©anmoins","nl":"toch / desondanks","cat":"Signaalwoorden"},
+      {"fr":"par contre","nl":"daarentegen","cat":"Signaalwoorden"},
+      {"fr":"pourtant","nl":"toch / maar","cat":"Signaalwoorden"},
+      {"fr":"par exemple","nl":"bijvoorbeeld","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ pas","nl":"niet","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ plus","nl":"niet meer","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ pas encore","nl":"nog niet","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ jamais","nl":"nooit","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ guÃ¨re","nl":"bijna niet","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ rien","nl":"niets","cat":"Signaalwoorden"},
+      {"fr":"ne â¦ personne","nl":"niemand","cat":"Signaalwoorden"},
+      {"fr":"moins â¦ que","nl":"minder â¦ dan","cat":"Signaalwoorden"},
+      {"fr":"aussi â¦ que","nl":"net zo â¦ als","cat":"Signaalwoorden"},
+      {"fr":"plus â¦ que","nl":"meer â¦ dan","cat":"Signaalwoorden"},
+      {"fr":"Ã  tout prix","nl":"tot elke prijs","cat":"Signaalwoorden"},
+      {"fr":"de moins en moins","nl":"minder en minder","cat":"Signaalwoorden"},
+      {"fr":"de plus en plus","nl":"meer en meer","cat":"Signaalwoorden"},
 
-// =====================================================
-// LEVEL COUNTS
-// =====================================================
-function updateCounts() {
-  const levels = [['h3','HAVO-3'],['h4','HAVO-4'],['v3','VWO-3'],['v4','VWO-4']];
-  levels.forEach(([id, key]) => {
-    document.getElementById('count-' + id).textContent = (DEFAULT_WORDS[key]?.length || 0) + ' woorden';
-  });
-}
+      {"fr":"content","nl":"tevreden","cat":"Pos. & Neg."},
+      {"fr":"efficace","nl":"doeltreffend","cat":"Pos. & Neg."},
+      {"fr":"encourager","nl":"aanmoedigen","cat":"Pos. & Neg."},
+      {"fr":"fier","nl":"trots","cat":"Pos. & Neg."},
+      {"fr":"meilleur","nl":"beter","cat":"Pos. & Neg."},
+      {"fr":"mieux","nl":"best","cat":"Pos. & Neg."},
+      {"fr":"rÃ©ussir","nl":"slagen","cat":"Pos. & Neg."},
+      {"fr":"riche","nl":"rijk","cat":"Pos. & Neg."}
+    ];
 
-// =====================================================
-// LEVEL CHOOSE
-// =====================================================
-function chooseLevel(niveau, klas) {
-  currentNiveau = niveau;
-  currentKlas = klas;
-  const key = niveau + '-' + klas;
-  const words = DEFAULT_WORDS[key] || [];
-  currentWords = shuffle([...words]).slice(0, CONFIG.vragenPerRonde);
-  currentQ = 0;
-  correct = 0;
-  wrong = 0;
-  answered = false;
-  startTime = Date.now();
-
-  document.getElementById('ex-level-badge').textContent = niveau + ' ' + klas;
-  document.getElementById('res-level-badge').textContent = niveau + ' ' + klas;
-
-  showScreen('screen-exercise');
-  renderQuestion();
-}
-
-// =====================================================
-// MODE SWITCH
-// =====================================================
-function setMode(mode) {
-  exerciseMode = mode;
-  document.getElementById('mode-mc').classList.toggle('active', mode === 'mc');
-  document.getElementById('mode-fill').classList.toggle('active', mode === 'fill');
-  document.getElementById('mc-block').style.display = mode === 'mc' ? 'block' : 'none';
-  document.getElementById('fill-block').style.display = mode === 'fill' ? 'block' : 'none';
-  // Reset current question rendering
-  renderQuestion();
-}
-
-// =====================================================
-// RENDER QUESTION
-// =====================================================
-function renderQuestion() {
-  if (currentQ >= currentWords.length) {
-    showResults();
-    return;
-  }
-
-  answered = false;
-  const word = currentWords[currentQ];
-  const total = currentWords.length;
-
-  document.getElementById('q-counter').textContent = `Vraag ${currentQ + 1} / ${total}`;
-  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
-  document.getElementById('progress-fill').style.width = ((currentQ / total) * 100) + '%';
-
-  const feedback = document.getElementById('feedback');
-  feedback.className = 'feedback';
-  document.getElementById('next-btn').style.display = 'none';
-
-  if (exerciseMode === 'mc') {
-    renderMC(word);
-  } else {
-    renderFill(word);
-  }
-}
-
-function renderMC(word) {
-  document.getElementById('mc-word').textContent = word.fr;
-  document.getElementById('mc-context').textContent = word.context ? '(' + word.context + ')' : '';
-
-  // Get 3 wrong answers
-  const others = currentWords.filter((_, i) => i !== currentQ);
-  const distractors = shuffle(others).slice(0, 3).map(w => w.nl);
-  const options = shuffle([word.nl, ...distractors]);
-
-  const container = document.getElementById('mc-options');
-  container.innerHTML = '';
-  options.forEach(opt => {
-    const btn = document.createElement('div');
-    btn.className = 'option';
-    btn.textContent = opt;
-    btn.onclick = () => checkMC(btn, opt, word.nl, options);
-    container.appendChild(btn);
-  });
-}
-
-function checkMC(el, chosen, correct_ans, allOptions) {
-  if (answered) return;
-  answered = true;
-  const allBtns = document.querySelectorAll('.option');
-  allBtns.forEach(b => b.classList.add('locked'));
-
-  if (chosen === correct_ans) {
-    el.classList.add('correct');
-    correct++;
-    showFeedback(true, null);
-  } else {
-    el.classList.add('wrong');
-    wrong++;
-    allBtns.forEach(b => { if (b.textContent === correct_ans) b.classList.add('correct'); });
-    showFeedback(false, correct_ans);
-  }
-  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
-  document.getElementById('next-btn').style.display = 'block';
-}
-
-function renderFill(word) {
-  document.getElementById('fill-word').textContent = word.fr;
-  document.getElementById('fill-context').textContent = word.context ? '(' + word.context + ')' : '';
-  const inp = document.getElementById('fill-input');
-  inp.value = '';
-  inp.className = 'fill-input';
-  inp.disabled = false;
-  inp.focus();
-  document.getElementById('fill-btn').style.display = 'block';
-}
-
-function checkFill() {
-  if (answered) return;
-  const word = currentWords[currentQ];
-  const inp = document.getElementById('fill-input');
-  const given = inp.value.trim().toLowerCase();
-  const expected = word.nl.toLowerCase();
-
-  // Accept partial match or close enough
-  const isCorrect = expected.split('/').some(part => {
-    const p = part.trim();
-    return given === p || given.length > 2 && (p.includes(given) || given.includes(p));
-  });
-
-  answered = true;
-  inp.disabled = true;
-  document.getElementById('fill-btn').style.display = 'none';
-
-  if (isCorrect) {
-    inp.classList.add('correct');
-    correct++;
-    showFeedback(true, null);
-  } else {
-    inp.classList.add('wrong');
-    wrong++;
-    showFeedback(false, word.nl);
-  }
-  document.getElementById('q-score').textContent = `â ${correct} \u00A0 â ${wrong}`;
-  document.getElementById('next-btn').style.display = 'block';
-}
-
-function showFeedback(isCorrect, correctAnswer) {
-  const el = document.getElementById('feedback');
-  if (isCorrect) {
-    el.textContent = 'â Goed! ð';
-    el.className = 'feedback correct show';
-  } else {
-    el.textContent = `â Fout. Het goede antwoord: "${correctAnswer}"`;
-    el.className = 'feedback wrong show';
-  }
-}
-
-function nextQuestion() {
-  currentQ++;
-  renderQuestion();
-}
-
-// =====================================================
-// RESULTS
-// =====================================================
-function showResults() {
-  const total = currentWords.length;
-  const pct = Math.round((correct / total) * 100);
-  const elapsed = Math.round((Date.now() - startTime) / 1000);
-
-  document.getElementById('res-score').textContent = correct + '/' + total;
-  document.getElementById('res-correct').textContent = correct;
-  document.getElementById('res-wrong').textContent = wrong;
-  document.getElementById('res-total').textContent = total;
-  document.getElementById('res-pct').textContent = pct + '%';
-
-  let title, sub;
-  if (pct >= 90) { title = 'Uitstekend! ð'; sub = 'Je kent het idioom heel goed.'; }
-  else if (pct >= 70) { title = 'Goed gedaan! ð'; sub = 'Je bent goed op weg.'; }
-  else if (pct >= 50) { title = 'Redelijk ð'; sub = 'Nog wat oefenen en je bent er.'; }
-  else { title = 'Blijven oefenen ðª'; sub = 'Probeer het nog een keer.'; }
-
-  document.getElementById('res-title').textContent = title;
-  document.getElementById('res-sub').textContent = sub;
-  document.getElementById('progress-fill').style.width = '100%';
-
-  showScreen('screen-results');
-  saveToSupabase(correct, total, pct, elapsed);
-}
-
-// =====================================================
-// SUPABASE
-// =====================================================
-async function saveToSupabase(correctNum, totalNum, pct, elapsed) {
-  const msg = document.getElementById('saving-msg');
-
-  // Skip if not configured
-  if (CONFIG.supabaseUrl.startsWith('JOUW') || CONFIG.supabaseKey.startsWith('JOUW')) {
-    msg.textContent = '(Supabase nog niet gekoppeld â resultaat niet opgeslagen)';
-    return;
-  }
-
-  msg.textContent = 'Resultaat opslaan...';
-
-  const record = {
-    email: currentUser.email,
-    naam: currentUser.name,
-    niveau: currentNiveau,
-    klas: currentKlas,
-    score: correctNum,
-    totaal: totalNum,
-    percentage: pct,
-    modus: exerciseMode === 'mc' ? 'Meerkeuze' : 'Invullen',
-    tijdsduur_s: elapsed,
-    datum: new Date().toISOString(),
-  };
-
-  try {
-    const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`, {
-      method: 'POST',
-      headers: {
-        'apikey': CONFIG.supabaseKey,
-        'Authorization': 'Bearer ' + CONFIG.supabaseKey,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
+    // ============= STATE =============
+    let state = {
+      currentScreen: 'login',
+      user: {
+        email: '',
+        naam: '',
       },
-      body: JSON.stringify(record)
-    });
-    if (res.ok) {
-      msg.textContent = 'â Resultaat opgeslagen.';
-    } else {
-      const err = await res.json();
-      msg.textContent = 'Fout bij opslaan: ' + (err.message || res.status);
+      settings: {
+        klas: null,
+        categorieÃ«n: new Set(CATEGORIES),
+        richting: null,
+        aantalWoorden: 20,
+      },
+      quiz: {
+        words: [],
+        currentIndex: 0,
+        answers: [],
+        startTime: null,
+        isAnswered: false,
+      },
+      flashcards: {
+        words: [],
+        currentIndex: 0,
+        isFront: true,
+      },
+    };
+
+    // ============= UTILITIES =============
+    function normalize(s) {
+      return s.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/^(le |la |les |l'|de |het |een |un |une |des )/i, '')
+        .trim();
     }
-  } catch (e) {
-    msg.textContent = 'Kon niet opslaan: ' + e.message;
-  }
-}
 
-// =====================================================
-// NAVIGATION
-// =====================================================
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
-}
+    function isCorrect(input, answer) {
+      const n = normalize(input);
+      const a = normalize(answer);
+      if (n === a) return true;
+      const alts = a.split('/').map(x => x.trim());
+      return alts.some(alt => n === alt || alt.includes(n) || n.includes(alt));
+    }
 
-function goToLevel() {
-  showScreen('screen-level');
-}
+    function showScreen(screenName) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelector('.' + screenName + '-screen').classList.add('active');
+      state.currentScreen = screenName;
+    }
 
-// =====================================================
-// UTILS
-// =====================================================
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+    function getFilteredWords() {
+      return WORDS.filter(w => state.settings.categorieÃ«n.has(w.cat));
+    }
 
-// Handle enter key on login
-document.getElementById('email-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-document.getElementById('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-</script>
+    function updateWordCount() {
+      const filtered = getFilteredWords();
+      const maxWords = Math.min(filtered.length, 100);
+      document.getElementById('maxWords').textContent = maxWords;
+      document.getElementById('sliderValue').textContent = Math.min(state.settings.aantalWoorden, maxWords);
+      document.getElementById('wordCount').textContent = `${filtered.length} woorden geselecteerd`;
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins}m ${secs}s`;
+    }
+
+    // ============= LOGIN =============
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const naam = document.getElementById('naam').value;
+      const errorEl = document.getElementById('emailError');
+
+      if (!email.endsWith(`@${CONFIG.schoolDomain}`)) {
+        errorEl.textContent = `E-mail moet eindigen op @${CONFIG.schoolDomain}`;
+        errorEl.classList.add('show');
+        return;
+      }
+
+      errorEl.classList.remove('show');
+      state.user = { email, naam };
+      document.getElementById('greetingName').textContent = naam;
+      showScreen('setup');
+    });
+
+    // ============= SETUP =============
+    // Categories
+    const categoriesGrid = document.getElementById('categoriesGrid');
+    CATEGORIES.forEach(cat => {
+      const chip = document.createElement('div');
+      chip.className = 'category-chip selected';
+      chip.textContent = cat;
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('selected');
+        if (chip.classList.contains('selected')) {
+          state.settings.categorieÃ«n.add(cat);
+        } else {
+          state.settings.categorieÃ«n.delete(cat);
+        }
+        updateWordCount();
+      });
+      categoriesGrid.appendChild(chip);
+    });
+
+    document.getElementById('selectAllBtn').addEventListener('click', () => {
+      CATEGORIES.forEach(cat => state.settings.categorieÃ«n.add(cat));
+      document.querySelectorAll('.category-chip').forEach(c => c.classList.add('selected'));
+      updateWordCount();
+    });
+
+    document.getElementById('deselectAllBtn').addEventListener('click', () => {
+      state.settings.categorieÃ«n.clear();
+      document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
+      updateWordCount();
+    });
+
+    // Klas buttons
+    document.querySelectorAll('[data-klas]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('[data-klas]').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.settings.klas = btn.dataset.klas;
+      });
+    });
+
+    // Richting buttons
+    document.querySelectorAll('[data-richting]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('[data-richting]').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.settings.richting = btn.dataset.richting;
+      });
+    });
+
+    // Slider
+    document.getElementById('wordSlider').addEventListener('input', (e) => {
+      state.settings.aantalWoorden = parseInt(e.target.value);
+      document.getElementById('sliderValue').textContent = state.settings.aantalWoorden;
+    });
+
+    updateWordCount();
+
+    // Start Quiz
+    document.getElementById('quizBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!state.settings.klas || !state.settings.richting) {
+        alert('Kies alsjeblieft je klas en richting');
+        return;
+      }
+
+      const filtered = getFilteredWords();
+      if (filtered.length === 0) {
+        alert('Geen woorden geselecteerd');
+        return;
+      }
+
+      state.quiz.words = filtered.sort(() => Math.random() - 0.5)
+        .slice(0, state.settings.aantalWoorden);
+
+      if (state.settings.richting === 'mix') {
+        state.quiz.words = state.quiz.words.map(w => ({
+          ...w,
+          reverse: Math.random() > 0.5,
+        }));
+      } else if (state.settings.richting === 'nl_fr') {
+        state.quiz.words = state.quiz.words.map(w => ({
+          ...w,
+          reverse: true,
+        }));
+      }
+
+      state.quiz.currentIndex = 0;
+      state.quiz.answers = [];
+      state.quiz.startTime = Date.now();
+      state.quiz.isAnswered = false;
+      showQuizQuestion();
+      showScreen('quiz');
+    });
+
+    // Start Flashcards
+    document.getElementById('flashcardsBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!state.settings.klas) {
+        alert('Kies alsjeblieft je klas');
+        return;
+      }
+
+      const filtered = getFilteredWords();
+      if (filtered.length === 0) {
+        alert('Geen woorden geselecteerd');
+        return;
+      }
+
+      state.flashcards.words = filtered.sort(() => Math.random() - 0.5)
+        .slice(0, state.settings.aantalWoorden);
+
+      if (state.settings.richting === 'mix') {
+        state.flashcards.words = state.flashcards.words.map(w => ({
+          ...w,
+          reverse: Math.random() > 0.5,
+        }));
+      } else if (state.settings.richting === 'nl_fr') {
+        state.flashcards.words = state.flashcards.words.map(w => ({
+          ...w,
+          reverse: true,
+        }));
+      }
+
+      state.flashcards.currentIndex = 0;
+      state.flashcards.isFront = true;
+      showFlashcard();
+      showScreen('flashcard');
+    });
+
+    // ============= QUIZ =============
+    function showQuizQuestion() {
+      const word = state.quiz.words[state.quiz.currentIndex];
+      const isReverse = word.reverse;
+      const fromLang = isReverse ? 'Nederlands' : 'Frans';
+      const toLang = isReverse ? 'Frans' : 'Nederlands';
+      const questionWord = isReverse ? word.nl : word.fr;
+      const correctAnswer = isReverse ? word.fr : word.nl;
+
+      document.getElementById('quizLabel').textContent = `${fromLang} â ${toLang}`;
+      document.getElementById('quizWord').textContent = questionWord;
+      document.getElementById('quizCounter').textContent = `Vraag ${state.quiz.currentIndex + 1} van ${state.quiz.words.length}`;
+      document.getElementById('progressFill').style.width = `${(state.quiz.currentIndex / state.quiz.words.length) * 100}%`;
+
+      const input = document.getElementById('quizInput');
+      input.value = '';
+      input.className = 'quiz-input';
+      input.disabled = false;
+      input.focus();
+
+      const feedback = document.getElementById('feedback');
+      feedback.classList.remove('show', 'correct', 'wrong');
+
+      const checkBtn = document.getElementById('checkBtn');
+      checkBtn.disabled = false;
+      checkBtn.textContent = 'Controleer';
+
+      state.quiz.isAnswered = false;
+      updateScoreDisplay();
+    }
+
+    function updateScoreDisplay() {
+      const correct = state.quiz.answers.filter(a => a.correct).length;
+      document.getElementById('scoreDisplay').textContent = `Score: ${correct}/${state.quiz.words.length}`;
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+    document.getElementById('quizInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !state.quiz.isAnswered) checkAnswer();
+    });
+
+    function checkAnswer() {
+      const input = document.getElementById('quizInput').value.trim();
+      const word = state.quiz.words[state.quiz.currentIndex];
+      const isReverse = word.reverse;
+      const correctAnswer = isReverse ? word.fr : word.nl;
+
+      const correct = isCorrect(input, correctAnswer);
+      const feedback = document.getElementById('feedback');
+      const inputEl = document.getElementById('quizInput');
+      const checkBtn = document.getElementById('checkBtn');
+
+      state.quiz.answers.push({ correct, input, answer: correctAnswer });
+      state.quiz.isAnswered = true;
+
+      if (correct) {
+        feedback.className = 'feedback show correct';
+        feedback.textContent = `â Correct! Het antwoord is: ${correctAnswer}`;
+        inputEl.className = 'quiz-input correct';
+      } else {
+        feedback.className = 'feedback show wrong';
+        feedback.textContent = `â Fout. Het juiste antwoord is: ${correctAnswer}`;
+        inputEl.className = 'quiz-input wrong';
+      }
+
+      checkBtn.disabled = true;
+      checkBtn.textContent = state.quiz.currentIndex < state.quiz.words.length - 1 ? 'Volgende â' : 'Resultaten â';
+      inputEl.disabled = true;
+
+      updateScoreDisplay();
+    }
+
+    // Continue to next question or show results
+    document.getElementById('checkBtn').addEventListener('click', function() {
+      if (!state.quiz.isAnswered) return;
+
+      if (state.quiz.currentIndex < state.quiz.words.length - 1) {
+        state.quiz.currentIndex++;
+        showQuizQuestion();
+      } else {
+        showResults();
+      }
+    });
+
+    // ============= FLASHCARDS =============
+    function showFlashcard() {
+      const word = state.flashcards.words[state.flashcards.currentIndex];
+      const isReverse = word.reverse;
+      const card = document.getElementById('card');
+
+      if (state.flashcards.isFront) {
+        const lang = isReverse ? 'Nederlands' : 'Frans';
+        const displayWord = isReverse ? word.nl : word.fr;
+        card.innerHTML = `
+          <div class="card-front">
+            <div class="card-front-lang">${lang}</div>
+            <div class="card-word">${displayWord}</div>
+          </div>
+        `;
+      } else {
+        const lang = isReverse ? 'Frans' : 'Nederlands';
+        const translation = isReverse ? word.fr : word.nl;
+        card.innerHTML = `
+          <div class="card-back">
+            <div class="card-back-lang">${lang}</div>
+            <div class="card-translation">${translation}</div>
+          </div>
+        `;
+      }
+
+      document.getElementById('flashcardCounter').textContent = `${state.flashcards.currentIndex + 1} van ${state.flashcards.words.length}`;
+      document.getElementById('prevBtn').disabled = state.flashcards.currentIndex === 0;
+      document.getElementById('nextBtn').disabled = state.flashcards.currentIndex === state.flashcards.words.length - 1;
+    }
+
+    document.getElementById('card').addEventListener('click', () => {
+      state.flashcards.isFront = !state.flashcards.isFront;
+      showFlashcard();
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (state.flashcards.currentIndex > 0) {
+        state.flashcards.currentIndex--;
+        state.flashcards.isFront = true;
+        showFlashcard();
+      }
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (state.flashcards.currentIndex < state.flashcards.words.length - 1) {
+        state.flashcards.currentIndex++;
+        state.flashcards.isFront = true;
+        showFlashcard();
+      }
+    });
+
+    document.getElementById('shuffleBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      state.flashcards.words.sort(() => Math.random() - 0.5);
+      state.flashcards.currentIndex = 0;
+      state.flashcards.isFront = true;
+      showFlashcard();
+    });
+
+    document.getElementById('backBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      showScreen('setup');
+    });
+
+    // ============= RESULTS =============
+    function showResults() {
+      const correct = state.quiz.answers.filter(a => a.correct).length;
+      const total = state.quiz.words.length;
+      const percentage = Math.round((correct / total) * 100);
+      const elapsed = Math.floor((Date.now() - state.quiz.startTime) / 1000);
+
+      document.getElementById('finalScore').textContent = `${correct}/${total}`;
+      document.getElementById('finalPercentage').textContent = `${percentage}%`;
+      document.getElementById('timeElapsed').textContent = `Tijd: ${formatTime(elapsed)}`;
+
+      const resultsList = document.getElementById('resultsList');
+      resultsList.innerHTML = '';
+
+      state.quiz.answers.forEach((answer, idx) => {
+        const word = state.quiz.words[idx];
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        item.innerHTML = `
+          <div class="result-question">${idx + 1}. ${answer.answer}</div>
+          <div class="result-user-answer">Jouw antwoord: ${answer.input || '(leeg)'}</div>
+          <div class="result-correct-answer">Correct: ${answer.answer}</div>
+        `;
+        resultsList.appendChild(item);
+      });
+
+      showScreen('results');
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const correct = state.quiz.answers.filter(a => a.correct).length;
+      const total = state.quiz.words.length;
+      const percentage = Math.round((correct / total) * 100);
+      const elapsed = Math.floor((Date.now() - state.quiz.startTime) / 1000);
+
+      const data = {
+        email: state.user.email,
+        naam: state.user.naam,
+        niveau: state.settings.klas,
+        score: correct,
+        totaal: total,
+        percentage: percentage,
+        modus: 'Quiz',
+        tijdsduur_s: elapsed,
+        datum: new Date().toISOString(),
+      };
+
+      try {
+        const response = await fetch(
+          `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`,
+          {
+            method: 'POST',
+            headers: {
+              'apikey': CONFIG.supabaseKey,
+              'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            },
+            body: JSON.stringify(data),
+          }
+        );
+
+        if (response.ok) {
+          showScreen('setup');
+        } else {
+          console.error('Save failed:', response.status);
+          alert('Opslaan mislukt, probeer het opnieuw');
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+        alert('Opslaan mislukt, probeer het opnieuw');
+      }
+    });
+
+    document.getElementById('retryBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const filtered = getFilteredWords();
+      state.quiz.words = filtered.sort(() => Math.random() - 0.5)
+        .slice(0, state.settings.aantalWoorden);
+
+      if (state.settings.richting === 'mix') {
+        state.quiz.words = state.quiz.words.map(w => ({
+          ...w,
+          reverse: Math.random() > 0.5,
+        }));
+      } else if (state.settings.richting === 'nl_fr') {
+        state.quiz.words = state.quiz.words.map(w => ({
+          ...w,
+          reverse: true,
+        }));
+      }
+
+      state.quiz.currentIndex = 0;
+      state.quiz.answers = [];
+      state.quiz.startTime = Date.now();
+      state.quiz.isAnswered = false;
+      showQuizQuestion();
+      showScreen('quiz');
+    });
+  </script>
 </body>
 </html>
