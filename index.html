@@ -37,15 +37,15 @@
     }
 
     header {
+      background: #1a2236;
+      margin: -20px -20px 0;
+      padding: 22px 20px;
       text-align: center;
-      margin-bottom: 40px;
-      padding-top: 20px;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #e07070;
-      margin-bottom: 8px;
       font-weight: 700;
       letter-spacing: -0.5px;
     }
@@ -54,6 +54,22 @@
       color: #888;
       font-size: 0.95rem;
       font-weight: 500;
+    }
+
+    .exam-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e1e1e;
+      margin-bottom: 4px;
+    }
+
+    .exam-subtitle {
+      color: #999;
+      font-size: 0.875rem;
+    }
+
+    .setup-section-flat {
+      margin-bottom: 28px;
     }
 
     .screen {
@@ -136,10 +152,12 @@
     }
 
     .section-title {
-      font-size: 1.1rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-bottom: 16px;
-      color: #1e1e1e;
+      margin-bottom: 14px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
     }
 
     .greeting {
@@ -180,11 +198,17 @@
       transform: scale(0.98);
     }
 
-    .pill-btn.selected,
-    .richting-btn.selected {
+    .pill-btn.selected {
       background: #e07070;
       color: white;
       border-color: #e07070;
+    }
+
+    .richting-btn.selected {
+      background: white;
+      color: #1a2236;
+      border-color: #1a2236;
+      border-width: 2px;
     }
 
     .categories-grid {
@@ -212,9 +236,9 @@
     }
 
     .category-chip.selected {
-      background: #e07070;
+      background: #1a2236;
       color: white;
-      border-color: #e07070;
+      border-color: #1a2236;
     }
 
     .toggle-categories {
@@ -325,9 +349,9 @@
     }
 
     .btn-secondary {
-      background: white;
-      color: #e07070;
-      border: 2px solid #e07070;
+      background: #1a2236;
+      color: white;
+      border: 2px solid #1a2236;
     }
 
     .btn-secondary:active {
@@ -717,7 +741,6 @@
   <div class="container">
     <header>
       <h1>Parbleu!</h1>
-      <p class="subtitle">Sint Catamaria College</p>
     </header>
 
     <!-- Login Screen -->
@@ -731,7 +754,6 @@
         <div class="form-group">
           <label for="naam">Je naam</label>
           <input type="text" id="naam" placeholder="Je voornaam" required>
-        </div>
         <button type="submit" class="btn-primary" style="width: 100%;">Inloggen →</button>
       </form>
     </div>
@@ -739,40 +761,29 @@
     <!-- Setup Screen -->
     <div class="screen setup-screen">
       <div class="setup-container">
-        <div>
-          <p class="greeting">Hoi <span id="greetingName"></span>!</p>
-          <p style="color: #888; font-size: 0.95rem;">Kies je oefening</p>
-        </div>
 
-        <!-- Klas Selector -->
-        <div class="setup-section">
-          <div class="section-title">Klas</div>
-          <div class="klas-buttons">
-            <button type="button" class="pill-btn" data-klas="HAVO 3">HAVO 3</button>
-            <button type="button" class="pill-btn" data-klas="HAVO 4">HAVO 4</button>
-            <button type="button" class="pill-btn" data-klas="VWO 3">VWO 3</button>
-            <button type="button" class="pill-btn" data-klas="VWO 4">VWO 4</button>
-          </div>
+        <!-- Exam Title -->
+        <div style="text-align: center; padding: 24px 0 16px;">
+          <h2 class="exam-title">Examenidioom Frans</h2>
+          <p class="exam-subtitle" id="totalWordInfo"></p>
         </div>
 
         <!-- Categories -->
-        <div class="setup-section">
+        <div class="setup-section-flat">
           <div class="section-title">Categorieën</div>
           <div class="categories-grid" id="categoriesGrid"></div>
           <div class="toggle-categories">
             <span class="toggle-link" id="selectAllBtn">Alles selecteren</span>
             <span class="toggle-link" id="deselectAllBtn">Alles deselecteren</span>
           </div>
-          <div class="word-count" id="wordCount">X woorden geselecteerd</div>
         </div>
 
         <!-- Richting -->
-        <div class="setup-section">
+        <div class="setup-section-flat">
           <div class="section-title">Richting</div>
           <div class="richting-buttons">
-            <button type="button" class="richting-btn" data-richting="fr_nl">🇫🇷 → 🇳🇱<br>Frans → Nederlands</button>
-            <button type="button" class="richting-btn" data-richting="nl_fr">🇳🇱 → 🇫🇷<br>Nederlands → Frans</button>
-            <button type="button" class="richting-btn" data-richting="mix">🔀<br>Mix</button>
+            <button type="button" class="richting-btn" data-richting="fr_nl">🇫🇷 – 🇳🇱<br>Frans → Nederlands</button>
+            <button type="button" class="richting-btn" data-richting="nl_fr">🇳🇱 – 🇫🇷<br>Nederlands → Frans</button>
           </div>
         </div>
 
@@ -780,12 +791,11 @@
         <div class="setup-section">
           <div class="section-title">Aantal woorden</div>
           <div class="slider-container">
-            <input type="range" id="wordSlider" min="5" max="100" value="20" step="1">
             <div class="slider-label">
-              <span>5</span>
+              <span style="color: #888;">Quiz</span>
               <span class="slider-value" id="sliderValue">20</span>
-              <span id="maxWords">100</span>
             </div>
+            <input type="range" id="wordSlider" min="5" max="100" value="20" step="1">
           </div>
         </div>
 
@@ -794,6 +804,7 @@
           <button type="button" class="btn-primary" id="quizBtn">✏️ Quiz starten</button>
           <button type="button" class="btn-secondary" id="flashcardsBtn">🃏 Flashcards</button>
         </div>
+        <p class="word-count" id="wordCount" style="text-align: center; margin-top: 10px;"></p>
       </div>
     </div>
 
@@ -900,13 +911,13 @@
       {"fr":"la différence","nl":"het verschil","cat":"Algemeen"},
       {"fr":"empêcher","nl":"verhinderen","cat":"Algemeen"},
       {"fr":"encore","nl":"nog","cat":"Algemeen"},
-      {"fr":"ensemble","nl":"geheel / samen","cat":"Algemeen"},
+      {"fr":"ensemble","nl":"gehiel / samen","cat":"Algemeen"},
       {"fr":"l'époque","nl":"het tijdperk","cat":"Algemeen"},
       {"fr":"l'esprit","nl":"de geest","cat":"Algemeen"},
-      {"fr":"w�tonner","nl":"verbazen","cat":"Algemeen"},
+      {"fr":"étonner","nl":"verbazen","cat":"Algemeen"},
       {"fr":"étonnant","nl":"verbazingwekkend","cat":"Algemeen"},
       {"fr":"étonné","nl":"verbaasd","cat":"Algemeen"},
-      {"fr":"w�viter","nl":"vermijden","cat":"Algemeen"},
+      {"fr":"éviter","nl":"vermijden","cat":"Algemeen"},
       {"fr":"exigeant","nl":"veeleisend","cat":"Algemeen"},
       {"fr":"l'exigence","nl":"de eis","cat":"Algemeen"},
       {"fr":"facilement","nl":"gemakkelijk","cat":"Algemeen"},
@@ -1013,7 +1024,7 @@
       {"fr":"la crise","nl":"de crisis","cat":"Economie"},
       {"fr":"l'inflation","nl":"de inflatie","cat":"Economie"},
       {"fr":"le crédit","nl":"het krediet","cat":"Economie"},
-      {"fr":"tépenser","nl":"uitgeven","cat":"Economie"},
+      {"fr":"dépenser","nl":"uitgeven","cat":"Economie"},
       {"fr":"le prix","nl":"de prijs","cat":"Economie"},
       {"fr":"le professionnel","nl":"de professional","cat":"Economie"},
       {"fr":"le travail","nl":"het werk","cat":"Economie"},
@@ -1080,13 +1091,13 @@
       {"fr":"le professeur","nl":"de leraar","cat":"Onderwijs"},
       {"fr":"la classe","nl":"de klas","cat":"Onderwijs"},
       {"fr":"l'école","nl":"de school","cat":"Onderwijs"},
-      {"fr":"w�tudier","nl":"studeren","cat":"Onderwijs"},
+      {"fr":"étudier","nl":"studeren","cat":"Onderwijs"},
       {"fr":"l'examen","nl":"het examen","cat":"Onderwijs"},
       {"fr":"l'élève","nl":"de leerling","cat":"Onderwijs"},
       {"fr":"le niveau","nl":"het niveau","cat":"Onderwijs"},
       {"fr":"le succès","nl":"het succes","cat":"Onderwijs"},
       {"fr":"l'échec","nl":"de mislukking","cat":"Onderwijs"},
-      {"fr":"téussir","nl":"slagen","cat":"Onderwijs"},
+      {"fr":"réussir","nl":"slagen","cat":"Onderwijs"},
 
       {"fr":"le spectacle","nl":"de show / voorstelling","cat":"Kunst & Cultuur"},
       {"fr":"le tableau","nl":"het schilderij","cat":"Kunst & Cultuur"},
@@ -1094,602 +1105,301 @@
       {"fr":"l'art","nl":"de kunst","cat":"Kunst & Cultuur"},
       {"fr":"la chanson","nl":"het lied","cat":"Kunst & Cultuur"},
       {"fr":"le chanteur","nl":"de zanger","cat":"Kunst & Cultuur"},
-      {"fr":"le cinéma","nl":"de bioscoop / film","cat":"Kunst & Cultuur"},
-      {"fr":"térer","nl":"scheppen / maken","cat":"Kunst & Cultuur"},
-      {"fr":"dessiner","nl":"tekenen","cat":"Kunst & Cultuur"},
-      {"fr":"un écrivain","nl":"een schrijver","cat":"Kunst & Cultuur"},
-      {"fr":"exposer","nl":"tentoonstellen","cat":"Kunst & Cultuur"},
-      {"fr":"une exposition","nl":"een tentoonstelling","cat":"Kunst & Cultuur"},
-
-      {"fr":"le candidat","nl":"de kandidaat","cat":"Politiek"},
-      {"fr":"le citoyen","nl":"de staatsburger","cat":"Politiek"},
-      {"fr":"le débat","nl":"het debat","cat":"Politiek"},
-      {"fr":"la démocratie","nl":"de democratie","cat":"Politiek"},
-      {"fr":"les élections","nl":"de verkiezingen","cat":"Politiek"},
-      {"fr":"le parlement","nl":"het parlement","cat":"Politiek"},
-      {"fr":"le parti","nl":"de partij","cat":"Politiek"},
-      {"fr":"la politique","nl":"de politiek","cat":"Politiek"},
-      {"fr":"le président","nl":"de president","cat":"Politiek"},
-      {"fr":"voter","nl":"stemmen","cat":"Politiek"},
-      {"fr":"la voix","nl":"de stem","cat":"Politiek"},
-
-      {"fr":"l'alcool","nl":"de alcohol","cat":"Gezondheid"},
-      {"fr":"l'alimentation","nl":"de voeding","cat":"Gezondheid"},
-      {"fr":"avoir mal à","nl":"pijn hebben aan","cat":"Gezondheid"},
-      {"fr":"le corps","nl":"het lichaam","cat":"Gezondheid"},
-      {"fr":"la douleur","nl":"de pijn","cat":"Gezondheid"},
-      {"fr":"se droguer","nl":"drugs gebruiken","cat":"Gezondheid"},
-      {"fr":"fumer","nl":"roken","cat":"Gezondheid"},
-      {"fr":"la grippe","nl":"de griep","cat":"Gezondheid"},
-      {"fr":"grossir","nl":"dikker worden","cat":"Gezondheid"},
-      {"fr":"mince","nl":"slank","cat":"Gezondheid"},
-      {"fr":"se nourrir","nl":"zich voeden","cat":"Gezondheid"},
-      {"fr":"la santé","nl":"de gezondheid","cat":"Gezondheid"},
-      {"fr":"le sport","nl":"de sport","cat":"Gezondheid"},
-
-      {"fr":"le championnat","nl":"het kampioenschap","cat":"Sport"},
-      {"fr":"concourir","nl":"meedingen / deelnemen","cat":"Sport"},
-      {"fr":"disputer un match","nl":"een wedstrijd spelen","cat":"Sport"},
-      {"fr":"l'entraînement","nl":"de training","cat":"Sport"},
-      {"fr":"l'équipe","nl":"het team","cat":"Sport"},
-      {"fr":"gagner","nl":"winnen","cat":"Sport"},
-      {"fr":"perdre","nl":"verliezen","cat":"Sport"},
-      {"fr":"le record","nl":"het record","cat":"Sport"},
-      {"fr":"le résultat","nl":"de uitslag","cat":"Sport"},
-      {"fr":"le stade","nl":"het stadion","cat":"Sport"},
-      {"fr":"remporter une victoire","nl":"een overwinning behalen","cat":"Sport"},
-
-      {"fr":"le bruit","nl":"het lawaai","cat":"Milieu"},
-      {"fr":"le désastre","nl":"de ramp","cat":"Milieu"},
-      {"fr":"l'effet de serre","nl":"broeikaseffect","cat":"Milieu"},
-      {"fr":"l'émission CO2","nl":"CO2-uitstoot","cat":"Milieu"},
-      {"fr":"un incendie","nl":"een brand","cat":"Milieu"},
-      {"fr":"l'inondation","nl":"de overstroming","cat":"Milieu"},
-      {"fr":"la matière première","nl":"de grondstof","cat":"Milieu"},
-      {"fr":"les ordures / les déchets","nl":"het afval","cat":"Milieu"},
-      {"fr":"le paysan / l'agriculteur","nl":"de boer","cat":"Milieu"},
-      {"fr":"le réchauffement de la terre","nl":"de opwarming van de aarde","cat":"Milieu"},
-      {"fr":"la sécheresse","nl":"de droogte","cat":"Milieu"},
-      {"fr":"le tremblement de terre","nl":"de aardbeving","cat":"Milieu"},
-      {"fr":"trier les déchets","nl":"afval scheiden","cat":"Milieu"},
-
-      {"fr":"un mensuel","nl":"een maandblad","cat":"Media"},
-      {"fr":"un quotidien","nl":"een dagblad","cat":"Media"},
-      {"fr":"un hebdomadaire","nl":"een weekblad","cat":"Media"},
-      {"fr":"numérique","nl":"digitaal","cat":"Media"},
-      {"fr":"un ordinateur (portable)","nl":"een computer (laptop)","cat":"Media"},
-      {"fr":"la publicité","nl":"de reclame","cat":"Media"},
-      {"fr":"la souris","nl":"de muis","cat":"Media"},
-      {"fr":"une tablette","nl":"een tablet / iPad","cat":"Media"},
-      {"fr":"télécharger","nl":"downloaden","cat":"Media"},
-      {"fr":"un texto","nl":"een sms","cat":"Media"},
-      {"fr":"internet","nl":"internet","cat":"Media"},
-      {"fr":"la télévision","nl":"de televisie","cat":"Media"},
-      {"fr":"la radio","nl":"de radio","cat":"Media"},
-      {"fr":"le journal","nl":"de krant","cat":"Media"},
-      {"fr":"la vidéo","nl":"de video","cat":"Media"},
-      {"fr":"le réseau social","nl":"het sociale netwerk","cat":"Media"},
-
-      {"fr":"le car scolaire","nl":"de schoolbus","cat":"Transport"},
-      {"fr":"les chemins de fer","nl":"de spoorwegen","cat":"Transport"},
-      {"fr":"changer de train","nl":"overstappen","cat":"Transport"},
-      {"fr":"descendre","nl":"uitstappen","cat":"Transport"},
-      {"fr":"monter","nl":"instappen","cat":"Transport"},
-      {"fr":"le permis de conduire","nl":"het rijbewijs","cat":"Transport"},
-      {"fr":"le réseau","nl":"het netwerk","cat":"Transport"},
-      {"fr":"la station","nl":"het station / halte","cat":"Transport"},
-      {"fr":"le trajet","nl":"de reis / het traject","cat":"Transport"},
-
-      {"fr":"toujours","nl":"altijd / nog steeds","cat":"Signaalwoorden"},
-      {"fr":"il y a + tijdsaanduiding","nl":"… geleden","cat":"Signaalwoorden"},
-      {"fr":"à l'avenir","nl":"in de toekomst","cat":"Signaalwoorden"},
-      {"fr":"tout à coup","nl":"plotseling / ineens","cat":"Signaalwoorden"},
-      {"fr":"tout de suite","nl":"meteen","cat":"Signaalwoorden"},
-      {"fr":"alors que / tandis que","nl":"terwijl","cat":"Signaalwoorden"},
-      {"fr":"au contraire","nl":"daarentegen","cat":"Signaalwoorden"},
-      {"fr":"bien que","nl":"hoewel","cat":"Signaalwoorden"},
-      {"fr":"cependant","nl":"desalniettemin / echter","cat":"Signaalwoorden"},
-      {"fr":"certes","nl":"zeker","cat":"Signaalwoorden"},
-      {"fr":"contrairement à","nl":"in tegenstelling tot","cat":"Signaalwoorden"},
-      {"fr":"en fait","nl":"eigenlijk / in feite","cat":"Signaalwoorden"},
-      {"fr":"en revanche","nl":"daarentegen","cat":"Signaalwoorden"},
-      {"fr":"mais","nl":"maar","cat":"Signaalwoorden"},
-      {"fr":"néanmoins","nl":"toch / desondanks","cat":"Signaalwoorden"},
-      {"fr":"par contre","nl":"daarentegen","cat":"Signaalwoorden"},
-      {"fr":"pourtant","nl":"toch / maar","cat":"Signaalwoorden"},
-      {"fr":"par exemple","nl":"bijvoorbeeld","cat":"Signaalwoorden"},
-      {"fr":"ne … pas","nl":"niet","cat":"Signaalwoorden"},
-      {"fr":"ne … plus","nl":"niet meer","cat":"Signaalwoorden"},
-      {"fr":"ne … pas encore","nl":"nog niet","cat":"Signaalwoorden"},
-      {"fr":"ne … jamais","nl":"nooit","cat":"Signaalwoorden"},
-      {"fr":"ne … guère","nl":"bijna niet","cat":"Signaalwoorden"},
-      {"fr":"ne … rien","nl":"niets","cat":"Signaalwoorden"},
-      {"fr":"ne … personne","nl":"niemand","cat":"Signaalwoorden"},
-      {"fr":"moins … que","nl":"minder … dan","cat":"Signaalwoorden"},
-      {"fr":"aussi … que","nl":"net zo … als","cat":"Signaalwoorden"},
-      {"fr":"plus … que","nl":"meer … dan","cat":"Signaalwoorden"},
-      {"fr":"à tout prix","nl":"tot elke prijs","cat":"Signaalwoorden"},
-      {"fr":"de moins en moins","nl":"minder en minder","cat":"Signaalwoorden"},
-      {"fr":"de plus en plus","nl":"meer en meer","cat":"Signaalwoorden"},
-
-      {"fr":"content","nl":"tevreden","cat":"Pos. & Neg."},
-      {"fr":"efficace","nl":"doeltreffend","cat":"Pos. & Neg."},
-      {"fr":"encourager","nl":"aanmoedigen","cat":"Pos. & Neg."},
-      {"fr":"fier","nl":"trots","cat":"Pos. & Neg."},
-      {"fr":"meilleur","nl":"beter","cat":"Pos. & Neg."},
-      {"fr":"mieux","nl":"best","cat":"Pos. & Neg."},
-      {"fr":"réussir","nl":"slagen","cat":"Pos. & Neg."},
-      {"fr":"riche","nl":"rijk","cat":"Pos. & Neg."}
-    ];
-
-    // ============= STATE =============
-    let state = {
-      currentScreen: 'login',
-      user: {
-        email: '',
-        naam: '',
-      },
-      settings: {
-        klas: null,
-        categories: new Set(CATEGORIES),
-        richting: null,
-        aantalWoorden: 20,
-      },
-      quiz: {
-        words: [],
-        currentIndex: 0,
-        answers: [],
-        startTime: null,
-        isAnswered: false,
-      },
-      flashcards: {
-        words: [],
-        currentIndex: 0,
-        isFront: true,
-      },
-    };
-
-    // ============= UTILITIES =============
-    function normalize(s) {
-      return s.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/^(le |la |les |l'|de |het |een |un |une |des )/i, '')
-        .trim();
-    }
-
-    function isCorrect(input, answer) {
-      const n = normalize(input);
-      const a = normalize(answer);
-      if (n === a) return true;
-      const alts = a.split('/').map(x => x.trim());
-      return alts.some(alt => n === alt || alt.includes(n) || n.includes(alt));
-    }
-
-    function showScreen(screenName) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.querySelector('.' + screenName + '-screen').classList.add('active');
-      state.currentScreen = screenName;
-    }
-
-    function getFilteredWords() {
-      return WORDS.filter(w => state.settings.categories.has(w.cat));
-    }
-
-    function updateWordCount() {
-      const filtered = getFilteredWords();
-      const maxWords = Math.min(filtered.length, 100);
-      document.getElementById('maxWords').textContent = maxWords;
-      document.getElementById('sliderValue').textContent = Math.min(state.settings.aantalWoorden, maxWords);
-      document.getElementById('wordCount').textContent = `${filtered.length} woorden geselecteerd`;
-    }
-
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      return `${mins}m ${secs}s`;
-    }
-
-    // ============= LOGIN =============
-    document.getElementById('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const naam = document.getElementById('naam').value;
-      const errorEl = document.getElementById('emailError');
-
-      if (!email.endsWith(`@${CONFIG.schoolDomain}`)) {
-        errorEl.textContent = `E-mail moet eindigen op @${CONFIG.schoolDomain}`;
-        errorEl.classList.add('show');
-        return;
-      }
-
-      errorEl.classList.remove('show');
-      state.user = { email, naam };
-      document.getElementById('greetingName').textContent = naam;
-      showScreen('setup');
-    });
-
-    // ============= SETUP =============
-    // Categories
-    const categoriesGrid = document.getElementById('categoriesGrid');
-    CATEGORIES.forEach(cat => {
-      const chip = document.createElement('div');
-      chip.className = 'category-chip selected';
-      chip.textContent = cat;
-      chip.addEventListener('click', () => {
-        chip.classList.toggle('selected');
-        if (chip.classList.contains('selected')) {
-          state.settings.categories.add(cat);
-        } else {
-          state.settings.categories.delete(cat);
-        }
-        updateWordCount();
-      });
-      categoriesGrid.appendChild(chip);
-    });
-
-    document.getElementById('selectAllBtn').addEventListener('click', () => {
-      CATEGORIES.forEach(cat => state.settings.categories.add(cat));
-      document.querySelectorAll('.category-chip').forEach(c => c.classList.add('selected'));
-      updateWordCount();
-    });
-
-    document.getElementById('deselectAllBtn').addEventListener('click', () => {
-      state.settings.categories.clear();
-      document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
-      updateWordCount();
-    });
-
-    // Klas buttons
-    document.querySelectorAll('[data-klas]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('[data-klas]').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        state.settings.klas = btn.dataset.klas;
-      });
-    });
-
-    // Richting buttons
-    document.querySelectorAll('[data-richting]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelectorAll('[data-richting]').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        state.settings.richting = btn.dataset.richting;
-      });
-    });
-
-    // Slider
-    document.getElementById('wordSlider').addEventListener('input', (e) => {
-      state.settings.aantalWoorden = parseInt(e.target.value);
-      document.getElementById('sliderValue').textContent = state.settings.aantalWoorden;
-    });
-
-    updateWordCount();
-
-    // Start Quiz
-    document.getElementById('quizBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      if (!state.settings.klas || !state.settings.richting) {
-        alert('Kies alsjeblieft je klas en richting');
-        return;
-      }
-
-      const filtered = getFilteredWords();
-      if (filtered.length === 0) {
-        alert('Geen woorden geselecteerd');
-        return;
-      }
-
-      state.quiz.words = filtered.sort(() => Math.random() - 0.5)
-        .slice(0, state.settings.aantalWoorden);
-
-      if (state.settings.richting === 'mix') {
-        state.quiz.words = state.quiz.words.map(w => ({
-          ...w,
-          reverse: Math.random() > 0.5,
-        }));
-      } else if (state.settings.richting === 'nl_fr') {
-        state.quiz.words = state.quiz.words.map(w => ({
-          ...w,
-          reverse: true,
-        }));
-      }
-
-      state.quiz.currentIndex = 0;
-      state.quiz.answers = [];
-      state.quiz.startTime = Date.now();
-      state.quiz.isAnswered = false;
-      showQuizQuestion();
-      showScreen('quiz');
-    });
-
-    // Start Flashcards
-    document.getElementById('flashcardsBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      if (!state.settings.klas) {
-        alert('Kies alsjeblieft je klas');
-        return;
-      }
-
-      const filtered = getFilteredWords();
-      if (filtered.length === 0) {
-        alert('Geen woorden geselecteerd');
-        return;
-      }
-
-      state.flashcards.words = filtered.sort(() => Math.random() - 0.5)
-        .slice(0, state.settings.aantalWoorden);
-
-      if (state.settings.richting === 'mix') {
-        state.flashcards.words = state.flashcards.words.map(w => ({
-          ...w,
-          reverse: Math.random() > 0.5,
-        }));
-      } else if (state.settings.richting === 'nl_fr') {
-        state.flashcards.words = state.flashcards.words.map(w => ({
-          ...w,
-          reverse: true,
-        }));
-      }
-
-      state.flashcards.currentIndex = 0;
-      state.flashcards.isFront = true;
-      showFlashcard();
-      showScreen('flashcard');
-    });
-
-    // ============= QUIZ =============
-    function showQuizQuestion() {
-      const word = state.quiz.words[state.quiz.currentIndex];
-      const isReverse = word.reverse;
-      const fromLang = isReverse ? 'Nederlands' : 'Frans';
-      const toLang = isReverse ? 'Frans' : 'Nederlands';
-      const questionWord = isReverse ? word.nl : word.fr;
-      const correctAnswer = isReverse ? word.fr : word.nl;
-
-      document.getElementById('quizLabel').textContent = `${fromLang} → ${toLang}`;
-      document.getElementById('quizWord').textContent = questionWord;
-      document.getElementById('quizCounter').textContent = `Vraag ${state.quiz.currentIndex + 1} van ${state.quiz.words.length}`;
-      document.getElementById('progressFill').style.width = `${(state.quiz.currentIndex / state.quiz.words.length) * 100}%`;
-
-      const input = document.getElementById('quizInput');
-      input.value = '';
-      input.className = 'quiz-input';
-      input.disabled = false;
-      input.focus();
-
-      const feedback = document.getElementById('feedback');
-      feedback.classList.remove('show', 'correct', 'wrong');
-
-      const checkBtn = document.getElementById('checkBtn');
-      checkBtn.disabled = false;
-      checkBtn.textContent = 'Controleer';
-
-      state.quiz.isAnswered = false;
-      updateScoreDisplay();
-    }
-
-    function updateScoreDisplay() {
-      const correct = state.quiz.answers.filter(a => a.correct).length;
-      document.getElementById('scoreDisplay').textContent = `Score: ${correct}/${state.quiz.words.length}`;
-    }
-
-    document.getElementById('checkBtn').addEventListener('click', checkAnswer);
-    document.getElementById('quizInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && !state.quiz.isAnswered) checkAnswer();
-    });
-
-    function checkAnswer() {
-      const input = document.getElementById('quizInput').value.trim();
-      const word = state.quiz.words[state.quiz.currentIndex];
-      const isReverse = word.reverse;
-      const correctAnswer = isReverse ? word.fr : word.nl;
-
-      const correct = isCorrect(input, correctAnswer);
-      const feedback = document.getElementById('feedback');
-      const inputEl = document.getElementById('quizInput');
-      const checkBtn = document.getElementById('checkBtn');
-
-      state.quiz.answers.push({ correct, input, answer: correctAnswer });
-      state.quiz.isAnswered = true;
-
-      if (correct) {
-        feedback.className = 'feedback show correct';
-        feedback.textContent = `✓ Correct! Het antwoord is: ${correctAnswer}`;
-        inputEl.className = 'quiz-input correct';
-      } else {
-        feedback.className = 'feedback show wrong';
-        feedback.textContent = `✗ Fout. Het juiste antwoord is: ${correctAnswer}`;
-        inputEl.className = 'quiz-input wrong';
-      }
-
-      checkBtn.disabled = true;
-      checkBtn.textContent = state.quiz.currentIndex < state.quiz.words.length - 1 ? 'Volgende →' : 'Resultaten →';
-      inputEl.disabled = true;
-
-      updateScoreDisplay();
-    }
-
-    // Continue to next question or show results
-    document.getElementById('checkBtn').addEventListener('click', function() {
-      if (!state.quiz.isAnswered) return;
-
-      if (state.quiz.currentIndex < state.quiz.words.length - 1) {
-        state.quiz.currentIndex++;
-        showQuizQuestion();
-      } else {
-        showResults();
-      }
-    });
-
-    // ============= FLASHCARDS =============
-    function showFlashcard() {
-      const word = state.flashcards.words[state.flashcards.currentIndex];
-      const isReverse = word.reverse;
-      const card = document.getElementById('card');
-
-      if (state.flashcards.isFront) {
-        const lang = isReverse ? 'Nederlands' : 'Frans';
-        const displayWord = isReverse ? word.nl : word.fr;
-        card.innerHTML = `
-          <div class="card-front">
-            <div class="card-front-lang">${lang}</div>
-            <div class="card-word">${displayWord}</div>
-          </div>
-        `;
-      } else {
-        const lang = isReverse ? 'Frans' : 'Nederlands';
-        const translation = isReverse ? word.fr : word.nl;
-        card.innerHTML = `
-          <div class="card-back">
-            <div class="card-back-lang">${lang}</div>
-            <div class="card-translation">${translation}</div>
-          </div>
-        `;
-      }
-
-      document.getElementById('flashcardCounter').textContent = `${state.flashcards.currentIndex + 1} van ${state.flashcards.words.length}`;
-      document.getElementById('prevBtn').disabled = state.flashcards.currentIndex === 0;
-      document.getElementById('nextBtn').disabled = state.flashcards.currentIndex === state.flashcards.words.length - 1;
-    }
-
-    document.getElementById('card').addEventListener('click', () => {
-      state.flashcards.isFront = !state.flashcards.isFront;
-      showFlashcard();
-    });
-
-    document.getElementById('prevBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      if (state.flashcards.currentIndex > 0) {
-        state.flashcards.currentIndex--;
-        state.flashcards.isFront = true;
-        showFlashcard();
-      }
-    });
-
-    document.getElementById('nextBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      if (state.flashcards.currentIndex < state.flashcards.words.length - 1) {
-        state.flashcards.currentIndex++;
-        state.flashcards.isFront = true;
-        showFlashcard();
-      }
-    });
-
-    document.getElementById('shuffleBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      state.flashcards.words.sort(() => Math.random() - 0.5);
-      state.flashcards.currentIndex = 0;
-      state.flashcards.isFront = true;
-      showFlashcard();
-    });
-
-    document.getElementById('backBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      showScreen('setup');
-    });
-
-    // ============= RESULTS =============
-    function showResults() {
-      const correct = state.quiz.answers.filter(a => a.correct).length;
-      const total = state.quiz.words.length;
-      const percentage = Math.round((correct / total) * 100);
-      const elapsed = Math.floor((Date.now() - state.quiz.startTime) / 1000);
-
-      document.getElementById('finalScore').textContent = `${correct}/${total}`;
-      document.getElementById('finalPercentage').textContent = `${percentage}%`;
-      document.getElementById('timeElapsed').textContent = `Tijd: ${formatTime(elapsed)}`;
-
-      const resultsList = document.getElementById('resultsList');
-      resultsList.innerHTML = '';
-
-      state.quiz.answers.forEach((answer, idx) => {
-        const word = state.quiz.words[idx];
-        const item = document.createElement('div');
-        item.className = 'result-item';
-        item.innerHTML = `
-          <div class="result-question">${idx + 1}. ${answer.answer}</div>
-          <div class="result-user-answer">Jouw antwoord: ${answer.input || '(leeg)'}</div>
-          <div class="result-correct-answer">Correct: ${answer.answer}</div>
-        `;
-        resultsList.appendChild(item);
-      });
-
-      showScreen('results');
-    }
-
-    document.getElementById('saveBtn').addEventListener('click', async (e) => {
-      e.preventDefault();
-      const correct = state.quiz.answers.filter(a => a.correct).length;
-      const total = state.quiz.words.length;
-      const percentage = Math.round((correct / total) * 100);
-      const elapsed = Math.floor((Date.now() - state.quiz.startTime) / 1000);
-
-      const data = {
-        email: state.user.email,
-        naam: state.user.naam,
-        niveau: state.settings.klas,
-        score: correct,
-        totaal: total,
-        percentage: percentage,
-        modus: 'Quiz',
-        tijdsduur_s: elapsed,
-        datum: new Date().toISOString(),
-      };
-
-      try {
-        const response = await fetch(
-          `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}`,
-          {
-            method: 'POST',
-            headers: {
-              'apikey': CONFIG.supabaseKey,
-              'Authorization': `Bearer ${CONFIG.supabaseKey}`,
-              'Content-Type': 'application/json',
-              'Prefer': 'return=minimal',
-            },
-            body: JSON.stringify(data),
-          }
-        );
-
-        if (response.ok) {
-          showScreen('setup');
-        } else {
-          console.error('Save failed:', response.status);
-          alert('Opslaan mislukt, probeer het opnieuw');
-        }
-      } catch (error) {
-        console.error('Save error:', error);
-        alert('Opslaan mislukt, probeer het opnieuw');
-      }
-    });
-
-    document.getElementById('retryBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      const filtered = getFilteredWords();
-      state.quiz.words = filtered.sort(() => Math.random() - 0.5)
-        .slice(0, state.settings.aantalWoorden);
-
-      if (state.settings.richting === 'mix') {
-        state.quiz.words = state.quiz.words.map(w => ({
-          ...w,
-          reverse: Math.random() > 0.5,
-        }));
-      } else if (state.settings.richting === 'nl_fr') {
-        state.quiz.words = state.quiz.words.map(w => ({
-          ...w,
-          reverse: true,
-        }));
-      }
-
-      state.quiz.currentIndex = 0;
-      state.quiz.answers = [];
-      state.quiz.startTime = Date.now();
-      state.quiz.isAnswered = false;
-      showQuizQuestion();
-      showScreen('quiz');
-    });
-  </script>
-</body>
-</html>
+      {"fr":"le ck��[XH������H�[�������[H���]����[��	��[]\��K�ș�����ܰ�Y\���������\[��XZ�[����]����[��	��[]\��K�ș�����\��[�\�������Z�[�[����]����[��	��[]\��K�ș�����[�0�Xܚ]�Z[�������Y[����Z��\����]����[��	��[]\��K�ș�����^��\�������[��ۜ�[[����]����[��	��[]\��K�ș�����[�H^��][ۈ������Y[�[��ۜ�[[�ȋ��]����[��	��[]\��K��ș�����H�[�Y]������H�[�YX]���]����]YZȟK�ș�����H�]�Y[�������H�X]؝\��\����]����]YZȟK�ș�����H0�X�]������]X�]���]����]YZȟK�ș�����H0�[[�ܘ]YH������H[[�ܘ]YH���]����]YZȟK�ș�����\�0�[X�[ۜȋ�����H�\��Y^�[��[����]����]YZȟK�ș�����H\�[Y[�������]\�[Y[����]����]YZȟK�ș�����H\�H������H\�Z����]����]YZȟK�ș�����H�]\]YH������H�]YZȋ��]����]YZȟK�ș�����H��\�Y[�������H�\�Y[����]����]YZȟK�ș�������\��������[[Y[����]����]YZȟK�ș�����H��^������H�[H���]����]YZȟK��ș�����	�[���������H[������]����^�ۙZY�K�ș�����	�[[Y[�][ۈ������H��Y[�ȋ��]����^�ۙZY�K�ș�����]��\�X[0�������Z��X��[�X[����]����^�ۙZY�K�ș�����H�ܜȋ�����]X�X[H���]����^�ۙZY�K�ș�����H�[]\�������HZ�����]����^�ۙZY�K�ș������H���Y\��������Y���X��ZZ�[����]����^�ۙZY�K�ș������[Y\����������[����]����^�ۙZY�K�ș�����Hܚ\H������HܚY\���]����^�ۙZY�K�ș�����ܛ���\�������Z��\��ܙ[����]����^�ۙZY�K�ș�����Z[��H�������[�ȋ��]����^�ۙZY�K�ș������H��\��\��������X���Y[����]����^�ۙZY�K�ș�����H�[�0�H������H�^�ۙZY���]����^�ۙZY�K�ș�����H�ܝ������H�ܝ���]����^�ۙZY�K��ș�����H�[\[ۛ�]������]�[\[�[���\���]����ܝ�K�ș������ۘ��\�\�������YYY[��[��Y[�[Y[����]����ܝ�K�ș�����\�]\�[�X]�������Y[��Y��Z��[[����]����ܝ�K�ș�����	�[��p뛙[Y[�������H�Z[�[�ȋ��]����ܝ�K�ș�����	��\]Z\H������]X[H���]����ܝ�K�ș������Yۙ\��������[��[����]����ܝ�K�ș�����\��H�������\�Y^�[����]����ܝ�K�ș�����H�X�ܙ������]�X�ܙ���]����ܝ�K�ș�����H��\�[]������HZ]�Yȋ��]����ܝ�K�ș�����H�YH������]�Y[ۈ���]����ܝ�K�ș������[\ܝ\�[�H�X��\�H������Y[�ݙ\��[��[���Z[[����]����ܝ�K��ș�����H��Z]������]]�XZH���]���Z[Y]H�K�ș�����H0�\�\��H������H�[\���]���Z[Y]H�K�ș�����	�Y��]H�\��H���������ZZ�\�Y��X����]���Z[Y]H�K�ș�����	��[Z\��[ۈ�̈�������̋]Z]������]���Z[Y]H�K�ș�����[�[��[�YH������Y[���[����]���Z[Y]H�K�ș�����	�[�ۙ][ۈ������Hݙ\����Z[�ȋ��]���Z[Y]H�K�ș�����HX]p��H�[Zp��H������Hܛۙ�و���]���Z[Y]H�K�ș�����\�ܙ\�\��\�0�X�]ȋ�����]Y��[���]���Z[Y]H�K�ș�����H^\�[��	�YܚX�[]\�������H��\����]���Z[Y]H�K�ș�����H��X�]Y��[Y[�HH\��H������H��\�Z[���[�HX\�H���]���Z[Y]H�K�ș�����H��X�\�\��H������H����H���]���Z[Y]H�K�ș�����H�[X�[Y[�H\��H������HX\��]�[�ȋ��]���Z[Y]H�K�ș������Y\�\�0�X�]ȋ�����Y��[��ZY[����]���Z[Y]H�K��ș�����[�Y[��Y[������Y[�XX[��Y���]���YYXH�K�ș�����[�][�YY[�������Y[�Y؛Y���]���YYXH�K�ș�����[�X��XYZ\�H������Y[��YZ؛Y���]���YYXH�K�ș������[p�\�\]YH������Y�]X[���]���YYXH�K�ș�����[�ܙ[�]]\�
+ܝX�JH������Y[���\]\�
+\�
+H���]���YYXH�K�ș�����HX�X�]0�H������H�X�[YH���]���YYXH�K�ș�����H��\�\ȋ�����H]Z\ȋ��]���YYXH�K�ș�����[�HX�]H������Y[�X�]�TY���]���YYXH�K�ș�����0�[0�X�\��\��������ۛ�Y[����]���YYXH�K�ș�����[�^ȋ�����Y[��\ȋ��]���YYXH�K�ș�����[�\��]������[�\��]���]���YYXH�K�ș�����H0�[0�]�\�[ۈ������H[]�\�YH���]���YYXH�K�ș�����H�Y[ȋ�����H�Y[ȋ��]���YYXH�K�ș�����H��\��[������Hܘ[����]���YYXH�K�ș�����H�Y0�[ȋ�����H�Y[ȋ��]���YYXH�K�ș�����H��\�X]H���X[������]���X[H�]�\�ȋ��]���YYXH�K��ș�����H�\����Z\�H������H�����\ȋ��]����[��ܝ�K�ș�����\��[Z[��H�\�������H��ܝ�Y�[����]����[��ܝ�K�ș������[��\�H�Z[�������ݙ\��\[����]����[��ܝ�K�ș�����\��[��H������Z]�\[����]����[��ܝ�K�ș�����[۝\�������[��\[����]����[��ܝ�K�ș�����H\�Z\�H�ۙZ\�H������]�Z��]�Z�ȋ��]����[��ܝ�K�ș�����H��\�X]H������]�]�\�ȋ��]����[��ܝ�K�ș�����H�][ۈ������]�][ۈ�[H���]����[��ܝ�K�ș�����H�Z�]������H�Z\��]�Z�X����]����[��ܝ�K��ș������Z��\�ȋ�����[Z������YYȋ��]����YۘX[��ܙ[��K�ș�����[HH
+�Z��X[�ZY[�ȋ������)��[Y[����]����YۘX[��ܙ[��K�ș������	�]�[�\�������[�H�Z��\����]����YۘX[��ܙ[��K�ș������]0���\��������[[���[�Y[�ȋ��]����YۘX[��ܙ[��K�ș������]H�Z]H������Y]Y[����]����YۘX[��ܙ[��K�ș�����[ܜ�]YH�[�\�]YH������\��Z����]����YۘX[��ܙ[��K�ș�����]H�۝�Z\�H������X\�[�Y�[����]����YۘX[��ܙ[��K�ș������Y[�]YH�������]�[���]����YۘX[��ܙ[��K�ș������\[�[�������\�[�Y][Z[��X�\����]����YۘX[��ܙ[��K�ș������\�\ȋ������Z�\����]����YۘX[��ܙ[��K�ș������۝�Z\�[Y[�0�������[�Y�[��[[������]����YۘX[��ܙ[��K�ș�����[��Z]������ZY�[�Z���[��Z]H���]����YۘX[��ܙ[��K�ș�����[��]�[��H������X\�[�Y�[����]����YۘX[��ܙ[��K�ș�����XZ\ȋ�����XX\����]����YۘX[��ܙ[��K�ș�������X[�[�[�ȋ��������\�ۙ[��ȋ��]����YۘX[��ܙ[��K�ș�����\��۝�H������X\�[�Y�[����]����YۘX[��ܙ[��K�ș������\�[����������XX\����]����YۘX[��ܙ[��K�ș�����\�^[\H�������Z���ܘ�Y[���]����YۘX[��ܙ[��K�ș������H8�)�\ȋ������Y]���]����YۘX[��ܙ[��K�ș������H8�)�\ȋ������Y]YY\����]����YۘX[��ܙ[��K�ș������H8�)�\�[��ܙH����������Y]���]����YۘX[��ܙ[��K�ș������H8�)��[XZ\ȋ��������]���]����YۘX[��ܙ[��K�ș������H8�)��p��H�������Z��H�Y]���]����YۘX[��ܙ[��K�ș������H8�)��Y[��������Y]ȋ��]����YۘX[��ܙ[��K�ș������H8�)�\��ۛ�H�������Y[X[����]����YۘX[��ܙ[��K�ș�����[�[��8�)�]YH������Z[�\�8�)�[����]����YۘX[��ܙ[��K�ș�����]\��H8�)�]YH�������]��8�)�[ȋ��]����YۘX[��ܙ[��K�ș�����\�8�)�]YH������YY\�8�)�[����]����YۘX[��ܙ[��K�ș�������]�^�������[�H�Z�ȋ��]����YۘX[��ܙ[��K�ș�����H[�[��[�[�[�ȋ�����Z[�\�[�Z[�\����]����YۘX[��ܙ[��K�ș�����H\�[�\ȋ�����YY\�[�YY\����]����YۘX[��ܙ[��K��ș������۝[�������]��Y[����]����ˈ	��Yˈ�K�ș�����Y��X�X�H�������[�Y��[����]����ˈ	��Yˈ�K�ș�����[���\�Y�\�������X[�[�YY�[����]����ˈ	��Yˈ�K�ș������Y\���������ȋ��]����ˈ	��Yˈ�K�ș�����YZ[]\��������]\����]����ˈ	��Yˈ�K�ș�����ZY]^�������\����]����ˈ	��Yˈ�K�ș�������]\��\��������Y�[����]����ˈ	��Yˈ�K�ș������X�H�������Z�ȋ��]����ˈ	��Yˈ�B�N���OOOOOOOOOOOOH�UHOOOOOOOOOOOOB�]�]HH�\��[��ܙY[��	���[���\�\��[XZ[�	����X[N�	���K��][��Έ�\Έ�[��]Y�ܚY\Έ�]��]
+�UQ�ԒQT�K��X�[�Έ�[�X[�[��ܙ[����K�]Z^���ܙΈ�K��\��[�[�^��[���\�Έ�K��\�[YN��[�\�[���\�Y��[�K�K��\��\�Έ�ܙΈ�K��\��[�[�^��\ќ�۝��YK�K�N���OOOOOOOOOOOOHUSUQT�OOOOOOOOOOOOB��[��[ۈ�ܛX[^�J�H�]\��˝���\��\�J
+B���ܛX[^�J	ӑ�	�K��\X�J��L�WL͙�K��	��B���\X�J׊HH\�	�H]Y[�[�[�H\�
+K�K	��B���[J
+NB���[��[ۈ\��ܜ�X�
+[�][���\�H�ۜ��H�ܛX[^�J[�]
+N�ۜ�HH�ܛX[^�J[���\�NY�
+�OOHJH�]\���YN�ۜ�[�HK��]
+	���K�X\
+O���[J
+JN�]\��[˜��YJ[O��OOH[[�[��Y\��H��[��Y\�[
+JNB���[��[ۈ����ܙY[��ܙY[��[YJH��[Y[��]Y\�T�[X�ܐ[
+	˜�ܙY[��K��ܑXX�
+�O�˘�\��\���[[ݙJ	�X�]�I�JN��[Y[��]Y\�T�[X�܊	ˉ�
+��ܙY[��[YH
+�	�\�ܙY[��K��\��\��Y
+	�X�]�I�N�]K��\��[��ܙY[�H�ܙY[��[YNB���[��[ۈ�]�[\�Y�ܙ�
+H�]\���ԑ˙�[\��O��]K��][��˘�]Y�ܚY\˚\�˘�]
+JNB���[��[ۈ\]U�ܙ��[�
+
+H�ۜ��[\�YH�]�[\�Y�ܙ�
+N�ۜ�X^�ܙ�HX]�Z[��[\�Y�[��L
+N�ۜ��Y\�H��[Y[���][[Y[��RY
+	��ܙ�Y\��N�Y\��X^HX^�ܙ���[Y[���][[Y[��RY
+	��Y\��[YI�K�^�۝[�HX]�Z[��]K��][��˘X[�[��ܙ[�X^�ܙ�N��[Y[���][[Y[��RY
+	��ܙ��[�	�K�^�۝[�H	ٚ[\�Y�[��H��ܙ[��\�[X�Y\�B���[��[ۈ�ܛX][YJ�X�ۙ�H�ۜ�Z[��HX]���܊�X�ۙ��
+�
+N�ۜ��X��H�X�ۙ�	H
+��]\��	�Z[��[H	��X��\�B����OOOOOOOOOOOOH��S�OOOOOOOOOOOOB���[Y[���][[Y[��RY
+	���[��ܛI�K�Y]�[�\�[�\�	��X�Z]	�
+JHO�K��]�[�Y�][
+
+N�ۜ�[XZ[H��[Y[���][[Y[��RY
+	�[XZ[	�K��[YN�ۜ��X[HH��[Y[���][[Y[��RY
+	ۘX[I�K��[YN�ۜ�\��ܑ[H��[Y[���][[Y[��RY
+	�[XZ[\��܉�N�Y�
+Y[XZ[�[���]
+	��ӑ�Q˜�����XZ[�X
+JH\��ܑ[�^�۝[�HK[XZ[[�]Z[�Y�[��	��ӑ�Q˜�����XZ[�X\��ܑ[��\��\��Y
+	�����N�]\��B��\��ܑ[��\��\���[[ݙJ	�����N�]K�\�\�H�[XZ[�X[HN��[Y[���][[Y[��RY
+	�ܙY][�Ә[YI�K�^�۝[�H�X[N����ܙY[�	��]\	�NJN���OOOOOOOOOOOOH�UTOOOOOOOOOOOOB����]Y�ܚY\���]�[�ܙ[����[Y[���][[Y[��RY
+	��[�ܙ[����K�^�۝[�H	��ԑ˛[��H��ܙ\�[��X\��HH�Y�[�[���ۜ��]Y�ܚY\�ܚYH��[Y[���][[Y[��RY
+	��]Y�ܚY\�ܚY	�N�ۜ��]��[��H�N�ԑ˙�ܑXX�
+�O���]��[���˘�]HH
+�]��[���˘�]H
+H
+�N�JN�UQ�ԒQT˙�ܑXX�
+�]O��ۜ��\H��[Y[��ܙX]Q[[Y[�
+	�]��N�\��\�Ә[YHH	��]Y�ܞKX�\�[X�Y	��\�^�۝[�H	��]H
+	��]��[����]HJX�\�Y]�[�\�[�\�	��X���
+
+HO��\��\��\�����J	��[X�Y	�NY�
+�\��\��\���۝Z[��	��[X�Y	�JH�]K��][��˘�]Y�ܚY\˘Y
+�]
+NH[�H�]K��][��˘�]Y�ܚY\˙[]J�]
+NB�\]U�ܙ��[�
+
+NJN�]Y�ܚY\�ܚY�\[��[
+�\
+NJN���[Y[���][[Y[��RY
+	��[X�[���K�Y]�[�\�[�\�	��X���
+
+HO��UQ�ԒQT˙�ܑXX�
+�]O��]K��][��˘�]Y�ܚY\˘Y
+�]
+JN��[Y[��]Y\�T�[X�ܐ[
+	˘�]Y�ܞKX�\	�K��ܑXX�
+�O�˘�\��\��Y
+	��[X�Y	�JN\]U�ܙ��[�
+
+NJN���[Y[���][[Y[��RY
+	�\�[X�[���K�Y]�[�\�[�\�	��X���
+
+HO��]K��][��˘�]Y�ܚY\˘�X\�
+N��[Y[��]Y\�T�[X�ܐ[
+	˘�]Y�ܞKX�\	�K��ܑXX�
+�O�˘�\��\���[[ݙJ	��[X�Y	�JN\]U�ܙ��[�
+
+NJN����\��]ۜ��[Y[��]Y\�T�[X�ܐ[
+	��]KZ�\�I�K��ܑXX�
+��O����Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+N��[Y[��]Y\�T�[X�ܐ[
+	��]KZ�\�I�K��ܑXX�
+�O����\��\���[[ݙJ	��[X�Y	�JN����\��\��Y
+	��[X�Y	�N�]K��][��˚�\�H���]\�]��\�JNJN����X�[���]ۜ��[Y[��]Y\�T�[X�ܐ[
+	��]K\�X�[��I�K��ܑXX�
+��O����Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+N��[Y[��]Y\�T�[X�ܐ[
+	��]K\�X�[��I�K��ܑXX�
+�O����\��\���[[ݙJ	��[X�Y	�JN����\��\��Y
+	��[X�Y	�N�]K��][��˜�X�[��H���]\�]��X�[��JNJN����Y\����[Y[���][[Y[��RY
+	��ܙ�Y\��K�Y]�[�\�[�\�	�[�]	�
+JHO��]K��][��˘X[�[��ܙ[�H\��R[�
+K�\��]��[YJN��[Y[���][[Y[��RY
+	��Y\��[YI�K�^�۝[�H�]K��][��˘X[�[��ܙ[�JN�\]U�ܙ��[�
+
+N����\�]Z^����[Y[���][[Y[��RY
+	�]Z^����K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+NY�
+\�]K��][��˜�X�[��H[\�
+	��Y\�[ڙX�YY�Y[��X�[��
+��[��8����Y\�[��و[�\���JI�N�]\��B���ۜ��[\�YH�]�[\�Y�ܙ�
+NY�
+�[\�Y�[��OOH
+H[\�
+	��Y[���ܙ[��\�[X�Y\�	�N�]\��B���]K�]Z^���ܙ�H�[\�Y��ܝ
+
+
+HO�X]��[��J
+HH�JB���X�J�]K��][��˘X[�[��ܙ[�N�Y�
+�]K��][��˜�X�[��OOH	�Z^	�H�]K�]Z^���ܙ�H�]K�]Z^���ܙ˛X\
+�O�
+������]�\��N�X]��[��J
+H��K�JJNH[�HY�
+�]K��][��˜�X�[��OOH	ۛٜ��H�]K�]Z^���ܙ�H�]K�]Z^���ܙ˛X\
+�O�
+������]�\��N��YK�JJNB���]K�]Z^���\��[�[�^H�]K�]Z^��[���\��H�N�]K�]Z^���\�[YHH]K����
+N�]K�]Z^��\�[���\�YH�[�N���]Z^�]Y\�[ۊ
+N����ܙY[�	�]Z^��NJN����\��\��\���[Y[���][[Y[��RY
+	ٛ\��\�Н��K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+NY�
+\�]K��][��˜�X�[��H[\�
+	��Y\�[ڙX�YY�Y[��X�[��
+��[��8����Y\�[��و[�\���JI�N�]\��B���ۜ��[\�YH�]�[\�Y�ܙ�
+NY�
+�[\�Y�[��OOH
+H[\�
+	��Y[���ܙ[��\�[X�Y\�	�N�]\��B���]K��\��\�˝�ܙ�H�[\�Y��ܝ
+
+
+HO�X]��[��J
+HH�JB���X�J�]K��][��˘X[�[��ܙ[�N�Y�
+�]K��][��˜�X�[��OOH	�Z^	�H�]K��\��\�˝�ܙ�H�]K��\��\�˝�ܙ˛X\
+�O�
+������]�\��N�X]��[��J
+H��K�JJNH[�HY�
+�]K��][��˜�X�[��OOH	ۛٜ��H�]K��\��\�˝�ܙ�H�]K��\��\�˝�ܙ˛X\
+�O�
+������]�\��N��YK�JJNB���]K��\��\�˘�\��[�[�^H�]K��\��\�˚\ќ�۝H�YN��ћ\��\�
+
+N����ܙY[�	ٛ\��\�	�NJN���OOOOOOOOOOOOHURV�OOOOOOOOOOOOB��[��[ۈ���]Z^�]Y\�[ۊ
+H�ۜ��ܙH�]K�]Z^���ܙ���]K�]Z^���\��[�[�^N�ۜ�\ԙ]�\��HH�ܙ��]�\��N�ۜ����S[��H\ԙ]�\��H�	әY\�[����	ќ�[����ۜ��[��H\ԙ]�\��H�	ќ�[����	әY\�[����ۜ�]Y\�[ە�ܙH\ԙ]�\��H��ܙ����ܙ����ۜ��ܜ�X�[���\�H\ԙ]�\��H��ܙ�����ܙ�����[Y[���][[Y[��RY
+	�]Z^�X�[	�K�^�۝[�H	ٜ��S[��H8���	��[��X��[Y[���][[Y[��RY
+	�]Z^��ܙ	�K�^�۝[�H]Y\�[ە�ܙ��[Y[���][[Y[��RY
+	�]Z^���[�\��K�^�۝[�H��XY�	��]K�]Z^���\��[�[�^
+�_H�[�	��]K�]Z^���ܙ˛[��X��[Y[���][[Y[��RY
+	���ܙ\�њ[	�K��[K��YH	��]K�]Z^���\��[�[�^��]K�]Z^���ܙ˛[��
+H
+�LIX��ۜ�[�]H��[Y[���][[Y[��RY
+	�]Z^�[�]	�N[�]��[YHH	��[�]��\�Ә[YHH	�]Z^�Z[�]	�[�]�\�X�YH�[�N[�]����\�
+N��ۜ��YY�X��H��[Y[���][[Y[��RY
+	ٙYY�X���N�YY�X�˘�\��\���[[ݙJ	�����	��ܜ�X�	�	�ܛۙ��N��ۜ��X�Н�H��[Y[���][[Y[��RY
+	��X�Н��N�X�Н��\�X�YH�[�N�X�Н��^�۝[�H	��۝��Y\����]K�]Z^��\�[���\�YH�[�N\]T��ܙQ\�^J
+NB���[��[ۈ\]T��ܙQ\�^J
+H�ۜ��ܜ�X�H�]K�]Z^��[���\�˙�[\�HO�K��ܜ�X�
+K�[����[Y[���][[Y[��RY
+	���ܙQ\�^I�K�^�۝[�H��ܙN�	��ܜ�X�K���]K�]Z^���ܙ˛[��XB����[Y[���][[Y[��RY
+	��X�Н��K�Y]�[�\�[�\�	��X����X��[���\�N��[Y[���][[Y[��RY
+	�]Z^�[�]	�K�Y]�[�\�[�\�	��^\�\���
+JHO�Y�
+K��^HOOH	�[�\��	��\�]K�]Z^��\�[���\�Y
+H�X��[���\�
+NJN��[��[ۈ�X��[���\�
+H�ۜ�[�]H��[Y[���][[Y[��RY
+	�]Z^�[�]	�K��[YK��[J
+N�ۜ��ܙH�]K�]Z^���ܙ���]K�]Z^���\��[�[�^N�ۜ�\ԙ]�\��HH�ܙ��]�\��N�ۜ��ܜ�X�[���\�H\ԙ]�\��H��ܙ�����ܙ����ۜ��ܜ�X�H\��ܜ�X�
+[�]�ܜ�X�[���\�N�ۜ��YY�X��H��[Y[���][[Y[��RY
+	ٙYY�X���N�ۜ�[�][H��[Y[���][[Y[��RY
+	�]Z^�[�]	�N�ۜ��X�Н�H��[Y[���][[Y[��RY
+	��X�Н��N��]K�]Z^��[���\�˜\�
+��ܜ�X�[�][���\���ܜ�X�[���\�JN�]K�]Z^��\�[���\�YH�YN�Y�
+�ܜ�X�
+H�YY�X�˘�\�Ә[YHH	ٙYY�X������ܜ�X�	��YY�X�˝^�۝[�H8�$��ܜ�X�H][���ܙ\Έ	��ܜ�X�[���\�X[�][��\�Ә[YHH	�]Z^�Z[�]�ܜ�X�	�H[�H�YY�X�˘�\�Ә[YHH	ٙYY�X�����ܛۙ���YY�X�˝^�۝[�H8�%���]�]�Z\�H[���ܙ\Έ	��ܜ�X�[���\�X[�][��\�Ә[YHH	�]Z^�Z[�]ܛۙ��B���X�Н��\�X�YH�YN�X�Н��^�۝[�H�]K�]Z^���\��[�[�^�]K�]Z^���ܙ˛[��HH�	՛��[�H8�����	ԙ\�[][�8����[�][�\�X�YH�YN�\]T��ܙQ\�^J
+NB�����۝[�YH��^]Y\�[ۈ܈����\�[��[Y[���][[Y[��RY
+	��X�Н��K�Y]�[�\�[�\�	��X����[��[ۊ
+HY�
+\�]K�]Z^��\�[���\�Y
+H�]\���Y�
+�]K�]Z^���\��[�[�^�]K�]Z^���ܙ˛[��HJH�]K�]Z^���\��[�[�^
+�����]Z^�]Y\�[ۊ
+NH[�H��ԙ\�[�
+NB�JN���OOOOOOOOOOOOH�T��T��OOOOOOOOOOOOB��[��[ۈ��ћ\��\�
+
+H�ۜ��ܙH�]K��\��\�˝�ܙ���]K��\��\�˘�\��[�[�^N�ۜ�\ԙ]�\��HH�ܙ��]�\��N�ۜ��\�H��[Y[���][[Y[��RY
+	��\�	�N�Y�
+�]K��\��\�˚\ќ�۝
+H�ۜ�[��H\ԙ]�\��H�	әY\�[����	ќ�[����ۜ�\�^U�ܙH\ԙ]�\��H��ܙ����ܙ����\��[��\�SH�]��\��H��\�Y��۝���]��\��H��\�Y��۝[[�ȏ��[��O�]���]��\��H��\�]�ܙ���\�^U�ܙO�]����]���H[�H�ۜ�[��H\ԙ]�\��H�	ќ�[����	әY\�[����ۜ��[��][ۈH\ԙ]�\��H��ܙ�����ܙ���\��[��\�SH�]��\��H��\�X�X�ȏ��]��\��H��\�X�X��[[�ȏ��[��O�]���]��\��H��\�]�[��][ۈ����[��][۟O�]����]���B����[Y[���][[Y[��RY
+	ٛ\��\���[�\��K�^�۝[�H	��]K��\��\�˘�\��[�[�^
+�_H�[�	��]K��\��\�˝�ܙ˛[��X��[Y[���][[Y[��RY
+	��]����K�\�X�YH�]K��\��\�˘�\��[�[�^OOH��[Y[���][[Y[��RY
+	ۙ^���K�\�X�YH�]K��\��\�˘�\��[�[�^OOH�]K��\��\�˝�ܙ˛[��HNB����[Y[���][[Y[��RY
+	��\�	�K�Y]�[�\�[�\�	��X���
+
+HO��]K��\��\�˚\ќ�۝H\�]K��\��\�˚\ќ�۝��ћ\��\�
+
+NJN���[Y[���][[Y[��RY
+	��]����K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+NY�
+�]K��\��\�˘�\��[�[�^�
+H�]K��\��\�˘�\��[�[�^KN�]K��\��\�˚\ќ�۝H�YN��ћ\��\�
+
+NB�JN���[Y[���][[Y[��RY
+	ۙ^���K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+NY�
+�]K��\��\�˘�\��[�[�^�]K��\��\�˝�ܙ˛[��HJH�]K��\��\�˘�\��[�[�^
+���]K��\��\�˚\ќ�۝H�YN��ћ\��\�
+
+NB�JN���[Y[���][[Y[��RY
+	��Y��P���K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+N�]K��\��\�˝�ܙ˜�ܝ
+
+
+HO�X]��[��J
+HH�JN�]K��\��\�˘�\��[�[�^H�]K��\��\�˚\ќ�۝H�YN��ћ\��\�
+
+NJN���[Y[���][[Y[��RY
+	ؘX�Н��K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+N����ܙY[�	��]\	�NJN���OOOOOOOOOOOOH�T�S�OOOOOOOOOOOOB��[��[ۈ��ԙ\�[�
+H�ۜ��ܜ�X�H�]K�]Z^��[���\�˙�[\�HO�K��ܜ�X�
+K�[���ۜ��[H�]K�]Z^���ܙ˛[���ۜ�\��[�Y�HHX]���[�
+
+�ܜ�X���[
+H
+�L
+N�ۜ�[\�YHX]���܊
+]K����
+HH�]K�]Z^���\�[YJH�L
+N���[Y[���][[Y[��RY
+	ٚ[�[��ܙI�K�^�۝[�H	��ܜ�X�K���[X��[Y[���][[Y[��RY
+	ٚ[�[\��[�Y�I�K�^�۝[�H	�\��[�Y�_IX��[Y[���][[Y[��RY
+	�[YQ[\�Y	�K�^�۝[�HZ��	ٛܛX][YJ[\�Y
+_X��ۜ��\�[�\�H��[Y[���][[Y[��RY
+	ܙ\�[�\�	�N�\�[�\��[��\�SH	����]K�]Z^��[���\�˙�ܑXX�
+
+[���\�Y
+HO��ۜ��ܙH�]K�]Z^���ܙ��YN�ۜ�][HH��[Y[��ܙX]Q[[Y[�
+	�]��N][K��\�Ә[YHH	ܙ\�[Z][I�][K�[��\�SH�]��\��H��\�[\]Y\�[ۈ���Y
+�_K�	�[���\��[���\�O�]���]��\��H��\�[]\�\�X[���\�����]�[���ܙ�	�[���\��[�]	�YY�I�O�]���]��\��H��\�[X�ܜ�X�X[���\����ܜ�X��	�[���\��[���\�O�]����\�[�\��\[��[
+][JNJN�����ܙY[�	ܙ\�[��NB����[Y[���][[Y[��RY
+	��]�P���K�Y]�[�\�[�\�	��X���\�[��
+JHO�K��]�[�Y�][
+
+N�ۜ��ܜ�X�H�]K�]Z^��[���\�˙�[\�HO�K��ܜ�X�
+K�[���ۜ��[H�]K�]Z^���ܙ˛[���ۜ�\��[�Y�HHX]���[�
+
+�ܜ�X���[
+H
+�L
+N�ۜ�[\�YHX]���܊
+]K����
+HH�]K�]Z^���\�[YJH�L
+N��ۜ�]HH[XZ[��]K�\�\��[XZ[��X[N��]K�\�\���X[K��]�X]N��]K��][��˚�\����ܙN��ܜ�X���X[��[�\��[�Y�N�\��[�Y�K�[�\Έ	�]Z^���Z��]\��Έ[\�Y�][N��]�]J
+K��T����[��
+K�N��H�ۜ��\�ۜ�HH]�Z]�]�
+�	��ӑ�Q˜�\X�\�U\�Kܙ\�݌K���ӑ�Q˜�\X�\�UX�_X�Y]��	���	��XY\�Έ	�\Z�^IΈ�ӑ�Q˜�\X�\�R�^K�	�]]ܚ^�][ۉΈ�X\�\�	��ӑ�Q˜�\X�\�R�^_X�	��۝[�U\IΈ	�\X�][ۋڜ�ۉ��	��Y�\�Έ	ܙ]\��[Z[�[X[	��K���N���Ӌ���[��Y�J]JK�B�
+N�Y�
+�\�ۜ�K���H����ܙY[�	��]\	�NH[�H�ۜ��K�\��܊	��]�H�Z[Y���\�ۜ�K��]\�N[\�
+	���X[�Z\�Z��ؙY\�]��Y]]��NB�H�]�
+\��܊H�ۜ��K�\��܊	��]�H\��܎��\��܊N[\�
+	���X[�Z\�Z��ؙY\�]��Y]]��NB�JN���[Y[���][[Y[��RY
+	ܙ]�P���K�Y]�[�\�[�\�	��X���
+JHO�K��]�[�Y�][
+
+N�ۜ��[\�YH�]�[\�Y�ܙ�
+N�]K�]Z^���ܙ�H�[\�Y��ܝ
+
+
+HO�X]��[��J
+HH�JB���X�J�]K��][��˘X[�[��ܙ[�N�Y�
+�]K��][��˜�X�[��OOH	�Z^	�H�]K�]Z^���ܙ�H�]K�]Z^���ܙ˛X\
+�O�
+������]�\��N�X]��[��J
+H��K�JJNH[�HY�
+�]K��][��˜�X�[��OOH	ۛٜ��H�]K�]Z^���ܙ�H�]K�]Z^���ܙ˛X\
+�O�
+������]�\��N��YK�JJNB���]K�]Z^���\��[�[�^H�]K�]Z^��[���\��H�N�]K�]Z^���\�[YHH]K����
+N�]K�]Z^��\�[���\�YH�[�N���]Z^�]Y\�[ۊ
+N����ܙY[�	�]Z^��NJN��ܚ\��؛�O���[�
