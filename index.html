@@ -39,8 +39,26 @@
     header {
       background: #1a2236;
       margin: -20px -20px 0;
-      padding: 22px 20px;
+      padding: 22px 20px 19px;
       text-align: center;
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right,
+        #0055A4 33.33%,
+        rgba(255,255,255,0.85) 33.33%,
+        rgba(255,255,255,0.85) 66.66%,
+        #EF4135 66.66%
+      );
+      opacity: 0.55;
     }
 
     h1 {
