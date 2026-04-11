@@ -2242,31 +2242,35 @@
     });
 
     // ============= SETUP =============
-    // Initialize klas pills on page load
-    renderKlasPills();
+    function renderCategories() {
+      document.getElementById('totalWordInfo').textContent = `${getActiveWords().length} woordparen klaar om te oefenen`;
+      state.settings.categories = new Set(getActiveCategories());
 
-    // Categories
-    // Set total word info
-    document.getElementById('totalWordInfo').textContent = `${getActiveWords().length} woordparen klaar om te oefenen`;
-
-    const categoriesGrid = document.getElementById('categoriesGrid');
-    const catCounts = {};
-    getActiveWords().forEach(w => { catCounts[w.cat] = (catCounts[w.cat] || 0) + 1; });
-    getActiveCategories().forEach(cat => {
-      const chip = document.createElement('div');
-      chip.className = 'category-chip selected';
-      chip.textContent = `${cat} (${catCounts[cat] || 0})`;
-      chip.addEventListener('click', () => {
-        chip.classList.toggle('selected');
-        if (chip.classList.contains('selected')) {
-          state.settings.categories.add(cat);
-        } else {
-          state.settings.categories.delete(cat);
-        }
-        updateWordCount();
+      const categoriesGrid = document.getElementById('categoriesGrid');
+      categoriesGrid.innerHTML = '';
+      const catCounts = {};
+      getActiveWords().forEach(w => { catCounts[w.cat] = (catCounts[w.cat] || 0) + 1; });
+      getActiveCategories().forEach(cat => {
+        const chip = document.createElement('div');
+        chip.className = 'category-chip selected';
+        chip.textContent = `${cat} (${catCounts[cat] || 0})`;
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('selected');
+          if (chip.classList.contains('selected')) {
+            state.settings.categories.add(cat);
+          } else {
+            state.settings.categories.delete(cat);
+          }
+          updateWordCount();
+        });
+        categoriesGrid.appendChild(chip);
       });
-      categoriesGrid.appendChild(chip);
-    });
+      updateWordCount();
+    }
+
+    // Initialize klas pills and categories on page load
+    renderKlasPills();
+    renderCategories();
 
     document.getElementById('selectAllBtn').addEventListener('click', () => {
       getActiveCategories().forEach(cat => state.settings.categories.add(cat));
