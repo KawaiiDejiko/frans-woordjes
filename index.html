@@ -759,6 +759,136 @@
       gap: 12px;
     }
 
+    /* ===== DOCENT ===== */
+    .docent-link {
+      display: block;
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: #aaa;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+    .docent-link:hover { color: #666; }
+
+    .docent-login-form {
+      margin-top: 32px;
+    }
+
+    .docent-screen-inner {
+      margin-top: 20px;
+    }
+
+    .docent-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .docent-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2236;
+    }
+
+    .docent-filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .docent-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .docent-stat {
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .docent-stat-value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1a2236;
+    }
+
+    .docent-stat-label {
+      font-size: 0.72rem;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .docent-table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .docent-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 0.85rem;
+    }
+
+    .docent-table th {
+      background: #1a2236;
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .docent-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #f0f0ee;
+      color: #1e1e1e;
+      white-space: nowrap;
+    }
+
+    .docent-table tr:last-child td { border-bottom: none; }
+    .docent-table tr:hover td { background: #f9f9f7; }
+
+    .score-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+    .score-good  { background: #e8f5e9; color: #2e7d32; }
+    .score-ok    { background: #fff8e1; color: #f57f17; }
+    .score-low   { background: #fce4ec; color: #c62828; }
+
+    .docent-empty {
+      text-align: center;
+      color: #aaa;
+      padding: 32px;
+      font-size: 0.9rem;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1.5px solid #ccc;
+      color: #666;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .btn-logout:hover { border-color: #999; color: #333; }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 2rem;
@@ -815,6 +945,60 @@
         </div>
         <button type="submit" class="btn-primary" style="width: 100%;">Inloggen →</button>
       </form>
+      <a class="docent-link" id="docentLink">Docent</a>
+    </div>
+
+    <!-- Docent Login Screen -->
+    <div class="screen docent-login-screen">
+      <form class="login-form docent-login-form" id="docentLoginForm">
+        <div style="text-align:center; margin-bottom: 24px;">
+          <div style="font-size: 1.5rem; margin-bottom: 6px;">🔒</div>
+          <div style="font-weight: 700; font-size: 1.1rem; color: #1a2236;">Docentenportaal</div>
+          <div style="font-size: 0.85rem; color: #888; margin-top: 4px;">Voer het docentenwachtwoord in</div>
+        </div>
+        <div class="form-group">
+          <label for="docentWw">Wachtwoord</label>
+          <input type="password" id="docentWw" placeholder="••••••••" required>
+          <div class="error-message" id="docentError"></div>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">Inloggen als docent →</button>
+        <a class="docent-link" id="docentBackLink">← Terug naar leerlingenlogin</a>
+      </form>
+    </div>
+
+    <!-- Docent Dashboard Screen -->
+    <div class="screen docent-screen">
+      <div class="docent-screen-inner">
+        <div class="docent-header-row">
+          <div class="docent-title">📊 Resultaten overzicht</div>
+          <button class="btn-logout" id="docentLogoutBtn">Uitloggen</button>
+        </div>
+
+        <div class="docent-stats">
+          <div class="docent-stat">
+            <div class="docent-stat-value" id="statAantal">—</div>
+            <div class="docent-stat-label">Quizzen gedaan</div>
+          </div>
+          <div class="docent-stat">
+            <div class="docent-stat-value" id="statGemiddelde">—</div>
+            <div class="docent-stat-label">Gemiddelde score</div>
+          </div>
+          <div class="docent-stat">
+            <div class="docent-stat-value" id="statLeerlingen">—</div>
+            <div class="docent-stat-label">Leerlingen</div>
+          </div>
+        </div>
+
+        <div class="docent-filter-pills" id="docentFilter">
+          <button class="klas-pill active" data-filter="alle">Alle</button>
+          <button class="klas-pill" data-filter="Havo5">Havo5</button>
+          <button class="klas-pill" data-filter="VWO4">VWO4</button>
+        </div>
+
+        <div style="margin-top: 16px;" id="docentTableContainer">
+          <div class="docent-empty">Laden...</div>
+        </div>
+      </div>
     </div>
 
     <!-- Setup Screen -->
@@ -943,6 +1127,7 @@
       supabaseUrl: 'https://txremxejuasyraidahzd.supabase.co',
       supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4cmVteGVqdWFzeXJhaWRhaHpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0NDMyNzIsImV4cCI6MjA5MTAxOTI3Mn0.kHhf-1MQkn9thBqSbjqYsHNOX7UoTih3qSAQg8S1oEw',
       supabaseTable: 'resultaten',
+      docentWachtwoord: 'Parbleu2024',
     };
 
     const WORD_SETS = {
@@ -2635,6 +2820,126 @@
       showQuizQuestion();
       showScreen('quiz');
     });
+
+    // ============= DOCENT =============
+    let docentData = [];
+    let docentFilter = 'alle';
+
+    document.getElementById('docentLink').addEventListener('click', () => {
+      showScreen('docent-login');
+    });
+
+    document.getElementById('docentBackLink').addEventListener('click', () => {
+      document.getElementById('docentError').classList.remove('show');
+      document.getElementById('docentWw').value = '';
+      showScreen('login');
+    });
+
+    document.getElementById('docentLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const ww = document.getElementById('docentWw').value;
+      const err = document.getElementById('docentError');
+      if (ww === CONFIG.docentWachtwoord) {
+        err.classList.remove('show');
+        document.getElementById('docentWw').value = '';
+        showScreen('docent');
+        loadDocentData();
+      } else {
+        err.textContent = 'Onjuist wachtwoord';
+        err.classList.add('show');
+      }
+    });
+
+    document.getElementById('docentLogoutBtn').addEventListener('click', () => {
+      docentData = [];
+      showScreen('login');
+    });
+
+    document.getElementById('docentFilter').addEventListener('click', (e) => {
+      const btn = e.target.closest('.klas-pill');
+      if (!btn) return;
+      docentFilter = btn.dataset.filter;
+      document.querySelectorAll('#docentFilter .klas-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderDocentTable();
+    });
+
+    async function loadDocentData() {
+      const container = document.getElementById('docentTableContainer');
+      container.innerHTML = '<div class="docent-empty">Laden...</div>';
+      try {
+        const resp = await fetch(
+          `${CONFIG.supabaseUrl}/rest/v1/${CONFIG.supabaseTable}?order=datum.desc&limit=200`,
+          {
+            headers: {
+              'apikey': CONFIG.supabaseKey,
+              'Authorization': `Bearer ${CONFIG.supabaseKey}`,
+            }
+          }
+        );
+        if (!resp.ok) throw new Error(resp.status);
+        docentData = await resp.json();
+        renderDocentTable();
+      } catch (err) {
+        container.innerHTML = `<div class="docent-empty">⚠️ Laden mislukt (${err.message})</div>`;
+      }
+    }
+
+    function renderDocentTable() {
+      const filtered = docentFilter === 'alle'
+        ? docentData
+        : docentData.filter(r => r.niveau === docentFilter);
+
+      // Stats
+      document.getElementById('statAantal').textContent = filtered.length;
+      const uniek = new Set(filtered.map(r => r.email)).size;
+      document.getElementById('statLeerlingen').textContent = uniek;
+      const gem = filtered.length
+        ? Math.round(filtered.reduce((s, r) => s + (r.percentage || 0), 0) / filtered.length)
+        : 0;
+      document.getElementById('statGemiddelde').textContent = filtered.length ? gem + '%' : '—';
+
+      const container = document.getElementById('docentTableContainer');
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="docent-empty">Nog geen resultaten voor deze klas.</div>';
+        return;
+      }
+
+      const rows = filtered.map(r => {
+        const pct = r.percentage ?? Math.round((r.score / r.totaal) * 100);
+        const cls = pct >= 70 ? 'score-good' : pct >= 50 ? 'score-ok' : 'score-low';
+        const datum = r.datum
+          ? new Date(r.datum).toLocaleString('nl-NL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+          : '—';
+        const tijd = r.tijdsduur_s ? `${Math.floor(r.tijdsduur_s/60)}m ${r.tijdsduur_s%60}s` : '—';
+        return `<tr>
+          <td>${r.naam || '—'}</td>
+          <td style="color:#888; font-size:0.78rem;">${(r.email||'').split('@')[0]}</td>
+          <td>${r.niveau || '—'}</td>
+          <td><span class="score-badge ${cls}">${r.score}/${r.totaal} (${pct}%)</span></td>
+          <td>${datum}</td>
+          <td style="color:#888;">${tijd}</td>
+        </tr>`;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="docent-table-wrap">
+          <table class="docent-table">
+            <thead>
+              <tr>
+                <th>Naam</th>
+                <th>E-mail</th>
+                <th>Klas</th>
+                <th>Score</th>
+                <th>Datum</th>
+                <th>Tijd</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
   </script>
 </body>
 </html>
