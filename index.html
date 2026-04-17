@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#EF4135">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Parbleu! Frans woordjes leren voor Sint Catamaria">
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -44,24 +44,19 @@
       position: relative;
     }
 
-    header::before,
-    header::after {
+    header::before {
       content: '';
       display: block;
       position: absolute;
       bottom: 0;
-      height: 5px;
-      width: 33.33%;
-    }
-
-    header::before {
       left: 0;
-      background: #0055A4;
-    }
-
-    header::after {
-      right: 0;
-      background: #EF4135;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right,
+        #0055A4 0%,     #0055A4 33.33%,
+        #ffffff 33.33%, #ffffff 66.66%,
+        #EF4135 66.66%, #EF4135 100%
+      );
     }
 
     h1 {
